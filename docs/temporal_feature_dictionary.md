@@ -18,8 +18,8 @@ All existing records, original variables, and `is_late` target labels are preser
 | `purchase_hour` | Hour when the order was placed | Hour of purchase timestamp | Hour (0–23) | 0 |
 | `purchase_is_weekend` | Indicates whether the order was placed on a weekend | 1 for Saturday/Sunday, otherwise 0 | Binary | 0 |
 | `estimated_window_days` | Number of calendar days between purchase and estimated delivery | Estimated Date − Purchase Date | Calendar days | 0 |
-| `approval_delay_hours` | Time elapsed between purchase and order approval | (Approval Timestamp − Purchase Timestamp) / 3600 | Continuous hours | 160 |
-| `actual_delivery_days` | Time elapsed between purchase and actual delivery | (Delivery Timestamp − Purchase Timestamp) / 86400 | Continuous days | 2,965 |
+| `approval_delay_hours` | Time elapsed between purchase and order approval | (Approval Timestamp − Purchase Timestamp).total_seconds() / 3600 | Continuous hours | 160 |
+| `actual_delivery_days` | Time elapsed between purchase and actual delivery | (Delivery Timestamp − Purchase Timestamp).total_seconds() / 86400 | Continuous days | 2,965 |
 | `delivery_delay_days` | Number of calendar days between actual and estimated delivery | Actual Delivery Date − Estimated Delivery Date | Calendar days | 2,965 |
 
 ## 3. Feature Interpretation
@@ -144,7 +144,7 @@ The number of columns increased from 28 to 34 as expected.
 
 ## 8. Reproducibility
 
-**Notebook:** `notebooks/02_temporal_feature_engineering.ipynb`
+**Notebook:** `notebooks/03_temporal_feature_engineering.ipynb`
 
 **Output:** `data/processed/research_data.csv`
 
@@ -153,3 +153,11 @@ The notebook can recompute the engineered features without introducing duplicate
 To reconstruct the enhanced dataset from the original Olist files, run the Stage 1 dataset preparation notebook before running TASK 01.
 
 The canonical CSV should only be updated after validation checks pass.
+
+## 9. Independent Handoff Checks
+
+The CSV supplied for TASK 05 was independently checked: all six formulas and missing patterns matched (absolute numeric tolerance 1e-8); 96,470 orders met the labeling rules and no label mismatches were found. This does not replace execution of the TASK 04 notebook.
+
+At purchase time, approval_delay_hours and promised_days must also be excluded because they require the realized approval timestamp. Estimated-window use remains conditional on the original estimate being available at purchase.
+
+The export cell currently defaults to EXPORT = False and requires the Git branch feat/temporal-feature-enhancement when enabled. Regenerating the CSV on another branch will fail that guard unless it is deliberately reviewed and adapted. Do not enable export blindly.

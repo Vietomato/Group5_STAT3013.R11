@@ -1,0 +1,8 @@
+check,value
+Invalid target values,0
+Eligible orders,96470
+Orders with valid labels,96470
+Eligible orders without a label,0
+Ineligible orders with a stored label,0
+Comparable eligible labeled orders,96470
+Label value mismatches,0

@@ -1,0 +1,7 @@
+feature,missing_rows,missing_percent,invalid_numeric_rows
+purchase_hour,0,0.0,0
+purchase_is_weekend,0,0.0,0
+estimated_window_days,0,0.0,0
+approval_delay_hours,160,0.16,0
+actual_delivery_days,2965,2.98,0
+delivery_delay_days,2965,2.98,0

@@ -1,0 +1,35 @@
+feature,availability,modeling_role,reason
+order_id,Identifier,Traceability only,Order identifier; not a default predictor.
+customer_id,Identifier,Traceability only,Customer identifier; not a default predictor.
+order_status,Post-purchase,Sample definition only; exclude from predictors,The historical status reflects later order progression.
+order_purchase_timestamp,Available at purchase,Feature engineering source,Order placement timestamp.
+order_approved_at,Post-purchase,Exclude from purchase-time predictors,Approval occurs after placement or at the same recorded time; not guaranteed available when the prediction is made.
+order_delivered_carrier_date,Post-purchase,Exclude from purchase-time predictors,Realized carrier handoff timestamp.
+order_delivered_customer_date,Post-purchase,Exclude from purchase-time predictors,Realized customer delivery timestamp.
+order_estimated_delivery_date,Conditional,Candidate source if availability is verified,Verify that this estimate was shown at order placement and was not revised using later information.
+flag_approval_before_purchase,Post-purchase,Quality review only; exclude from predictors,"Uses approval, shipment, delivery, or later status information."
+flag_carrier_before_purchase,Post-purchase,Quality review only; exclude from predictors,"Uses approval, shipment, delivery, or later status information."
+flag_delivery_before_carrier,Post-purchase,Quality review only; exclude from predictors,"Uses approval, shipment, delivery, or later status information."
+flag_delivery_before_purchase,Post-purchase,Quality review only; exclude from predictors,"Uses approval, shipment, delivery, or later status information."
+flag_delivered_missing_date,Post-purchase,Quality review only; exclude from predictors,"Uses approval, shipment, delivery, or later status information."
+is_late,Target,Prediction target,Defined using the realized delivery outcome.
+purchase_weekday,Available at purchase,Candidate predictor,Derived from the purchase timestamp.
+purchase_month,Available at purchase,Time split and analysis; predictor use requires design review,Year-month of purchase; retain chronological meaning.
+promised_days,Post-purchase,Exclude from purchase-time predictors,Calculated using the approval timestamp.
+customer_state,Conditional,Candidate predictor if availability is verified,"Use the shipping address recorded at purchase, not a later update."
+items_value,Conditional,Candidate predictor if availability is verified,Use order composition and quoted amounts fixed at purchase; verify that later changes are not included.
+freight_value,Conditional,Candidate predictor if availability is verified,Use order composition and quoted amounts fixed at purchase; verify that later changes are not included.
+item_count,Conditional,Candidate predictor if availability is verified,Use order composition and quoted amounts fixed at purchase; verify that later changes are not included.
+seller_count,Conditional,Candidate predictor if availability is verified,Requires seller assignments known at purchase.
+has_interstate_seller,Conditional,Candidate predictor if availability is verified,Requires purchase-time seller assignments and customer/seller states.
+distance_km_mean,Conditional,Candidate predictor if availability is verified,"Requires purchase-time seller assignments and locations, plus an outcome-independent geographic lookup."
+seller_count_with_geo,Conditional,Quality review; not approved as a default predictor,Describes seller/location coverage in the integration process. Review availability and redundancy before modeling.
+seller_count_total,Conditional,Quality review; not approved as a default predictor,Describes seller/location coverage in the integration process. Review availability and redundancy before modeling.
+has_partial_missing_geo,Conditional,Quality review; not approved as a default predictor,Describes seller/location coverage in the integration process. Review availability and redundancy before modeling.
+has_all_missing_geo,Conditional,Quality review; not approved as a default predictor,Describes seller/location coverage in the integration process. Review availability and redundancy before modeling.
+purchase_hour,Available at purchase,Candidate predictor,Derived from the purchase timestamp.
+purchase_is_weekend,Available at purchase,Candidate predictor,Derived from the purchase timestamp.
+estimated_window_days,Conditional,Candidate predictor if availability is verified,Requires a delivery estimate available at order placement.
+approval_delay_hours,Post-purchase,Exclude from purchase-time predictors,Requires the realized approval timestamp.
+actual_delivery_days,Post-purchase,EDA only; exclude from predictors,Requires the actual customer delivery timestamp.
+delivery_delay_days,Post-purchase,EDA and label validation only,Directly reveals the late-delivery label through its sign.
