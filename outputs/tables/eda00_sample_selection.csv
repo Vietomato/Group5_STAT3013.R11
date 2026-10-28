@@ -1,0 +1,9 @@
+Item,Orders,% of all orders
+Total orders (order level),99441,100.0
+Orders with order_status = delivered,96478,97.02
+Orders with a valid is_late label (analysis sample),96470,97.01
+   - is_late = 1 (Late),6534,6.57
+   - is_late = 0 (Not Late),89936,90.44
+Orders without a label (excluded from rate calculations),2971,2.99
+   - of which: not delivered,2963,2.98
+   - of which: delivered but missing/invalid dates,8,0.01

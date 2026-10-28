@@ -1,0 +1,3 @@
+Metric,Reference level,Note
+ROC-AUC,0.5 (scorer with no discrimination),Does not depend on prevalence
+Average Precision (AP),0.0677 = prevalence of the evaluated set (constant scorer),"Depends on the Late share of the evaluation set itself; one random ranking does not necessarily give an AP exactly equal to prevalence. 0.0677 is only the prevalence of the full labelled sample, not a fixed value for every set."

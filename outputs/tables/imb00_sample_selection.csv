@@ -1,0 +1,6 @@
+Item,Orders,% of all orders
+Total orders,99441,100.0
+Orders with a valid is_late label (analysis sample),96470,97.01
+   - Late (1),6534,6.57
+   - Not Late (0),89936,90.44
+Orders without a label (excluded),2971,2.99
