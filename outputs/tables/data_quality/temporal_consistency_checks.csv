@@ -1,0 +1,7 @@
+feature,missing_pattern_mismatches,comparable_rows,value_mismatches
+purchase_hour,0,99441,0
+purchase_is_weekend,0,99441,0
+estimated_window_days,0,99441,0
+approval_delay_hours,0,99281,0
+actual_delivery_days,0,96476,0
+delivery_delay_days,0,96476,0

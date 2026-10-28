@@ -1,0 +1,8 @@
+feature,check,flagged_rows
+purchase_hour,Outside 0-23 or non-integer,0
+purchase_is_weekend,"Outside {0, 1}",0
+estimated_window_days,Negative duration,0
+approval_delay_hours,Negative duration,0
+actual_delivery_days,Negative duration,0
+estimated_window_days,Non-integer calendar-day difference,0
+delivery_delay_days,Non-integer calendar-day difference,0

@@ -1,0 +1,8 @@
+feature,valid_labeled_orders,available_rows,missing_rows,missing_percent
+purchase_weekday,96470,96470,0,0.0
+purchase_month,96470,96470,0,0.0
+customer_state,96470,96470,0,0.0
+distance_km_mean,96470,95990,480,0.5
+freight_value,96470,96470,0,0.0
+estimated_window_days,96470,96470,0,0.0
+delivery_delay_days,96470,96470,0,0.0

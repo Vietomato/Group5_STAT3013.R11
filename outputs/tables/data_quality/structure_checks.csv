@@ -1,0 +1,7 @@
+check,value
+Total rows,99441
+Total columns,34
+Missing order_id,0
+Rows with blank order_id,0
+Rows in duplicated order_id groups,0
+Missing temporal columns,0

@@ -1,6 +1,6 @@
 # EDA Findings (ENG) – Late Delivery EDA (Stage 2 · TASK 02)
 
-**Owner:** Phong · **Source:** `data/processed/research_data.csv` (99,441 rows, 34 columns; 1 row = 1 order, unique `order_id`) · **Notebook:** `notebooks/03_late_delivery_eda.ipynb` (TASK 03 is reported separately in `class_imbalance_findings_eng.md`, notebook `03b_class_imbalance_analysis.ipynb`)
+**Owner:** Phong · **Source:** `data/processed/research_data.csv` (99,441 rows, 34 columns; 1 row = 1 order, unique `order_id`) · **Notebook:** `notebooks/04_late_delivery_eda.ipynb` (TASK 03 is reported separately in `class_imbalance_findings.md`, notebook `05_class_imbalance_analysis.ipynb`)
 
 > Figures below are computed from `research_data.csv`; charts are generated when the notebook is run (file names are given per section, saved in `outputs/figures/`; CSV tables in `outputs/tables/`).
 > All comments are **descriptive observations** – no causal conclusions and no statistical-significance conclusions.
@@ -33,7 +33,7 @@
 | Not Late (0) | 89,936 | 93.23 |
 | Late (1) | 6,534 | 6.77 |
 
-**Findings:** Late is clearly the minority class (6.77%). Details in the TASK 03 report (`class_imbalance_findings_eng.md`).
+**Findings:** Late is clearly the minority class (6.77%). Details in the TASK 03 report (`class_imbalance_findings.md`).
 
 ## EDA02 – Late rate by purchase weekday · `eda02_late_rate_by_weekday.png`
 
@@ -81,7 +81,7 @@
 
 ## EDA04 – Late rate by customer state · `eda04_late_rate_by_state.png`
 
-Highest / lowest (all 27 states in `eda04_late_rate_by_state.csv`):
+Selected higher- and lower-rate states (all 27 states in `eda04_late_rate_by_state.csv`):
 
 | State | Valid | Late | Late rate | | State | Valid | Late | Late rate |
 |---|---:|---:|---:|---|---|---:|---:|---:|
@@ -111,7 +111,7 @@ Highest / lowest (all 27 states in `eda04_late_rate_by_state.csv`):
 | ≥ 2,000 km | 5,613 | 676 | 12.04% | 5.82% |
 | *Missing distance* | 480 | 45 | 9.38% | 0.50% |
 
-**Findings:** The late rate rises steadily with distance; the farthest group is ~2.7× the nearest. Every group has n > 5,000. Distance may co-vary with state, promised window, etc., so no causal conclusion.
+**Findings:** The late rate rises steadily with distance; the farthest group is ~2.7× the nearest. Every non-missing distance group has n > 5,000; the separate missing-distance group has 480 orders. Distance may co-vary with state, promised window, etc., so no causal conclusion.
 
 ## EDA06 – Freight value: Late vs Not Late · `eda06_freight_by_late.png`
 
@@ -160,7 +160,7 @@ Supplementary – late rate by estimated-window group (`eda07_late_rate_by_estim
 
 Among Late orders: median 7 days, Q1–Q3 = 3–13, p90 = 22.
 
-**Findings:** The distribution is concentrated on the early side (peak around −15 days); the right (late) tail is longer and heavier than the left. 228 orders lie outside the displayed range [−60, 40] (34 more than 60 days early, 194 more than 40 days late), so outlier-sensitive statistics (mean, SD) need care. By the checks performed there are no missing or negative values in `estimated_window_days`.
+**Findings:** The distribution is concentrated on the early side (peak around −15 days); extreme values occur on both sides, with the maximum delay extending to 188 days and the minimum to −147 days. Tail mass is not established by these extrema alone. 228 orders lie outside the displayed range [−60, 40] (34 more than 60 days early, 194 more than 40 days late), so outlier-sensitive statistics (mean, SD) need care. By the checks performed there are no missing or negative values in `estimated_window_days`.
 
 ## Data limitations & caveats
 1. The sample contains only **delivered** orders with valid dates → possible selection (survivorship) bias, especially in the last months.
@@ -171,6 +171,15 @@ Among Late orders: median 7 days, Q1–Q3 = 3–13, p90 = 22.
 
 ## Suggested hypotheses for the Inference stage
 - Late rate differs across states (Chi-square, Cramér's V).
-- Late rate increases with distance (trend across groups / logistic regression).
+- Is late delivery associated with distance? A grouped independence test assesses differences, not a monotonic trend; a trend or regression analysis requires a separate specification.
 - Estimated window differs between Late and Not Late (Welch / Mann–Whitney); note the non-monotonic relationship.
 - Late rate varies by month (Chi-square / logistic regression, together with TASK 06 Wilson CIs).
+
+
+## Research Handoff
+
+These questions were informed by EDA and are exploratory. Stage 3 should specify the estimand, sample, assumptions, effect size, confidence interval, and multiplicity plan before testing. Statistical significance is not a feature-selection requirement for ML.
+
+Feature availability at purchase must be reviewed across all 34 columns. Exclude realized delivery/approval durations and post-purchase quality flags from purchase-time predictors. Historical estimated dates, seller assignments, order composition, and quoted amounts require documented availability assumptions.
+
+TASK 06 will assess monthly completeness and Wilson confidence intervals. Neither these intervals nor EDA establish causality or seasonality.

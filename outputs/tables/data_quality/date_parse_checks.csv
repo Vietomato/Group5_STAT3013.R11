@@ -1,0 +1,5 @@
+feature,source_missing_rows,invalid_date_rows
+order_purchase_timestamp,0,0
+order_approved_at,160,0
+order_delivered_customer_date,2965,0
+order_estimated_delivery_date,0,0

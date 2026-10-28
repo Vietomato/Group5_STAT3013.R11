@@ -1,9 +1,9 @@
 # Class Imbalance Findings (ENG) (Stage 2 · TASK 03)
 
-**Owner:** Phong · **Source:** `data/processed/research_data.csv` (99,441 rows, 34 columns; 1 row = 1 order) · **Notebook:** `notebooks/03b_class_imbalance_analysis.ipynb` · Figure: `imb01_class_distribution.png`
+**Owner:** Phong · **Source:** `data/processed/research_data.csv` (99,441 rows, 34 columns; 1 row = 1 order) · **Notebook:** `notebooks/05_class_imbalance_analysis.ipynb` · Figure: `imb01_class_distribution.png`
 
 > Figures are computed from `research_data.csv`; charts are generated when the notebook is run (saved in `outputs/figures/`, tables in `outputs/tables/`).
-> Related TASK 02 report: `eda_findings_eng.md` (monthly prevalence in EDA03).
+> Related TASK 02 report: `eda_findings.md` (monthly prevalence in EDA03).
 
 ## 0. Sample scope
 
@@ -55,7 +55,7 @@ Constant classifier "always predict Not Late": TN = 89,936, FN = 6,534, TP = FP 
 
 | Metric | Effect when Late ≈ 6.8% | Role |
 |---|---|---|
-| Accuracy | Dominated by the majority class; 93.23% floor | Reference only, not the main metric |
+| Accuracy | Dominated by the majority class; 93.23% majority-class baseline | Reference only, not the main metric |
 | Precision (Late) | Share of correct alerts among flagged orders; sensitive to low prevalence. Converting to cost needs business assumptions | Shows how many alerts are right vs wrong |
 | Recall (Late) | Not inflated by the majority class | Measures missed late orders – goal of early prediction |
 | F1 (Late) | Balances Precision/Recall of Late; = 0 for the constant classifier | Summary at one threshold |
@@ -66,7 +66,7 @@ Constant classifier "always predict Not Late": TN = 89,936, FN = 6,534, TP = FP 
 
 **Recommendation:** main metric **Average Precision (AP)** (plus ROC-AUC); report Precision / Recall / F1 of the Late class at a threshold chosen on validation according to the objective and cost, together with the confusion matrix.
 
-**Limitations of Accuracy as the main metric:** (1) dominated by the majority class; (2) does not distinguish the two error types, and the cost of each needs business assumptions; (3) depends on the threshold – choose it on validation instead of by default; (4) the 93.23% floor makes improvements look tiny; (5) prevalence changes over time, so Accuracy is not directly comparable across periods.
+**Limitations of Accuracy as the main metric:** (1) dominated by the majority class; (2) does not distinguish the two error types, and the cost of each needs business assumptions; (3) depends on the threshold – choose it on validation instead of by default; (4) the 93.23% majority-class baseline makes improvements look tiny; (5) prevalence changes over time, so Accuracy is not directly comparable across periods.
 
 **Evaluation design (provisional, to be finalised during ML design):** since the goal is to predict future orders, the provisional design is a time-based split (train → validation → test); thresholds chosen on validation; the test set is not rebalanced.
 
