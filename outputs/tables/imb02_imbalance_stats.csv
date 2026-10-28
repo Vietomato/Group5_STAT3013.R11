@@ -1,0 +1,7 @@
+,Value
+Majority class,Not Late (0)
+Minority class,Late (1)
+Imbalance ratio (majority : minority),13.76 : 1
+Imbalance ratio (minority / majority),0.0727
+Prevalence of Late,6.7731%
+Accuracy when always predicting the majority class,93.2269%

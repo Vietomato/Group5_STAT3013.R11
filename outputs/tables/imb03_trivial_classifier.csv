@@ -1,0 +1,7 @@
+,Always-'Not Late'
+Accuracy,0.9323
+Precision (Late),
+Recall (Late),0.0
+F1 (Late),0.0
+ROC-AUC (no discrimination),0.5
+Average Precision (constant scorer) = prevalence,0.0677

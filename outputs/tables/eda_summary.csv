@@ -1,0 +1,10 @@
+Code,Metric,Value
+EDA01,Overall late rate,"6.77% (6,534/96,470)"
+EDA02,Weekday: min – max,Sunday 6.22% – Monday 7.44%
+EDA03,Month (n≥100): min – max,2016-10 0.75% – 2018-03 18.96%
+EDA03,Month 2017–2018 (n≥100): min,2018-06 1.16%
+EDA04,State (n≥100): min – max,AM 2.76% – AL 21.41%
+EDA05,Distance: nearest – farthest group,4.47% – 12.04%
+EDA06,Freight median Not Late / Late,17.06 / 18.23
+EDA07,Estimated window median Not Late / Late,24.0 / 23.0
+EDA08,Delay median / p95 / max (days),-12 / 3 / 188
