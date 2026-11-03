@@ -1,0 +1,5 @@
+﻿Reason,All orders,Labeled orders
+Missing approval timestamp,160,14
+Missing estimated delivery timestamp,0,0
+Negative raw promised duration,10,4
+Total stored promised_days missing,170,18

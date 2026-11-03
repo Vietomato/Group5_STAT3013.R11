@@ -1,8 +1,13 @@
-check,value
-Invalid target values,0
+﻿Check,Orders
 Eligible orders,96470
 Orders with valid labels,96470
+Late orders,6534
+Not Late orders,89936
+Missing target,2971
 Eligible orders without a label,0
-Ineligible orders with a stored label,0
-Comparable eligible labeled orders,96470
+Ineligible orders with a label,0
 Label value mismatches,0
+Labeled orders missing delivery delay,0
+Delay sign mismatches,0
+Unlabeled orders with delivery delay,6
+Delivered orders without a label,8

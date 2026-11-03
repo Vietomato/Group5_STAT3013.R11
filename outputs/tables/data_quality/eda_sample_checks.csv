@@ -1,8 +1,12 @@
-feature,valid_labeled_orders,available_rows,missing_rows,missing_percent
+﻿Feature,Labeled orders,Available orders,Missing orders,Missing percent
 purchase_weekday,96470,96470,0,0.0
 purchase_month,96470,96470,0,0.0
 customer_state,96470,96470,0,0.0
-distance_km_mean,96470,95990,480,0.5
+distance_km_mean,96470,95990,480,0.49756400953664354
 freight_value,96470,96470,0,0.0
 estimated_window_days,96470,96470,0,0.0
 delivery_delay_days,96470,96470,0,0.0
+promised_days,96470,96452,18,0.01865865035762413
+items_value,96470,96470,0,0.0
+seller_count,96470,96470,0,0.0
+has_interstate_seller,96470,96470,0,0.0

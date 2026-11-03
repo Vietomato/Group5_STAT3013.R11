@@ -1,0 +1,6 @@
+﻿Check,Comparable orders,Flagged orders
+Approval before purchase,99281,0
+Carrier handoff before purchase,97658,166
+Customer delivery before carrier handoff,96475,23
+Customer delivery before purchase,96476,0
+Carrier handoff before approval,97644,1359
