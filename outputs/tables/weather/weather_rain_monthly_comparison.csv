@@ -1,0 +1,13 @@
+﻿context,timezone_scenario,comparison_band,reference_band,months_compared,months_higher_rate,months_lower_rate,months_equal_rate,median_difference_pp
+purchase_destination,assume_utc,"(1,5] mm","(0,1] mm",19,12,7,0,0.8140002856141342
+purchase_destination,assume_sao_paulo,"(1,5] mm","(0,1] mm",19,11,8,0,0.45993575701760425
+purchase_destination,assume_utc,"(5,10] mm","(0,1] mm",16,8,8,0,0.20806979626381406
+purchase_destination,assume_sao_paulo,"(5,10] mm","(0,1] mm",16,10,6,0,0.7928446359721872
+purchase_destination,assume_utc,>10 mm,"(0,1] mm",16,9,7,0,0.20063482192468696
+purchase_destination,assume_sao_paulo,>10 mm,"(0,1] mm",16,9,7,0,0.16030468106599116
+purchase_origin,assume_utc,"(1,5] mm","(0,1] mm",19,10,9,0,0.45127232034252884
+purchase_origin,assume_sao_paulo,"(1,5] mm","(0,1] mm",19,10,9,0,0.3261933453016246
+purchase_origin,assume_utc,"(5,10] mm","(0,1] mm",16,8,8,0,0.4637556983499933
+purchase_origin,assume_sao_paulo,"(5,10] mm","(0,1] mm",16,8,8,0,0.0011411383611446002
+purchase_origin,assume_utc,>10 mm,"(0,1] mm",15,6,9,0,-0.24718457720939035
+purchase_origin,assume_sao_paulo,>10 mm,"(0,1] mm",15,7,8,0,-0.1312440845514784
