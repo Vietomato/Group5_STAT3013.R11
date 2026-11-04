@@ -1,0 +1,3 @@
+window,orders_without_seller_records,orders_with_no_weather,orders_with_partial_weather,orders_with_complete_weather
+lag2,775,0,0,98666
+3days_lag2,775,0,0,98666
