@@ -1,0 +1,3 @@
+﻿delivery_label,items_value_count,items_value_mean,items_value_median,freight_value_count,freight_value_mean,freight_value_median,total_product_weight_g_count,total_product_weight_g_mean,total_product_weight_g_median,total_product_volume_cm3_count,total_product_volume_cm3_mean,total_product_volume_cm3_median
+Not Late,89936,136.0336749466287,85.39,89936,22.606943937911407,17.06,89914,2361.6827301643793,750.0,89920,17208.59677491103,7200.0
+Late,6534,150.89138965411692,90.05,6534,25.247595653504746,18.23,6534,2735.6374349556168,817.0,6534,19029.325068870523,7629.0
