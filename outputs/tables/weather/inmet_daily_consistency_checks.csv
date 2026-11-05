@@ -1,0 +1,8 @@
+﻿check,comparable_station_days,flagged_station_days
+Minimum temperature <= maximum temperature,507708,0
+Minimum temperature <= mean temperature,507730,0
+Mean temperature <= maximum temperature,507735,0
+Mean humidity between 0 and 100,485676,0
+rain_total_mm >= 0,481532,0
+wind_speed_sample_mean_ms >= 0,495171,0
+wind_gust_max_ms >= 0,494419,0

@@ -1,5 +1,6 @@
-feature,source_missing_rows,invalid_date_rows
-order_purchase_timestamp,0,0
-order_approved_at,160,0
-order_delivered_customer_date,2965,0
-order_estimated_delivery_date,0,0
+﻿Feature,Source missing,Invalid dates,Missing after parsing
+order_purchase_timestamp,0,0,0
+order_approved_at,160,0,160
+order_delivered_carrier_date,1783,0,1783
+order_delivered_customer_date,2965,0,2965
+order_estimated_delivery_date,0,0,0
