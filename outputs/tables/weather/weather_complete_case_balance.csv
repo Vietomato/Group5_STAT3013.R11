@@ -1,0 +1,9 @@
+﻿analysis_role,timezone_scenario,all_14_weather_features_available,labeled_orders,not_late_orders,late_orders,late_percent
+purchase,assume_sao_paulo,True,95249,88800,6449,6.770674757740239
+purchase,assume_sao_paulo,False,1221,1136,85,6.961506961506962
+purchase,assume_utc,True,95248,88796,6452,6.773895514866454
+purchase,assume_utc,False,1222,1140,82,6.710310965630114
+retrospective,assume_sao_paulo,True,95284,88842,6442,6.7608412745056885
+retrospective,assume_sao_paulo,False,1186,1094,92,7.75716694772344
+retrospective,assume_utc,True,95261,88824,6437,6.757224887414577
+retrospective,assume_utc,False,1209,1112,97,8.02315963606286
