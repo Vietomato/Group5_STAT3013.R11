@@ -1,0 +1,11 @@
+﻿timezone_scenario,feature_group,feature_completeness,order_count,late_count,share_of_labeled_orders_pct,late_rate_pct
+assume_sao_paulo,weather,complete,95249,6449,98.73432155074117,6.770674757740239
+assume_sao_paulo,weather,incomplete,1221,85,1.265678449258837,6.961506961506962
+assume_sao_paulo,holiday,complete,96470,6534,100.0,6.7730900798175595
+assume_sao_paulo,price_product,complete,95071,6433,98.54980823053799,6.766521862607945
+assume_sao_paulo,price_product,incomplete,1399,101,1.4501917694620088,7.219442458899214
+assume_utc,weather,complete,95248,6452,98.73328495905463,6.773895514866454
+assume_utc,weather,incomplete,1222,82,1.2667150409453716,6.710310965630114
+assume_utc,holiday,complete,96470,6534,100.0,6.7730900798175595
+assume_utc,price_product,complete,95071,6433,98.54980823053799,6.766521862607945
+assume_utc,price_product,incomplete,1399,101,1.4501917694620088,7.219442458899214
