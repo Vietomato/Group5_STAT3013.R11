@@ -1,0 +1,22 @@
+﻿feature,group,description,unit,availability,stage4_role,stage5_role,note
+distance_km_mean,F0,Mean seller-to-customer distance,km,Conditional,Primary,Predictor,Requires seller assignment and location information at purchase; consider 100 km units for regression
+customer_state,F0,Customer state,category,At purchase,Adjustment,Predictor,Encode as categorical; specify regression reference group
+item_count,F0,Number of order items,count,Conditional,Adjustment,Predictor,Requires order contents available at purchase
+seller_count,F0,Number of distinct sellers,count,Conditional,Adjustment,Predictor,Requires seller assignment available at purchase
+purchase_hour,F0,Hour of purchase,hour,At purchase,Optional,Predictor,Values 0 to 23; document timezone assumption
+purchase_weekday,F0,Day of week of purchase,category,At purchase,Adjustment,Predictor,Specify reference day for regression
+estimated_window_days,F0,Calendar days from purchase to estimated delivery,days,Conditional,Adjustment,Predictor,Requires delivery estimate available at purchase
+items_value,F1,Total item price excluding freight,BRL,Conditional,Explanatory,Predictor,Requires purchase-time prices; do not combine with freight_value and their sum in logistic regression
+freight_value,F1,Total order freight value,BRL,Conditional,Primary,Predictor,Requires purchase-time freight quote; consider 10 BRL units for regression
+total_product_weight_g,F1,Aggregated product weight,g,Conditional,Adjustment,Predictor,Review missing and coverage rules; consider kg units for regression
+total_product_volume_cm3,F1,Aggregated product volume,cm3,Conditional,Adjustment,Predictor,Review missing and coverage rules; inspect skewness
+product_category_count,F1,Number of distinct product categories,count,Conditional,Optional,Predictor,Review category coverage and sparse groups
+purchase_is_national_holiday,F2,Purchase date is a national holiday,binary,At purchase,Primary,Predictor,Use the agreed Brazilian national holiday calendar
+days_to_next_national_holiday,F2,Calendar days to next national holiday,days,At purchase,Optional,Predictor,Use the documented convention for purchases on a holiday
+national_holiday_count_in_estimated_window,F2,National holidays in estimated delivery window,count,Conditional,Explanatory,Predictor,Requires purchase-time estimate; document inclusive or exclusive window endpoints
+destination_rain_state_mean_mm,F3,Pre-purchase destination state rainfall summary,mm,Conditional,Primary,Predictor,Use exact historical window and aggregation in weather dictionary; UTC scenario; not route weather
+origin_rain_state_mean_mm,F3,Pre-purchase origin state rainfall summary,mm,Conditional,Optional,Predictor,Document historical window and multi-seller aggregation; UTC scenario
+destination_humidity_state_mean_pct,F3,Pre-purchase destination state humidity summary,percent,Conditional,Optional,Predictor,Document historical window and aggregation; changes expressed in percentage points
+origin_humidity_state_mean_pct,F3,Pre-purchase origin state humidity summary,percent,Conditional,Optional,Predictor,Document historical window and multi-seller aggregation
+destination_air_temp_state_mean_c,F3,Pre-purchase destination state air temperature summary,degC,Conditional,Optional,Predictor,Document historical window and aggregation; UTC scenario
+origin_air_temp_state_mean_c,F3,Pre-purchase origin state air temperature summary,degC,Conditional,Optional,Predictor,Document historical window and multi-seller aggregation; UTC scenario
