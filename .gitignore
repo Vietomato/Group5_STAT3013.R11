@@ -1,5 +1,6 @@
 # Python environments
 .venv/
+.venv-phong/
 venv/
 env/
 
@@ -18,3 +19,4 @@ __pycache__/
 Thumbs.db
 
 /data/external/inmet/raw/
+outputs/models/
