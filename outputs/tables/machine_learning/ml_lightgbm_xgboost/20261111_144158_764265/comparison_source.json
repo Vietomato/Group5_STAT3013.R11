@@ -1,0 +1,5 @@
+{
+  "logistic_random_forest_run": "outputs\\tables\\machine_learning\\ml_logistic_random_forest\\20261111_144133_163705",
+  "input_match": "raw_sha256",
+  "note": "Inputs match (allowing Git line endings), orders/labels match; package versions differ. See both run manifests."
+}

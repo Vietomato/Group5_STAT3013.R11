@@ -1,0 +1,33 @@
+{
+  "selection": "outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json",
+  "selection_sha256": "06ab7c61f307db612e06b2bf360de7c0d5b01544a8445d60816505e01ed1778b",
+  "method": "sigmoid on clipped raw log-odds",
+  "clipping_epsilon": 1e-06,
+  "calibrator_parameters": {
+    "C": 1.0,
+    "class_weight": null,
+    "dual": false,
+    "fit_intercept": true,
+    "intercept_scaling": 1,
+    "l1_ratio": null,
+    "max_iter": 1000,
+    "multi_class": "deprecated",
+    "n_jobs": null,
+    "penalty": null,
+    "random_state": 42,
+    "solver": "lbfgs",
+    "tol": 1e-10,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "calibration_split": "validation_b",
+  "threshold_split": "validation_b",
+  "threshold_probability_type": "calibrated",
+  "threshold_rule": "p >= threshold",
+  "min_recall": 0.7,
+  "threshold_selection": "max precision, then min alert rate, then max threshold",
+  "calibration_bins": "10 equal-width bins, [left,right), last includes 1",
+  "classifier_refitted": false,
+  "test_predicted": false,
+  "limitation": "B is used for calibration fitting and threshold selection; its scores are not independent evaluation."
+}
