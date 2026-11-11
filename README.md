@@ -1,36 +1,36 @@
-# Dự đoán sớm rủi ro giao hàng trễ trong thương mại điện tử Brazil
+# Early Prediction of Late Delivery Risk in Brazilian E-Commerce
 
-Đồ án sử dụng **Brazilian E-Commerce Public Dataset by Olist**, bổ sung thông tin sản phẩm, ngày lễ và thời tiết INMET để phân tích giao trễ và dự đoán rủi ro tại thời điểm đặt hàng.
+This project uses the **Brazilian E-Commerce Public Dataset by Olist**, enriched with product attributes, Brazilian holidays and INMET weather observations, to study delivery delays and predict risk at order placement.
 
-Đã hoàn thành preprocessing, EDA, thống kê suy luận, hồi quy giải thích, baseline ML, xử lý mất cân bằng lớp, calibration, chọn ngưỡng và đánh giá Test. Oversampling/undersampling được thực hiện **sau khi đã xem Test** và được trình bày riêng như phân tích khám phá.
+The completed workflow covers preprocessing, exploratory data analysis (EDA), statistical inference, explanatory regression, predictive baselines, class weighting, calibration, threshold selection and final Test evaluation. Random oversampling and undersampling were added **after Test results had been observed** and are reported separately as exploratory analyses.
 
-## 1. Mục tiêu và phạm vi
+## 1. Objectives and scope
 
-- Mô tả giao trễ theo thời gian, địa lý và đặc điểm đơn hàng.
-- Kiểm định mối liên hệ, ước lượng kích thước ảnh hưởng và độ bất định.
-- So sánh Logistic Regression, Random Forest, LightGBM, XGBoost, CatBoost và DummyClassifier làm mốc tham chiếu.
-- Đánh giá xác suất và ngưỡng cảnh báo theo một protocol chung.
+- Describe delivery delays across time, geography and order characteristics.
+- Test associations and report effect sizes and uncertainty.
+- Compare Logistic Regression, Random Forest, LightGBM, XGBoost and CatBoost, with DummyClassifier as a reference.
+- Evaluate predicted probabilities and an operating threshold under a shared protocol.
 
-Đây là nghiên cứu quan sát trên dữ liệu lịch sử. Kết quả không chứng minh quan hệ nhân quả và chưa xác nhận hiệu quả triển khai thực tế.
+This is an observational study of historical transactions. Results do not establish causation or demonstrate production readiness.
 
-## 2. Cấu trúc project
+## 2. Repository structure
 
 ```text
 data/
-  raw/                         # 9 bảng Olist gốc
-  processed/                   # Bảng đã làm sạch và dataset theo đơn hàng
+  raw/                         # Nine original Olist tables
+  processed/                   # Cleaned tables and order-level datasets
   external/
     holidays/
-    inmet/processed/           # Thời tiết đã xử lý
-    inmet/raw/                 # ZIP tự bổ sung; không đưa vào Git
-  ml_preparation/               # Manifest và thống kê chia tập
+    inmet/processed/           # Processed weather tables
+    inmet/raw/                 # Separately supplied ZIPs; excluded from Git
+  ml_preparation/               # Shared split manifest and summary
 docs/
   data_preprocessing/
   eda/
   inferential_statistics/
   explanatory_regression/
   machine_learning/
-  predictor_list.csv            # 21 biến đầu vào ML
+  predictor_list.csv            # 21 ML predictors
 notebooks/
   01_data_preprocessing/
   02_eda/
@@ -44,41 +44,41 @@ notebooks/
     test_evaluation/
     sampling_experiments/
 outputs/
-  tables/                       # Bảng theo nhóm phân tích
+  tables/                       # Tables grouped by analysis stage
   figures/
-  models/                       # Pipeline/calibrator cục bộ, không đưa vào Git
-  migrations/                   # Metadata trước đổi đường dẫn, không đưa vào Git
+  models/                       # Local pipelines/calibrators; excluded from Git
+  migrations/                   # Local metadata backups; excluded from Git
 README.md
 requirements.txt
 .gitignore
 ```
 
-Mục lục: [tài liệu](docs/README.md), [notebook](notebooks/README.md), [quy trình ML](notebooks/05_machine_learning/README.md), [bảng kết quả](outputs/tables/README.md).
+Indexes: [documentation](docs/README.md), [notebooks](notebooks/README.md), [ML workflow](notebooks/05_machine_learning/README.md), [result tables](outputs/tables/README.md).
 
-## 3. Dữ liệu và nhãn mục tiêu
+## 3. Dataset and target
 
-Dataset theo đơn hàng có **99.441 đơn**, một dòng cho mỗi `order_id`. Có **96.470 nhãn hợp lệ**, gồm **6.534 đơn trễ**, tương ứng **6,77%** trong mẫu có nhãn.
+The order-level dataset contains **99,441 orders**, with one row per `order_id`. There are **96,470 valid delivery labels**, including **6,534 Late orders**, or **6.77%** of labeled orders.
 
-Với đơn đủ điều kiện gắn nhãn:
+For orders eligible for labeling:
 
-- `is_late = 1`: ngày giao thực tế sau ngày giao dự kiến.
-- `is_late = 0`: giao đúng hoặc trước ngày giao dự kiến.
-- Nhãn thiếu: không đủ điều kiện; **không chuyển thành 0**.
+- `is_late = 1`: actual delivery calendar date is after the estimated date.
+- `is_late = 0`: delivery is on or before the estimated date.
+- Missing label: labeling requirements are not met; **never replace this with 0**.
 
-So sánh theo ngày lịch, kết hợp điều kiện trạng thái và tính hợp lệ của ngày. Xem [từ điển dataset](docs/data_preprocessing/order_dataset_dictionary.md) và [kiểm tra leakage](docs/eda/data_quality_and_leakage_review.md).
+Label construction also checks order status and date validity. See the [dataset dictionary](docs/data_preprocessing/order_dataset_dictionary.md) and [data quality/leakage review](docs/eda/data_quality_and_leakage_review.md).
 
-| Đầu vào ML | Vị trí |
+| Shared ML input | Location |
 |---|---|
-| Dataset chính | [research_data_weather_price_holiday_assume_utc.csv](data/processed/research_data_weather_price_holiday_assume_utc.csv) |
+| Main dataset | [research_data_weather_price_holiday_assume_utc.csv](data/processed/research_data_weather_price_holiday_assume_utc.csv) |
 | 21 predictors | [predictor_list.csv](docs/predictor_list.csv) |
-| Phân chia đơn hàng | [split_manifest.csv](data/ml_preparation/split_manifest.csv) |
-| Thống kê chia tập | [split_summary.csv](data/ml_preparation/split_summary.csv) |
+| Order assignments | [split_manifest.csv](data/ml_preparation/split_manifest.csv) |
+| Split counts | [split_summary.csv](data/ml_preparation/split_summary.csv) |
 
-Predictors thuộc bốn nhóm: thông tin nội bộ, giá/sản phẩm, ngày lễ và thời tiết. Dataset còn chứa biến kết quả sau mua; chỉ dùng danh sách predictors, không lấy toàn bộ cột làm đầu vào.
+Predictors cover internal order information, price/product characteristics, holidays and weather. The dataset also contains post-purchase outcomes: use the predictor list rather than every available column.
 
-CSV gốc và processed hiện được Git theo dõi. Giữ nguyên dữ liệu gốc. Nguồn ngày lễ nằm trong cột `source_url`; [tài liệu INMET](docs/data_preprocessing/inmet_weather_preparation_review.md) mô tả nguồn và cách tổng hợp thời tiết.
+Original and processed CSVs are currently tracked in Git. Keep raw files unchanged. Holiday sources are recorded in the `source_url` column; the [INMET review](docs/data_preprocessing/inmet_weather_preparation_review.md) documents weather preparation and aggregation.
 
-### Đầu vào còn thiếu nếu dựng lại thời tiết từ đầu
+### Inputs required to rebuild weather from source
 
 ```text
 data/external/inmet/raw/2016.zip
@@ -86,15 +86,15 @@ data/external/inmet/raw/2017.zip
 data/external/inmet/raw/2018.zip
 ```
 
-Ba ZIP này chưa có trong workspace và không đưa vào Git. Các bảng thời tiết đã xử lý cùng dataset ML hiện có đầy đủ, nên có thể dùng processed và đọc kết quả mà không dựng lại archive.
+These three archives are not currently supplied and are excluded from Git. Processed weather tables and the ML dataset are available, so the processed-data workflow and saved results can be inspected without rebuilding the archives.
 
-## 4. Cài đặt môi trường
+## 4. Environment setup
 
-Môi trường đã kiểm tra: **Windows, CPython 3.14.6**. Những phiên bản Python khác chưa được xác nhận trong lần bàn giao này.
+Validated environment: **Windows, CPython 3.14.6**. Other Python versions were not verified in this handoff.
 
-`requirements.txt` ghim các dependency trực tiếp theo môi trường đã chạy thành công; dependency gián tiếp do pip giải quyết. Đây không phải bản khóa toàn bộ dependency gián tiếp. Mỗi run giữ `package_versions.json` riêng; không mặc định các run cũ đều dùng môi trường hiện tại.
+`requirements.txt` pins direct dependencies from the working environment; pip resolves transitive dependencies. It is not a complete transitive lockfile. Each experiment retains its own `package_versions.json`, and historical runs may use different environments.
 
-Chạy từ thư mục gốc bằng PowerShell:
+Run from the repository root in PowerShell:
 
 ```powershell
 python -m venv .venv
@@ -104,135 +104,135 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m jupyterlab
 ```
 
-Trong VS Code, dùng extension Python và Jupyter, rồi chọn `.venv\Scripts\python.exe` làm kernel. Gọi trực tiếp Python trong môi trường ảo giúp không phải đổi execution policy để kích hoạt môi trường.
+For VS Code, install the Python and Jupyter extensions and select `.venv\Scripts\python.exe` as the kernel. Calling the environment's Python directly avoids changing PowerShell execution policy for activation.
 
-## 5. Quy trình notebook
+## 5. Notebook workflow
 
-### Preprocessing và EDA
+### Preprocessing and EDA
 
-1. [clean_olist_tables](notebooks/01_data_preprocessing/clean_olist_tables.ipynb): làm sạch bảng nguồn.
-2. [build_order_level_dataset](notebooks/01_data_preprocessing/build_order_level_dataset.ipynb): tạo dataset theo đơn hàng và nhãn.
-3. [build_temporal_features](notebooks/01_data_preprocessing/build_temporal_features.ipynb): tạo đặc trưng thời gian.
-4. Tạo [giá/sản phẩm](notebooks/01_data_preprocessing/build_price_product_features.ipynb), [ngày lễ](notebooks/01_data_preprocessing/build_holiday_features.ipynb), [thời tiết](notebooks/01_data_preprocessing/prepare_inmet_weather.ipynb), rồi [ghép dataset mở rộng](notebooks/01_data_preprocessing/merge_enriched_features.ipynb).
-5. [02_eda](notebooks/02_eda/): khám phá giao trễ, mất cân bằng lớp, thời gian, hủy đơn, review và chất lượng dữ liệu.
+1. [clean_olist_tables](notebooks/01_data_preprocessing/clean_olist_tables.ipynb): clean source tables.
+2. [build_order_level_dataset](notebooks/01_data_preprocessing/build_order_level_dataset.ipynb): construct the order-level dataset and target.
+3. [build_temporal_features](notebooks/01_data_preprocessing/build_temporal_features.ipynb): derive temporal features.
+4. Prepare [price/product](notebooks/01_data_preprocessing/build_price_product_features.ipynb), [holiday](notebooks/01_data_preprocessing/build_holiday_features.ipynb) and [weather](notebooks/01_data_preprocessing/prepare_inmet_weather.ipynb) features, then [merge the enriched dataset](notebooks/01_data_preprocessing/merge_enriched_features.ipynb).
+5. [02_eda](notebooks/02_eda/): examine delivery delays, class imbalance, time patterns, cancellations, reviews and data quality.
 
-Không chạy lại preprocessing trên dataset chính một cách tự động: notebook dựng dataset có bước ghi đè `research_data.csv`; notebook temporal mặc định `EXPORT=False` và còn kiểm tra branch `feat/temporal-feature-enhancement` khi bật xuất. Cần rà soát bước xuất trước khi dựng lại để tránh để dataset thiếu đặc trưng thời gian. Phần INMET còn cần ba ZIP nêu trên. Các giới hạn này chưa được sửa trong lần chuẩn bị tài liệu.
+Review exports before rebuilding the canonical dataset. The order-level construction notebook overwrites `research_data.csv`; temporal export defaults to `EXPORT=False` and still checks for branch `feat/temporal-feature-enhancement` when enabled. Running the chain without reviewing these controls can leave the dataset without its temporal additions. Weather preparation also requires the three ZIPs above. These implementation limitations remain unresolved.
 
-### Thống kê và ML
+### Statistical analysis and ML
 
-| Bước | Notebook / thư mục | Nội dung |
+| Step | Notebook / folder | Purpose |
 |---|---|---|
-| Chuẩn bị split | [ml_data_preparation](notebooks/05_machine_learning/data_preparation/ml_data_preparation.ipynb) | Manifest dùng chung trước Stage 4 và ML |
-| Stage 3 | [test_delivery_risk_associations](notebooks/03_inferential_statistics/test_delivery_risk_associations.ipynb) | 26 kiểm định chính, Holm, kích thước ảnh hưởng và khoảng tin cậy |
-| Stage 4 | [explain_late_delivery_logistic](notebooks/04_explanatory_regression/explain_late_delivery_logistic.ipynb) | M0/M4, độ nhạy và diagnostics; mẫu complete-case 56.553 đơn |
-| Baseline | [baselines](notebooks/05_machine_learning/baselines/) | 5 họ mô hình và DummyClassifier |
-| Lựa chọn | [model_selection](notebooks/05_machine_learning/model_selection/) | CatBoost có trọng số; chọn và đóng băng pipeline trên A |
-| Calibration | [calibration_threshold](notebooks/05_machine_learning/calibration/calibration_threshold.ipynb) | Sigmoid và ngưỡng trên B |
-| Test | [final_test_evaluation](notebooks/05_machine_learning/test_evaluation/final_test_evaluation.ipynb) | Đánh giá các cấu hình đã đóng băng |
-| Bổ sung sau Test | [sampling_experiments](notebooks/05_machine_learning/sampling_experiments/) | Oversampling/undersampling trên 5 mô hình, chỉ chấm A |
+| Split preparation | [ml_data_preparation](notebooks/05_machine_learning/data_preparation/ml_data_preparation.ipynb) | Shared manifest required by Stage 4 and predictive ML |
+| Stage 3 | [test_delivery_risk_associations](notebooks/03_inferential_statistics/test_delivery_risk_associations.ipynb) | 26 primary tests, Holm correction, effect sizes and intervals |
+| Stage 4 | [explain_late_delivery_logistic](notebooks/04_explanatory_regression/explain_late_delivery_logistic.ipynb) | M0/M4 explanatory models, sensitivity analyses and diagnostics; 56,553 complete cases |
+| Baselines | [baselines](notebooks/05_machine_learning/baselines/) | Five learned model families and DummyClassifier |
+| Selection | [model_selection](notebooks/05_machine_learning/model_selection/) | Weighted CatBoost challenger; Validation A selection and pipeline freeze |
+| Calibration | [calibration_threshold](notebooks/05_machine_learning/calibration/calibration_threshold.ipynb) | Sigmoid calibration and threshold selection on B |
+| Test | [final_test_evaluation](notebooks/05_machine_learning/test_evaluation/final_test_evaluation.ipynb) | Evaluation of frozen configurations |
+| Post-Test extensions | [sampling_experiments](notebooks/05_machine_learning/sampling_experiments/) | Oversampling/undersampling across five models, scored on A only |
 
-ML được viết trực tiếp trong cell `.ipynb`. Notebook tìm thư mục gốc từ vị trí hiện tại. Dùng kernel sạch cho run mới; thứ tự chi tiết nằm trong [README ML](notebooks/05_machine_learning/README.md).
+ML code is implemented directly in `.ipynb` cells. Repository discovery works from notebook subfolders. Start new experiments with a fresh kernel and follow the [ML execution guide](notebooks/05_machine_learning/README.md).
 
-**Test đã được đánh giá.** Notebook Test chặn chạy lại đánh giá hoàn thành với cùng cấu hình. Đọc kết quả đã lưu thay vì dùng Test để chỉnh mô hình/ngưỡng. Notebook lựa chọn, calibration và Test tham chiếu các run cụ thể; chạy lại baseline không tự thay các tham chiếu đã chốt.
+**Final Test evaluation is complete.** The Test notebook blocks a second completed evaluation of the same frozen configuration. Inspect saved outputs rather than using Test to tune models or thresholds. Selection, calibration and Test notebooks reference specific recorded runs; rerunning a baseline does not silently replace those frozen references.
 
-## 6. Thiết kế thí nghiệm
+## 6. Experimental design
 
-Chia theo thời gian mua, giữ cùng ngày mua trong cùng tập, kết hợp khoảng cách 45 ngày và cutoff nhãn sẵn có. Không chia ngẫu nhiên hoặc chia riêng cho từng mô hình.
+Orders are split chronologically, keeping the same purchase day within one split and applying 45-day maturation gaps and label-availability cutoffs. Models share the same manifest rather than using independent random splits.
 
-| Tập | Số đơn | Đơn trễ | Mục đích |
+| Split | Orders | Late orders | Role |
 |---|---:|---:|---|
-| Train | 57.449 | 3.720 | Fit preprocessing và classifier |
-| Validation A | 7.661 | 387 | So sánh và chọn cấu hình |
-| Validation B | 3.115 | 180 | Calibration và chọn ngưỡng |
-| Test | 9.445 | 504 | Đánh giá cuối cùng |
-| **Tổng** | **77.670** | **4.791** | Theo manifest |
+| Train | 57,449 | 3,720 | Fit preprocessing and classifier |
+| Validation A | 7,661 | 387 | Compare and select configurations |
+| Validation B | 3,115 | 180 | Calibration and threshold selection |
+| Test | 9,445 | 504 | Final evaluation |
+| **Total** | **77,670** | **4,791** | Selected by the manifest |
 
-18.800 đơn có nhãn hợp lệ bị loại do khoảng cách thời gian hoặc nhãn chưa sẵn có tại cutoff. Không ép tỷ lệ cuối cùng về 70/20/10.
+Another 18,800 valid-labeled orders are excluded by maturation gaps or label-availability requirements. Do not force the final split back to 70/20/10.
 
-- **Average Precision (AP)** là chỉ số lựa chọn chính, không đồng nhất với PR-AUC tính bằng hình thang.
-- ROC-AUC bổ sung khả năng phân biệt; Brier và Log Loss đánh giá xác suất, thấp hơn tốt hơn.
-- Imputation, encoding và scaling chỉ học từ Train. Logistic có scaling; CatBoost dùng categorical native; các cây còn lại dùng one-hot.
-- CatBoost baseline được chọn trên A; cấu hình có trọng số kém hơn và không được chọn.
-- Sigmoid fit trên log-odds xác suất đã clip trên B. Ngưỡng yêu cầu Recall ≥70%, ưu tiên Precision cao nhất rồi tỷ lệ cảnh báo thấp nhất.
-- Calibration và ngưỡng cùng dùng B, nên điểm trên B không phải đánh giá độc lập.
+- **Average Precision (AP)** is the primary selection metric. It is not interchangeable with trapezoidal PR-AUC.
+- ROC-AUC measures discrimination; lower Brier score and Log Loss indicate better probability quality.
+- Imputation, encoding and scaling learn from Train only. Logistic Regression uses scaling; CatBoost uses native categorical handling; the other tree models use one-hot encoding.
+- The unweighted CatBoost baseline was selected on A. Its weighted challenger performed worse and was rejected.
+- Sigmoid calibration was fitted to clipped raw log-odds on B. The threshold rule requires Recall >=70%, prioritizes Precision, then lower alert rate.
+- Calibration and threshold selection share B, so B metrics are not an independent evaluation.
 
-Xem [experiment_protocol.md](docs/machine_learning/experiment_protocol.md) để biết cấu hình, quy tắc phá hòa, cutoff và các lần bổ sung phạm vi.
+See [experiment_protocol.md](docs/machine_learning/experiment_protocol.md) for parameters, tie-break rules, cutoffs and scope amendments.
 
-## 7. Kết quả chính
+## 7. Main results
 
-### Xác suất gốc trên Test
+### Raw probabilities on Test
 
-Test gồm 9.445 đơn, tỷ lệ trễ 5,34%. Thứ hạng dưới đây không được dùng để chọn lại mô hình.
+Test contains 9,445 orders with 5.34% Late prevalence. The ranking below was not used to reselect the model.
 
-| Mô hình | AP ↑ | ROC-AUC ↑ | Brier ↓ | Log Loss ↓ |
+| Model | AP (higher) | ROC-AUC (higher) | Brier (lower) | Log Loss (lower) |
 |---|---:|---:|---:|---:|
-| Random Forest | **0,097815** | **0,703794** | **0,049924** | **0,200420** |
-| LightGBM | 0,089018 | 0,677041 | 0,050339 | 0,201280 |
-| XGBoost | 0,087707 | 0,682035 | 0,050587 | 0,200834 |
-| CatBoost — đã chọn trên A | 0,082843 | 0,674094 | 0,050143 | 0,200854 |
-| Logistic Regression | 0,081244 | 0,629901 | 0,051185 | 0,206977 |
-| CatBoost có trọng số | 0,073914 | 0,624723 | 0,176899 | 0,535125 |
-| DummyClassifier | 0,053362 | 0,500000 | 0,050644 | 0,209432 |
+| Random Forest | **0.097815** | **0.703794** | **0.049924** | **0.200420** |
+| LightGBM | 0.089018 | 0.677041 | 0.050339 | 0.201280 |
+| XGBoost | 0.087707 | 0.682035 | 0.050587 | 0.200834 |
+| CatBoost - selected on A | 0.082843 | 0.674094 | 0.050143 | 0.200854 |
+| Logistic Regression | 0.081244 | 0.629901 | 0.051185 | 0.206977 |
+| Weighted CatBoost | 0.073914 | 0.624723 | 0.176899 | 0.535125 |
+| DummyClassifier | 0.053362 | 0.500000 | 0.050644 | 0.209432 |
 
-Nguồn: [bảng Test](outputs/tables/machine_learning/ml_test/20261111_160038_411032/seven_model_test_comparison.csv).
+Source: [Test comparison](outputs/tables/machine_learning/ml_test/20261111_160038_411032/seven_model_test_comparison.csv).
 
-### CatBoost tại ngưỡng đã chốt trên B
+### Selected CatBoost at the B-frozen operating threshold
 
-Ngưỡng xác suất sau calibration: **0,054178902872422004**, quy tắc `p >= threshold`.
+The calibrated probability threshold is **0.054178902872422004**, with predicted Late defined as `p >= threshold`.
 
-| Chỉ số Test | Kết quả |
+| Test measure | Result |
 |---|---:|
-| Recall | 94,25% — phát hiện 475/504 đơn trễ |
-| Precision | 6,42% |
-| F1 | 0,120238 |
-| Tỷ lệ cảnh báo | 78,32% — 7.397 đơn |
-| TP / FP / FN / TN | 475 / 6.922 / 29 / 2.019 |
+| Recall | 94.25% - 475 of 504 Late orders detected |
+| Precision | 6.42% |
+| F1 | 0.120238 |
+| Alert rate | 78.32% - 7,397 orders |
+| TP / FP / FN / TN | 475 / 6,922 / 29 / 2,019 |
 
-Calibration cải thiện điểm B nhưng **làm xác suất Test kém hơn**: Brier tăng 0,050143 → 0,057522; Log Loss tăng 0,200854 → 0,227891. Recall cao đi kèm quá nhiều cảnh báo sai, chưa cho thấy hiệu quả vận hành tốt.
+Calibration improved B scores but **worsened Test probability quality**: Brier increased from 0.050143 to 0.057522, and Log Loss from 0.200854 to 0.227891. High recall came with a large false-alert burden; operational effectiveness has not been established.
 
-Nguồn: [trước/sau calibration](outputs/tables/machine_learning/ml_test/20261111_160038_411032/selected_calibration_comparison.csv), [chỉ số tại ngưỡng](outputs/tables/machine_learning/ml_test/20261111_160038_411032/selected_threshold_metrics.csv).
+Sources: [raw versus calibrated probabilities](outputs/tables/machine_learning/ml_test/20261111_160038_411032/selected_calibration_comparison.csv), [threshold metrics](outputs/tables/machine_learning/ml_test/20261111_160038_411032/selected_threshold_metrics.csv).
 
-### Lấy mẫu lại sau Test
+### Post-Test resampling analyses
 
-Cùng seed 42 và cùng mẫu Train sau resampling được dùng cho 5 mô hình, giữ nguyên tham số baseline. Preprocessing học trên Train gốc, sau đó chỉ resample hàng dùng để fit classifier. Validation A không resample.
+All five model families used seed 42, identical sampled indices within each method and unchanged baseline parameters. Preprocessing was fitted on original Train before resampling classifier inputs. Validation A was not resampled.
 
-- Oversampling: 53.729 đơn mỗi lớp; chỉ Logistic tăng AP nhẹ.
-- Undersampling: 3.720 đơn mỗi lớp; chỉ Random Forest tăng AP so với baseline của chính nó.
-- Brier và Log Loss xấu hơn baseline ở cả 5 mô hình với cả hai phương pháp.
-- Không cấu hình resampling nào vượt AP của CatBoost baseline trên A. Không thay quyết định đã đóng băng hoặc chấm lại B/Test.
+- Oversampling: 53,729 rows per class; only Logistic Regression slightly improved AP.
+- Undersampling: 3,720 rows per class; only Random Forest improved AP over its own baseline.
+- Both methods worsened Brier and Log Loss for all five models.
+- No resampled configuration exceeded the original CatBoost baseline AP on A. The frozen decision was not changed, and B/Test were not rescored.
 
-Nguồn: [so sánh ba điều kiện lấy mẫu](outputs/tables/machine_learning/ml_random_undersampling/20261111_161215_292137/sampling_method_comparison.csv).
+Source: [baseline, oversampling and undersampling comparison](outputs/tables/machine_learning/ml_random_undersampling/20261111_161215_292137/sampling_method_comparison.csv).
 
-## 8. Artifact và khả năng tái lập
+## 8. Artifacts and reproducibility
 
-| Artifact | Vị trí |
+| Artifact | Location |
 |---|---|
-| Lựa chọn classifier | [selected_config.json](outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json) |
-| Calibrator và ngưỡng | [final_config.json](outputs/tables/machine_learning/ml_calibration/20261111_154951_108593/final_config.json) |
-| Kiểm tra Test | [evaluation_manifest.json](outputs/tables/machine_learning/ml_test/20261111_160038_411032/evaluation_manifest.json) |
-| Chỉ mục bảng | [outputs/tables/README.md](outputs/tables/README.md) |
+| Classifier selection | [selected_config.json](outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json) |
+| Calibration and threshold | [final_config.json](outputs/tables/machine_learning/ml_calibration/20261111_154951_108593/final_config.json) |
+| Test evaluation audit | [evaluation_manifest.json](outputs/tables/machine_learning/ml_test/20261111_160038_411032/evaluation_manifest.json) |
+| Table index | [outputs/tables/README.md](outputs/tables/README.md) |
 
-Run ML lưu metrics, dự đoán theo đơn, audit, tham số, phiên bản và hash. Dùng completion record nếu có và kiểm tra đủ artifact cần thiết; một số thư mục chạy dở được giữ để truy vết, không phải kết quả hoàn thành.
+Runs record metrics, order-level predictions, audits, parameters, package versions and input hashes. Check completion records where available and required artifacts: incomplete trial folders are retained for provenance and are not completed results.
 
-`outputs/models/` không đưa vào Git vì có model nhị phân lớn. **Clone repo không tự khôi phục pipeline/calibrator gốc.** Muốn kiểm tra artifact đã đóng băng hoặc áp dụng chúng cho dữ liệu khác, cần bản lưu model đúng phiên bản/SHA256. Metrics và metadata không thay thế model. Huấn luyện lại tạo bộ artifact mới, không tự thay cấu hình đã chốt trong notebook.
+`outputs/models/` is excluded from Git because it contains large binary artifacts. **Cloning this repository does not restore the original pipelines or calibrators.** Verifying frozen artifacts or applying them to other data requires the matching model backup and SHA256. Metrics and metadata are not substitutes for the model. Retraining creates new artifacts and does not automatically replace notebook references to frozen runs.
 
-`outputs/reruns/` đã được xóa; notebook không phụ thuộc vào thư mục đó. `outputs/migrations/` là bản sao metadata cục bộ khi đổi đường dẫn, không đưa vào Git. Metadata hiện tại đã được cập nhật đường dẫn và chuỗi hash; số liệu/dự đoán không tính lại trong bước di chuyển.
+`outputs/reruns/` was removed; notebooks do not depend on it. `outputs/migrations/` contains local metadata backups from path reorganizations and is excluded from Git. Current metadata paths and dependent hashes were migrated together; numerical results and predictions were not recomputed during those moves.
 
-## 9. Giới hạn và việc còn lại
+## 9. Limitations and remaining work
 
-- Dữ liệu lịch sử không phải mẫu ngẫu nhiên của toàn bộ thị trường Brazil.
-- Mẫu dự đoán chỉ gồm đơn cuối cùng có nhãn hợp lệ, không bao phủ trực tiếp mọi đơn hủy/chưa hoàn thành.
-- Loại đơn do nhãn chưa sẵn có và complete-case regression có thể tạo sai lệch chọn mẫu.
-- Múi giờ nguồn, thời điểm công bố thời tiết và khả năng biết một số thông tin lúc mua chưa được xác minh đầy đủ. Thời tiết theo bang không đo tuyến giao hàng cụ thể.
-- Không dùng ngày giao thực tế, thời lượng giao thực tế, review hoặc cờ phát sinh sau mua làm predictor.
-- A được dùng lặp lại để chọn mô hình; Test từng xuất hiện trong EDA/Stage 3. Phân tích lấy mẫu lại được bổ sung sau khi xem Test.
-- Chưa có khoảng tin cậy cho chênh lệch hiệu năng, kiểm định vận hành hoặc ngưỡng được xác nhận theo chi phí nghiệp vụ.
+- Historical Olist transactions are not a random sample of all Brazilian e-commerce.
+- Prediction cohorts contain ultimately valid-labeled orders, not every canceled or unresolved order.
+- Label-cutoff exclusions and complete-case regression can introduce selection bias.
+- Source timezone, weather publication timing and purchase-time availability of some fields remain assumptions. State-level weather does not describe an exact delivery route.
+- Actual delivery timestamps/durations, reviews and post-purchase flags must not enter the purchase-time predictor set.
+- A was reused for selection; Test outcomes previously appeared in EDA/Stage 3. Resampling extensions followed Test exposure.
+- Model-performance differences have no uncertainty intervals; operating costs and production alert requirements have not been validated.
 
-Cần tổng hợp kết luận Stage 3–5, phân tích nhóm cảnh báo sai/bỏ sót và đối chiếu calibration B/Test cho báo cáo. Những phân tích đó mang tính mô tả, không dùng Test hiện tại để chọn lại mô hình/ngưỡng. Tải ZIP INMET và rà soát xuất temporal nếu cần dựng lại preprocessing từ đầu.
+Remaining descriptive work includes error/subgroup analysis and examining calibration differences between B and Test. Further model development needs a new evaluation design rather than tuning against the existing Test cohort. Supply the INMET ZIPs and review temporal export controls before rebuilding preprocessing from scratch.
 
-## 10. Chuẩn bị commit
+## 10. Commit preparation
 
-Giữ trong Git: notebook, tài liệu, requirements, predictor list, CSV đang được theo dõi, split manifest, bảng kết quả và biểu đồ. Không đưa môi trường ảo, bí mật, cache, model nhị phân, ZIP INMET gốc, nhật ký tạm hoặc bản sao migration cục bộ vào commit.
+Keep notebooks, documentation, requirements, predictor definitions, currently tracked CSV data, split manifests, result tables and figures in Git. Exclude virtual environments, secrets, caches, binary models, raw INMET ZIPs, temporary run logs and local migration backups.
 
 ```powershell
 git status --short
@@ -244,4 +244,4 @@ git diff --cached --check
 git commit -m "Organize project and document final experiments"
 ```
 
-Chỉ stage/commit sau khi xem danh sách thay đổi. Nhiều đường dẫn cũ có trạng thái `D`, đường dẫn mới là `??` vì đã sắp xếp lại; không tự động có nghĩa là mất dữ liệu. `.gitignore` không loại các file đã được Git theo dõi khỏi lịch sử.
+Review changes before staging or committing. Reorganized files may appear as deleted old paths and untracked new paths before staging; that alone does not imply data loss. `.gitignore` does not remove previously tracked files from history.
