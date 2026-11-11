@@ -1,0 +1,38 @@
+{
+  "purpose": "E2: single weighted CatBoost challenger on Validation A",
+  "CatBoostWeighted": {
+    "iterations": 100,
+    "learning_rate": 0.1,
+    "depth": 6,
+    "loss_function": "Logloss",
+    "thread_count": 4,
+    "random_seed": 42,
+    "use_best_model": false,
+    "verbose": false,
+    "class_weights": [
+      1.0,
+      14.443279569892473
+    ],
+    "eval_metric": "Logloss",
+    "allow_writing_files": false,
+    "task_type": "CPU",
+    "cat_features": [
+      "customer_state",
+      "purchase_weekday"
+    ]
+  },
+  "train_class_counts": {
+    "not_late": 53729,
+    "late": 3720
+  },
+  "weight_ratio": 14.443279569892473,
+  "baseline_run": "outputs\\tables\\machine_learning\\ml_catboost_dummy\\20261111_152855_922857",
+  "fit_split": "train",
+  "score_split": "validation_a",
+  "tuning": false,
+  "weighting": "class_weights from Train only",
+  "early_stopping": false,
+  "calibration": false,
+  "threshold_selection": false,
+  "preprocessing": "Train median + categorical missing string, native categorical handling; unchanged from CatBoost baseline"
+}

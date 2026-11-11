@@ -1,0 +1,33 @@
+{
+  "purpose": "supplementary exploratory baseline comparison on Validation A",
+  "CatBoost": {
+    "iterations": 100,
+    "learning_rate": 0.1,
+    "depth": 6,
+    "loss_function": "Logloss",
+    "thread_count": 4,
+    "random_seed": 42,
+    "use_best_model": false,
+    "verbose": false,
+    "eval_metric": "Logloss",
+    "allow_writing_files": false,
+    "task_type": "CPU",
+    "cat_features": [
+      "customer_state",
+      "purchase_weekday"
+    ]
+  },
+  "DummyClassifier": {
+    "constant": null,
+    "random_state": 42,
+    "strategy": "prior"
+  },
+  "fit_split": "train",
+  "score_split": "validation_a",
+  "tuning": false,
+  "weighting": "none",
+  "early_stopping": false,
+  "calibration": false,
+  "threshold_selection": false,
+  "preprocessing": "CatBoost: train median + categorical missing string, native categorical handling; Dummy: no feature learning"
+}

@@ -1,0 +1,2 @@
+model,split,probability_type,n,late,prevalence,AP,ROC_AUC,Brier,LogLoss
+CatBoostWeighted,validation_a,raw,7661,387,0.05051559848583736,0.07914697366854931,0.6029510081213825,0.15941938951466525,0.49957391915297117

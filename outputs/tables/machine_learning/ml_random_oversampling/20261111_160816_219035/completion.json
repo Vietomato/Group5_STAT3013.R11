@@ -1,0 +1,13 @@
+{
+  "status": "completed",
+  "models": [
+    "LogisticRegression",
+    "RandomForest",
+    "LightGBM",
+    "XGBoost",
+    "CatBoost"
+  ],
+  "validation_a_only": true,
+  "test_predicted": false,
+  "frozen_decision_changed": false
+}

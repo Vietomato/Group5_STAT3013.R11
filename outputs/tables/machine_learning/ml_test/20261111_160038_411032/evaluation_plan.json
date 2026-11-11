@@ -1,0 +1,72 @@
+{
+  "final_config": "outputs/tables/machine_learning/ml_calibration/20261111_154951_108593/final_config.json",
+  "final_config_sha256": "b6345dc4eb8ce5809ec21b3a19d9725b67ec9be6c3d7db0d666dcd56795721d6",
+  "selection_config": "outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json",
+  "model_registry": [
+    {
+      "model": "LogisticRegression",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_logistic_random_forest/20261111_144245_493286/LogisticRegression.joblib",
+      "pipeline_sha256": "44bc06720a443be8ed292815a077c68f61537cc4065048732740226c3de19a99",
+      "source_run": "outputs/tables/machine_learning/ml_logistic_random_forest/20261111_144245_493286"
+    },
+    {
+      "model": "RandomForest",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_logistic_random_forest/20261111_144245_493286/RandomForest.joblib",
+      "pipeline_sha256": "6e6847d211e3f0da8799ea3a3354d6516a7e1db37cf0e8ca4538588b7b6b71cd",
+      "source_run": "outputs/tables/machine_learning/ml_logistic_random_forest/20261111_144245_493286"
+    },
+    {
+      "model": "LightGBM",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_lightgbm_xgboost/20261111_145217_850412/LightGBM.joblib",
+      "pipeline_sha256": "b922f3dfabd42be5df346cd026f414bae28ac4b3c2bcc6c1583808e1cec84540",
+      "source_run": "outputs/tables/machine_learning/ml_lightgbm_xgboost/20261111_145217_850412"
+    },
+    {
+      "model": "XGBoost",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_lightgbm_xgboost/20261111_145217_850412/XGBoost.joblib",
+      "pipeline_sha256": "597398891103041b0ac47f1f1ea8e8e17a65d783859cc98acf7328df6c368c05",
+      "source_run": "outputs/tables/machine_learning/ml_lightgbm_xgboost/20261111_145217_850412"
+    },
+    {
+      "model": "CatBoost",
+      "selected_on_validation_a": true,
+      "pipeline": "outputs/models/ml_selection/20261111_154450_762570/CatBoostBaseline.joblib",
+      "pipeline_sha256": "a15ecc749164d142bc8cbc702a7f1204eb50160b5d3bedaf946f8fb0948815e7",
+      "source_run": "outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857"
+    },
+    {
+      "model": "DummyClassifier",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_catboost_dummy/20261111_152855_922857/DummyClassifier.joblib",
+      "pipeline_sha256": "32f57884192b6d1d207d374557ea0f18dd66807b9d9422cd073d743a8d637dfa",
+      "source_run": "outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857"
+    },
+    {
+      "model": "CatBoostWeighted",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_catboost_weighted/20261111_153704_495324/CatBoostWeighted.joblib",
+      "pipeline_sha256": "64c400bf2b93b47e009f0d5e66e9203d359049459ff2f0f0ad2407ae15926329",
+      "source_run": "outputs/tables/machine_learning/ml_catboost_weighted/20261111_153704_495324"
+    }
+  ],
+  "selected_model": "CatBoost",
+  "threshold": 0.054178902872422004,
+  "calibrator": "outputs/models/ml_calibration/20261111_154951_108593/sigmoid_calibrator.joblib",
+  "calibrator_sha256": "1c0eee46f7a63a2930e3dc53db16db00a83c2cd38087728bc62b83cd0f1795a6",
+  "test_expected_orders": 9445,
+  "test_expected_late": 504,
+  "input_hashes": {
+    "data/processed/research_data_weather_price_holiday_assume_utc.csv": "ed604fa22a2c95695036966f80a0f8a4666fb242bc2ab9f781ed8fb68630ff4c",
+    "docs/predictor_list.csv": "044dc58a193c4f92f9bc5d09388d666956040ab51c765367f70a79ca4549569e",
+    "data/ml_preparation/split_manifest.csv": "4acf1fd734bf69d5e45e8ba923b8c52a50ed87e0745909d6176fa7fad1475582"
+  },
+  "classifier_refitted": false,
+  "calibrator_refitted": false,
+  "threshold_reselected": false,
+  "selection_changed_after_test": false,
+  "limitation": "Test outcomes previously appeared in EDA/Stage 3. No choices may be changed based on these Test results."
+}

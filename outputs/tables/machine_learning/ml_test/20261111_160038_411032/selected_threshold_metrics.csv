@@ -1,0 +1,2 @@
+model,split,probability_type,threshold,n,late,Precision,Recall,F1,alert_rate,alerts,TN,FP,FN,TP,validation_b_target_recall,test_recall_target_met
+CatBoost,test,calibrated,0.054178902872422004,9445,504,0.06421522238745438,0.9424603174603174,0.12023794456397924,0.7831656961355214,7397,2019,6922,29,475,0.7,True

@@ -1,0 +1,514 @@
+﻿section,model,block_days,detail,check,value
+predictor_missingness,Shared training sample,,feature=distance_km_mean,dtype,float64
+predictor_missingness,Shared training sample,,feature=distance_km_mean,missing_orders,300
+predictor_missingness,Shared training sample,,feature=distance_km_mean,unique_nonmissing,54358
+predictor_missingness,Shared training sample,,feature=distance_km_mean,missing_percent,0.5222023011714738
+predictor_missingness,Shared training sample,,feature=customer_state,dtype,object
+predictor_missingness,Shared training sample,,feature=customer_state,missing_orders,0
+predictor_missingness,Shared training sample,,feature=customer_state,unique_nonmissing,27
+predictor_missingness,Shared training sample,,feature=customer_state,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=item_count,dtype,float64
+predictor_missingness,Shared training sample,,feature=item_count,missing_orders,0
+predictor_missingness,Shared training sample,,feature=item_count,unique_nonmissing,16
+predictor_missingness,Shared training sample,,feature=item_count,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=seller_count,dtype,float64
+predictor_missingness,Shared training sample,,feature=seller_count,missing_orders,0
+predictor_missingness,Shared training sample,,feature=seller_count,unique_nonmissing,5
+predictor_missingness,Shared training sample,,feature=seller_count,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=purchase_weekday,dtype,object
+predictor_missingness,Shared training sample,,feature=purchase_weekday,missing_orders,0
+predictor_missingness,Shared training sample,,feature=purchase_weekday,unique_nonmissing,7
+predictor_missingness,Shared training sample,,feature=purchase_weekday,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=estimated_window_days,dtype,int64
+predictor_missingness,Shared training sample,,feature=estimated_window_days,missing_orders,0
+predictor_missingness,Shared training sample,,feature=estimated_window_days,unique_nonmissing,94
+predictor_missingness,Shared training sample,,feature=estimated_window_days,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=items_value,dtype,float64
+predictor_missingness,Shared training sample,,feature=items_value,missing_orders,0
+predictor_missingness,Shared training sample,,feature=items_value,unique_nonmissing,5300
+predictor_missingness,Shared training sample,,feature=items_value,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=freight_value,dtype,float64
+predictor_missingness,Shared training sample,,feature=freight_value,missing_orders,0
+predictor_missingness,Shared training sample,,feature=freight_value,unique_nonmissing,5644
+predictor_missingness,Shared training sample,,feature=freight_value,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=total_product_weight_g,dtype,float64
+predictor_missingness,Shared training sample,,feature=total_product_weight_g,missing_orders,16
+predictor_missingness,Shared training sample,,feature=total_product_weight_g,unique_nonmissing,2177
+predictor_missingness,Shared training sample,,feature=total_product_weight_g,missing_percent,0.02785078939581194
+predictor_missingness,Shared training sample,,feature=total_product_volume_cm3,dtype,float64
+predictor_missingness,Shared training sample,,feature=total_product_volume_cm3,missing_orders,16
+predictor_missingness,Shared training sample,,feature=total_product_volume_cm3,unique_nonmissing,4689
+predictor_missingness,Shared training sample,,feature=total_product_volume_cm3,missing_percent,0.02785078939581194
+predictor_missingness,Shared training sample,,feature=purchase_is_national_holiday,dtype,int64
+predictor_missingness,Shared training sample,,feature=purchase_is_national_holiday,missing_orders,0
+predictor_missingness,Shared training sample,,feature=purchase_is_national_holiday,unique_nonmissing,2
+predictor_missingness,Shared training sample,,feature=purchase_is_national_holiday,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=national_holiday_count_in_estimated_window,dtype,int64
+predictor_missingness,Shared training sample,,feature=national_holiday_count_in_estimated_window,missing_orders,0
+predictor_missingness,Shared training sample,,feature=national_holiday_count_in_estimated_window,unique_nonmissing,6
+predictor_missingness,Shared training sample,,feature=national_holiday_count_in_estimated_window,missing_percent,0.0
+predictor_missingness,Shared training sample,,feature=destination_rain_state_mean_mm,dtype,float64
+predictor_missingness,Shared training sample,,feature=destination_rain_state_mean_mm,missing_orders,599
+predictor_missingness,Shared training sample,,feature=destination_rain_state_mean_mm,unique_nonmissing,3955
+predictor_missingness,Shared training sample,,feature=destination_rain_state_mean_mm,missing_percent,1.0426639280057093
+initial_and_transformed_fits,M0_initial,,,orders,56553
+initial_and_transformed_fits,M0_initial,,,parameters,37
+initial_and_transformed_fits,M0_initial,,,converged,True
+initial_and_transformed_fits,M0_initial,,,iterations,7
+initial_and_transformed_fits,M0_initial,,,finite_coefficients,True
+initial_and_transformed_fits,M0_initial,,,finite_standard_errors,True
+initial_and_transformed_fits,M0_initial,,,aic,25669.38965725486
+initial_and_transformed_fits,M0_initial,,,minimum_fitted_probability,4.8683046807366056e-05
+initial_and_transformed_fits,M0_initial,,,maximum_fitted_probability,0.4494406636503954
+initial_and_transformed_fits,M0_transformed,,,orders,56553
+initial_and_transformed_fits,M0_transformed,,,parameters,38
+initial_and_transformed_fits,M0_transformed,,,converged,True
+initial_and_transformed_fits,M0_transformed,,,iterations,7
+initial_and_transformed_fits,M0_transformed,,,finite_coefficients,True
+initial_and_transformed_fits,M0_transformed,,,finite_standard_errors,True
+initial_and_transformed_fits,M0_transformed,,,aic,25599.54331815093
+initial_and_transformed_fits,M0_transformed,,,minimum_fitted_probability,5.015734048561606e-09
+initial_and_transformed_fits,M0_transformed,,,maximum_fitted_probability,0.392911984511221
+initial_and_transformed_fits,M4_initial,,,orders,56553
+initial_and_transformed_fits,M4_initial,,,parameters,44
+initial_and_transformed_fits,M4_initial,,,converged,True
+initial_and_transformed_fits,M4_initial,,,iterations,7
+initial_and_transformed_fits,M4_initial,,,finite_coefficients,True
+initial_and_transformed_fits,M4_initial,,,finite_standard_errors,True
+initial_and_transformed_fits,M4_initial,,,aic,25538.185694147396
+initial_and_transformed_fits,M4_initial,,,minimum_fitted_probability,3.516603117904209e-05
+initial_and_transformed_fits,M4_initial,,,maximum_fitted_probability,0.6760227887793987
+initial_and_transformed_fits,M4_transformed,,,orders,56553
+initial_and_transformed_fits,M4_transformed,,,parameters,45
+initial_and_transformed_fits,M4_transformed,,,converged,True
+initial_and_transformed_fits,M4_transformed,,,iterations,7
+initial_and_transformed_fits,M4_transformed,,,finite_coefficients,True
+initial_and_transformed_fits,M4_transformed,,,finite_standard_errors,True
+initial_and_transformed_fits,M4_transformed,,,aic,25379.622936665037
+initial_and_transformed_fits,M4_transformed,,,minimum_fitted_probability,2.217085721641238e-09
+initial_and_transformed_fits,M4_transformed,,,maximum_fitted_probability,0.4703901327632148
+calendar_adjusted_fits,M0_time_adjusted,,,orders,56553
+calendar_adjusted_fits,M0_time_adjusted,,,parameters,53
+calendar_adjusted_fits,M0_time_adjusted,,,design_rank,53
+calendar_adjusted_fits,M0_time_adjusted,,,converged,True
+calendar_adjusted_fits,M0_time_adjusted,,,iterations,7
+calendar_adjusted_fits,M0_time_adjusted,,,finite_coefficients,True
+calendar_adjusted_fits,M0_time_adjusted,,,finite_standard_errors,True
+calendar_adjusted_fits,M0_time_adjusted,,,aic,24290.885680880612
+calendar_adjusted_fits,M0_time_adjusted,,,warning_count,0
+calendar_adjusted_fits,M4_time_adjusted,,,orders,56553
+calendar_adjusted_fits,M4_time_adjusted,,,parameters,60
+calendar_adjusted_fits,M4_time_adjusted,,,design_rank,60
+calendar_adjusted_fits,M4_time_adjusted,,,converged,True
+calendar_adjusted_fits,M4_time_adjusted,,,iterations,7
+calendar_adjusted_fits,M4_time_adjusted,,,finite_coefficients,True
+calendar_adjusted_fits,M4_time_adjusted,,,finite_standard_errors,True
+calendar_adjusted_fits,M4_time_adjusted,,,aic,24160.994139394876
+calendar_adjusted_fits,M4_time_adjusted,,,warning_count,0
+clustered_covariance,M0_transformed,7.0,,clusters,65
+clustered_covariance,M0_transformed,7.0,,inference_df,64
+clustered_covariance,M0_transformed,7.0,,parameters,38
+clustered_covariance,M0_transformed,7.0,,converged,True
+clustered_covariance,M0_transformed,7.0,,max_coefficient_difference,8.333143064476189e-10
+clustered_covariance,M0_transformed,7.0,,finite_covariance,True
+clustered_covariance,M0_transformed,7.0,,finite_standard_errors,True
+clustered_covariance,M0_transformed,7.0,,covariance_rank,38
+clustered_covariance,M0_transformed,7.0,,warning_count,0
+clustered_covariance,M4_transformed,7.0,,clusters,65
+clustered_covariance,M4_transformed,7.0,,inference_df,64
+clustered_covariance,M4_transformed,7.0,,parameters,45
+clustered_covariance,M4_transformed,7.0,,converged,True
+clustered_covariance,M4_transformed,7.0,,max_coefficient_difference,9.541920586997321e-10
+clustered_covariance,M4_transformed,7.0,,finite_covariance,True
+clustered_covariance,M4_transformed,7.0,,finite_standard_errors,True
+clustered_covariance,M4_transformed,7.0,,covariance_rank,45
+clustered_covariance,M4_transformed,7.0,,warning_count,0
+clustered_covariance,M0_time_adjusted,7.0,,clusters,65
+clustered_covariance,M0_time_adjusted,7.0,,inference_df,64
+clustered_covariance,M0_time_adjusted,7.0,,parameters,53
+clustered_covariance,M0_time_adjusted,7.0,,converged,True
+clustered_covariance,M0_time_adjusted,7.0,,max_coefficient_difference,1.5634078476267632e-09
+clustered_covariance,M0_time_adjusted,7.0,,finite_covariance,True
+clustered_covariance,M0_time_adjusted,7.0,,finite_standard_errors,True
+clustered_covariance,M0_time_adjusted,7.0,,covariance_rank,52
+clustered_covariance,M0_time_adjusted,7.0,,warning_count,0
+clustered_covariance,M4_time_adjusted,7.0,,clusters,65
+clustered_covariance,M4_time_adjusted,7.0,,inference_df,64
+clustered_covariance,M4_time_adjusted,7.0,,parameters,60
+clustered_covariance,M4_time_adjusted,7.0,,converged,True
+clustered_covariance,M4_time_adjusted,7.0,,max_coefficient_difference,1.8679534585785973e-09
+clustered_covariance,M4_time_adjusted,7.0,,finite_covariance,True
+clustered_covariance,M4_time_adjusted,7.0,,finite_standard_errors,True
+clustered_covariance,M4_time_adjusted,7.0,,covariance_rank,59
+clustered_covariance,M4_time_adjusted,7.0,,warning_count,0
+clustered_covariance,M0_transformed,14.0,,clusters,35
+clustered_covariance,M0_transformed,14.0,,inference_df,34
+clustered_covariance,M0_transformed,14.0,,parameters,38
+clustered_covariance,M0_transformed,14.0,,converged,True
+clustered_covariance,M0_transformed,14.0,,max_coefficient_difference,8.333143064476189e-10
+clustered_covariance,M0_transformed,14.0,,finite_covariance,True
+clustered_covariance,M0_transformed,14.0,,finite_standard_errors,True
+clustered_covariance,M0_transformed,14.0,,covariance_rank,34
+clustered_covariance,M0_transformed,14.0,,warning_count,0
+clustered_covariance,M4_transformed,14.0,,clusters,35
+clustered_covariance,M4_transformed,14.0,,inference_df,34
+clustered_covariance,M4_transformed,14.0,,parameters,45
+clustered_covariance,M4_transformed,14.0,,converged,True
+clustered_covariance,M4_transformed,14.0,,max_coefficient_difference,9.541920586997321e-10
+clustered_covariance,M4_transformed,14.0,,finite_covariance,True
+clustered_covariance,M4_transformed,14.0,,finite_standard_errors,True
+clustered_covariance,M4_transformed,14.0,,covariance_rank,34
+clustered_covariance,M4_transformed,14.0,,warning_count,0
+clustered_covariance,M0_time_adjusted,14.0,,clusters,35
+clustered_covariance,M0_time_adjusted,14.0,,inference_df,34
+clustered_covariance,M0_time_adjusted,14.0,,parameters,53
+clustered_covariance,M0_time_adjusted,14.0,,converged,True
+clustered_covariance,M0_time_adjusted,14.0,,max_coefficient_difference,1.5634078476267632e-09
+clustered_covariance,M0_time_adjusted,14.0,,finite_covariance,True
+clustered_covariance,M0_time_adjusted,14.0,,finite_standard_errors,True
+clustered_covariance,M0_time_adjusted,14.0,,covariance_rank,36
+clustered_covariance,M0_time_adjusted,14.0,,warning_count,0
+clustered_covariance,M4_time_adjusted,14.0,,clusters,35
+clustered_covariance,M4_time_adjusted,14.0,,inference_df,34
+clustered_covariance,M4_time_adjusted,14.0,,parameters,60
+clustered_covariance,M4_time_adjusted,14.0,,converged,True
+clustered_covariance,M4_time_adjusted,14.0,,max_coefficient_difference,1.8679534585785973e-09
+clustered_covariance,M4_time_adjusted,14.0,,finite_covariance,True
+clustered_covariance,M4_time_adjusted,14.0,,finite_standard_errors,True
+clustered_covariance,M4_time_adjusted,14.0,,covariance_rank,35
+clustered_covariance,M4_time_adjusted,14.0,,warning_count,0
+vif,M0_initial,,term=distance_100km,vif,4.813650045063871
+vif,M0_initial,,term=distance_100km,flag_vif_above_5,False
+vif,M0_initial,,term=item_count,vif,1.065256144643741
+vif,M0_initial,,term=item_count,flag_vif_above_5,False
+vif,M0_initial,,term=is_multi_seller,vif,1.064821042057786
+vif,M0_initial,,term=is_multi_seller,flag_vif_above_5,False
+vif,M0_initial,,term=estimated_window_days,vif,1.536039267356996
+vif,M0_initial,,term=estimated_window_days,flag_vif_above_5,False
+vif,M4_initial,,term=distance_100km,vif,5.102561863539799
+vif,M4_initial,,term=distance_100km,flag_vif_above_5,True
+vif,M4_initial,,term=item_count,vif,1.4868167000391241
+vif,M4_initial,,term=item_count,flag_vif_above_5,False
+vif,M4_initial,,term=is_multi_seller,vif,1.0656143655327779
+vif,M4_initial,,term=is_multi_seller,flag_vif_above_5,False
+vif,M4_initial,,term=estimated_window_days,vif,1.665862030755953
+vif,M4_initial,,term=estimated_window_days,flag_vif_above_5,False
+vif,M4_initial,,term=items_value_100brl,vif,1.237440524397576
+vif,M4_initial,,term=items_value_100brl,flag_vif_above_5,False
+vif,M4_initial,,term=freight_value_10brl,vif,3.4782130773981312
+vif,M4_initial,,term=freight_value_10brl,flag_vif_above_5,False
+vif,M4_initial,,term=product_weight_kg,vif,3.568851581143576
+vif,M4_initial,,term=product_weight_kg,flag_vif_above_5,False
+vif,M4_initial,,term=product_volume_10l,vif,3.391856006756688
+vif,M4_initial,,term=product_volume_10l,flag_vif_above_5,False
+vif,M4_initial,,term=purchase_is_national_holiday,vif,1.015888143591717
+vif,M4_initial,,term=purchase_is_national_holiday,flag_vif_above_5,False
+vif,M4_initial,,term=national_holiday_count_in_estimated_window,vif,1.0954697661619774
+vif,M4_initial,,term=national_holiday_count_in_estimated_window,flag_vif_above_5,False
+vif,M4_initial,,term=destination_rain_5mm,vif,1.0231398270867669
+vif,M4_initial,,term=destination_rain_5mm,flag_vif_above_5,False
+vif,M0_transformed,,term=log1p_distance_100km,vif,3.081078739648595
+vif,M0_transformed,,term=log1p_distance_100km,flag_vif_above_5,False
+vif,M0_transformed,,term=item_count,vif,1.065258120052972
+vif,M0_transformed,,term=item_count,flag_vif_above_5,False
+vif,M0_transformed,,term=is_multi_seller,vif,1.0652721064435426
+vif,M0_transformed,,term=is_multi_seller,flag_vif_above_5,False
+vif,M0_transformed,,term=window_centered_10days,vif,2.518384967467521
+vif,M0_transformed,,term=window_centered_10days,flag_vif_above_5,False
+vif,M0_transformed,,term=window_centered_10days_sq,vif,1.6054888036129804
+vif,M0_transformed,,term=window_centered_10days_sq,flag_vif_above_5,False
+vif,M4_transformed,,term=log1p_distance_100km,vif,3.50686022211537
+vif,M4_transformed,,term=log1p_distance_100km,flag_vif_above_5,False
+vif,M4_transformed,,term=item_count,vif,1.6002214975119098
+vif,M4_transformed,,term=item_count,flag_vif_above_5,False
+vif,M4_transformed,,term=is_multi_seller,vif,1.0678264755482523
+vif,M4_transformed,,term=is_multi_seller,flag_vif_above_5,False
+vif,M4_transformed,,term=window_centered_10days,vif,2.7248253086356518
+vif,M4_transformed,,term=window_centered_10days,flag_vif_above_5,False
+vif,M4_transformed,,term=window_centered_10days_sq,vif,1.613875520824557
+vif,M4_transformed,,term=window_centered_10days_sq,flag_vif_above_5,False
+vif,M4_transformed,,term=log1p_items_value_100brl,vif,1.467532751813352
+vif,M4_transformed,,term=log1p_items_value_100brl,flag_vif_above_5,False
+vif,M4_transformed,,term=log1p_freight_value_10brl,vif,4.094112022190315
+vif,M4_transformed,,term=log1p_freight_value_10brl,flag_vif_above_5,False
+vif,M4_transformed,,term=log1p_product_weight_kg,vif,3.672472905503597
+vif,M4_transformed,,term=log1p_product_weight_kg,flag_vif_above_5,False
+vif,M4_transformed,,term=log1p_product_volume_10l,vif,2.882584490284361
+vif,M4_transformed,,term=log1p_product_volume_10l,flag_vif_above_5,False
+vif,M4_transformed,,term=purchase_is_national_holiday,vif,1.016107387669935
+vif,M4_transformed,,term=purchase_is_national_holiday,flag_vif_above_5,False
+vif,M4_transformed,,term=national_holiday_count_in_estimated_window,vif,1.0987387917139368
+vif,M4_transformed,,term=national_holiday_count_in_estimated_window,flag_vif_above_5,False
+vif,M4_transformed,,term=log1p_destination_rain_5mm,vif,1.0361226995525596
+vif,M4_transformed,,term=log1p_destination_rain_5mm,flag_vif_above_5,False
+probability_boundaries,M0_transformed,,,minimum_probability_scientific,5.015734e-09
+probability_boundaries,M0_transformed,,,exact_zero_probabilities,0
+probability_boundaries,M0_transformed,,,exact_one_probabilities,0
+probability_boundaries,M0_transformed,,,probabilities_below_1e_minus_8,1
+probability_boundaries,M0_transformed,,,minimum_linear_predictor,-19.11068605062739
+probability_boundaries,M0_transformed,,,maximum_linear_predictor,-0.43508815255292355
+probability_boundaries,M4_transformed,,,minimum_probability_scientific,2.217086e-09
+probability_boundaries,M4_transformed,,,exact_zero_probabilities,0
+probability_boundaries,M4_transformed,,,exact_one_probabilities,0
+probability_boundaries,M4_transformed,,,probabilities_below_1e_minus_8,1
+probability_boundaries,M4_transformed,,,minimum_linear_predictor,-19.927072239239923
+probability_boundaries,M4_transformed,,,maximum_linear_predictor,-0.1185782158428965
+functional_form_residuals,M4_initial_vs_transformed,,term=distance_100km,initial_max_absolute_residual_pp,1.6753534529275014
+functional_form_residuals,M4_initial_vs_transformed,,term=distance_100km,transformed_max_absolute_residual_pp,0.8722242280392534
+functional_form_residuals,M4_initial_vs_transformed,,term=estimated_window_days,initial_max_absolute_residual_pp,1.5893501345962069
+functional_form_residuals,M4_initial_vs_transformed,,term=estimated_window_days,transformed_max_absolute_residual_pp,0.8677786828264102
+functional_form_residuals,M4_initial_vs_transformed,,term=items_value_100brl,initial_max_absolute_residual_pp,1.1567689299144743
+functional_form_residuals,M4_initial_vs_transformed,,term=items_value_100brl,transformed_max_absolute_residual_pp,0.8904032072072756
+functional_form_residuals,M4_initial_vs_transformed,,term=freight_value_10brl,initial_max_absolute_residual_pp,1.7168153540871331
+functional_form_residuals,M4_initial_vs_transformed,,term=freight_value_10brl,transformed_max_absolute_residual_pp,0.9735190507290548
+functional_form_residuals,M4_initial_vs_transformed,,term=product_weight_kg,initial_max_absolute_residual_pp,0.9566525780807488
+functional_form_residuals,M4_initial_vs_transformed,,term=product_weight_kg,transformed_max_absolute_residual_pp,0.5340161235987878
+functional_form_residuals,M4_initial_vs_transformed,,term=product_volume_10l,initial_max_absolute_residual_pp,1.0150117996895593
+functional_form_residuals,M4_initial_vs_transformed,,term=product_volume_10l,transformed_max_absolute_residual_pp,0.5720689993008523
+functional_form_residuals,M4_initial_vs_transformed,,term=destination_rain_5mm,initial_max_absolute_residual_pp,2.2102131429462095
+functional_form_residuals,M4_initial_vs_transformed,,term=destination_rain_5mm,transformed_max_absolute_residual_pp,1.8324610861797694
+functional_form_residuals,M4_initial_vs_transformed,,term=item_count,initial_max_absolute_residual_pp,0.23154600583903118
+functional_form_residuals,M4_initial_vs_transformed,,term=item_count,transformed_max_absolute_residual_pp,0.45704574171927387
+influence_screening,M4_transformed,,,orders,56553
+influence_screening,M4_transformed,,,parameters,45
+influence_screening,M4_transformed,,,cook_review_threshold,7.073011157675101e-05
+influence_screening,M4_transformed,,,leverage_review_threshold,0.0015914275104768978
+influence_screening,M4_transformed,,,orders_flagged_cook,3327
+influence_screening,M4_transformed,,,orders_flagged_leverage,5513
+influence_screening,M4_transformed,,,maximum_cooks_distance,0.025608208772097737
+influence_screening,M4_transformed,,,maximum_leverage,0.21778084158778768
+monthly_residuals,M4_transformed,,purchase_month=2016-09,orders,1
+monthly_residuals,M4_transformed,,purchase_month=2016-09,late_orders,1
+monthly_residuals,M4_transformed,,purchase_month=2016-09,observed_rate,1.0
+monthly_residuals,M4_transformed,,purchase_month=2016-09,fitted_rate,0.045802062021941044
+monthly_residuals,M4_transformed,,purchase_month=2016-09,mean_rain_index_mm,0.3866666666666666
+monthly_residuals,M4_transformed,,purchase_month=2016-09,observed_percent,100.0
+monthly_residuals,M4_transformed,,purchase_month=2016-09,fitted_percent,4.580206202194105
+monthly_residuals,M4_transformed,,purchase_month=2016-09,residual_pp,95.4197937978059
+monthly_residuals,M4_transformed,,purchase_month=2016-10,orders,261
+monthly_residuals,M4_transformed,,purchase_month=2016-10,late_orders,2
+monthly_residuals,M4_transformed,,purchase_month=2016-10,observed_rate,0.007662835249042145
+monthly_residuals,M4_transformed,,purchase_month=2016-10,fitted_rate,0.0052777203584886
+monthly_residuals,M4_transformed,,purchase_month=2016-10,mean_rain_index_mm,3.978271443285498
+monthly_residuals,M4_transformed,,purchase_month=2016-10,observed_percent,0.7662835249042145
+monthly_residuals,M4_transformed,,purchase_month=2016-10,fitted_percent,0.52777203584886
+monthly_residuals,M4_transformed,,purchase_month=2016-10,residual_pp,0.23851148905535446
+monthly_residuals,M4_transformed,,purchase_month=2016-12,orders,1
+monthly_residuals,M4_transformed,,purchase_month=2016-12,late_orders,0
+monthly_residuals,M4_transformed,,purchase_month=2016-12,observed_rate,0.0
+monthly_residuals,M4_transformed,,purchase_month=2016-12,fitted_rate,0.01436971063633891
+monthly_residuals,M4_transformed,,purchase_month=2016-12,mean_rain_index_mm,2.723076923076923
+monthly_residuals,M4_transformed,,purchase_month=2016-12,observed_percent,0.0
+monthly_residuals,M4_transformed,,purchase_month=2016-12,fitted_percent,1.436971063633891
+monthly_residuals,M4_transformed,,purchase_month=2016-12,residual_pp,-1.436971063633891
+monthly_residuals,M4_transformed,,purchase_month=2017-01,orders,739
+monthly_residuals,M4_transformed,,purchase_month=2017-01,late_orders,21
+monthly_residuals,M4_transformed,,purchase_month=2017-01,observed_rate,0.028416779431664412
+monthly_residuals,M4_transformed,,purchase_month=2017-01,fitted_rate,0.026629886513226668
+monthly_residuals,M4_transformed,,purchase_month=2017-01,mean_rain_index_mm,7.167127804970684
+monthly_residuals,M4_transformed,,purchase_month=2017-01,observed_percent,2.841677943166441
+monthly_residuals,M4_transformed,,purchase_month=2017-01,fitted_percent,2.662988651322667
+monthly_residuals,M4_transformed,,purchase_month=2017-01,residual_pp,0.17868929184377436
+monthly_residuals,M4_transformed,,purchase_month=2017-02,orders,1618
+monthly_residuals,M4_transformed,,purchase_month=2017-02,late_orders,49
+monthly_residuals,M4_transformed,,purchase_month=2017-02,observed_rate,0.030284301606922127
+monthly_residuals,M4_transformed,,purchase_month=2017-02,fitted_rate,0.044732122739875764
+monthly_residuals,M4_transformed,,purchase_month=2017-02,mean_rain_index_mm,4.529688510832656
+monthly_residuals,M4_transformed,,purchase_month=2017-02,observed_percent,3.0284301606922126
+monthly_residuals,M4_transformed,,purchase_month=2017-02,fitted_percent,4.473212273987577
+monthly_residuals,M4_transformed,,purchase_month=2017-02,residual_pp,-1.4447821132953642
+monthly_residuals,M4_transformed,,purchase_month=2017-03,orders,2500
+monthly_residuals,M4_transformed,,purchase_month=2017-03,late_orders,113
+monthly_residuals,M4_transformed,,purchase_month=2017-03,observed_rate,0.0452
+monthly_residuals,M4_transformed,,purchase_month=2017-03,fitted_rate,0.07013783797850189
+monthly_residuals,M4_transformed,,purchase_month=2017-03,mean_rain_index_mm,4.791208119050265
+monthly_residuals,M4_transformed,,purchase_month=2017-03,observed_percent,4.52
+monthly_residuals,M4_transformed,,purchase_month=2017-03,fitted_percent,7.013783797850189
+monthly_residuals,M4_transformed,,purchase_month=2017-03,residual_pp,-2.493783797850189
+monthly_residuals,M4_transformed,,purchase_month=2017-04,orders,2247
+monthly_residuals,M4_transformed,,purchase_month=2017-04,late_orders,143
+monthly_residuals,M4_transformed,,purchase_month=2017-04,observed_rate,0.06364040943480195
+monthly_residuals,M4_transformed,,purchase_month=2017-04,fitted_rate,0.05611951030763996
+monthly_residuals,M4_transformed,,purchase_month=2017-04,mean_rain_index_mm,3.8357741602798856
+monthly_residuals,M4_transformed,,purchase_month=2017-04,observed_percent,6.3640409434801954
+monthly_residuals,M4_transformed,,purchase_month=2017-04,fitted_percent,5.611951030763996
+monthly_residuals,M4_transformed,,purchase_month=2017-04,residual_pp,0.7520899127161993
+monthly_residuals,M4_transformed,,purchase_month=2017-05,orders,3497
+monthly_residuals,M4_transformed,,purchase_month=2017-05,late_orders,104
+monthly_residuals,M4_transformed,,purchase_month=2017-05,observed_rate,0.02973977695167286
+monthly_residuals,M4_transformed,,purchase_month=2017-05,fitted_rate,0.06607507969709112
+monthly_residuals,M4_transformed,,purchase_month=2017-05,mean_rain_index_mm,4.1752280241456425
+monthly_residuals,M4_transformed,,purchase_month=2017-05,observed_percent,2.973977695167286
+monthly_residuals,M4_transformed,,purchase_month=2017-05,fitted_percent,6.607507969709111
+monthly_residuals,M4_transformed,,purchase_month=2017-05,residual_pp,-3.633530274541825
+monthly_residuals,M4_transformed,,purchase_month=2017-06,orders,3078
+monthly_residuals,M4_transformed,,purchase_month=2017-06,late_orders,93
+monthly_residuals,M4_transformed,,purchase_month=2017-06,observed_rate,0.030214424951267055
+monthly_residuals,M4_transformed,,purchase_month=2017-06,fitted_rate,0.061579368793632926
+monthly_residuals,M4_transformed,,purchase_month=2017-06,mean_rain_index_mm,2.6160235090438553
+monthly_residuals,M4_transformed,,purchase_month=2017-06,observed_percent,3.0214424951267054
+monthly_residuals,M4_transformed,,purchase_month=2017-06,fitted_percent,6.157936879363293
+monthly_residuals,M4_transformed,,purchase_month=2017-06,residual_pp,-3.1364943842365873
+monthly_residuals,M4_transformed,,purchase_month=2017-07,orders,3829
+monthly_residuals,M4_transformed,,purchase_month=2017-07,late_orders,100
+monthly_residuals,M4_transformed,,purchase_month=2017-07,observed_rate,0.026116479498563595
+monthly_residuals,M4_transformed,,purchase_month=2017-07,fitted_rate,0.06245405474953241
+monthly_residuals,M4_transformed,,purchase_month=2017-07,mean_rain_index_mm,0.7970335233545576
+monthly_residuals,M4_transformed,,purchase_month=2017-07,observed_percent,2.6116479498563594
+monthly_residuals,M4_transformed,,purchase_month=2017-07,fitted_percent,6.245405474953241
+monthly_residuals,M4_transformed,,purchase_month=2017-07,residual_pp,-3.6337575250968817
+monthly_residuals,M4_transformed,,purchase_month=2017-08,orders,4150
+monthly_residuals,M4_transformed,,purchase_month=2017-08,late_orders,120
+monthly_residuals,M4_transformed,,purchase_month=2017-08,observed_rate,0.02891566265060241
+monthly_residuals,M4_transformed,,purchase_month=2017-08,fitted_rate,0.06315732955670977
+monthly_residuals,M4_transformed,,purchase_month=2017-08,mean_rain_index_mm,1.970824011019819
+monthly_residuals,M4_transformed,,purchase_month=2017-08,observed_percent,2.891566265060241
+monthly_residuals,M4_transformed,,purchase_month=2017-08,fitted_percent,6.315732955670978
+monthly_residuals,M4_transformed,,purchase_month=2017-08,residual_pp,-3.4241666906107366
+monthly_residuals,M4_transformed,,purchase_month=2017-09,orders,4059
+monthly_residuals,M4_transformed,,purchase_month=2017-09,late_orders,175
+monthly_residuals,M4_transformed,,purchase_month=2017-09,observed_rate,0.043114067504311404
+monthly_residuals,M4_transformed,,purchase_month=2017-09,fitted_rate,0.0704018028110957
+monthly_residuals,M4_transformed,,purchase_month=2017-09,mean_rain_index_mm,0.7799675284159382
+monthly_residuals,M4_transformed,,purchase_month=2017-09,observed_percent,4.31140675043114
+monthly_residuals,M4_transformed,,purchase_month=2017-09,fitted_percent,7.040180281109571
+monthly_residuals,M4_transformed,,purchase_month=2017-09,residual_pp,-2.7287735306784304
+monthly_residuals,M4_transformed,,purchase_month=2017-10,orders,4416
+monthly_residuals,M4_transformed,,purchase_month=2017-10,late_orders,182
+monthly_residuals,M4_transformed,,purchase_month=2017-10,observed_rate,0.04121376811594203
+monthly_residuals,M4_transformed,,purchase_month=2017-10,fitted_rate,0.07200428333576588
+monthly_residuals,M4_transformed,,purchase_month=2017-10,mean_rain_index_mm,4.2546045612030134
+monthly_residuals,M4_transformed,,purchase_month=2017-10,observed_percent,4.121376811594203
+monthly_residuals,M4_transformed,,purchase_month=2017-10,fitted_percent,7.200428333576587
+monthly_residuals,M4_transformed,,purchase_month=2017-10,residual_pp,-3.079051521982384
+monthly_residuals,M4_transformed,,purchase_month=2017-11,orders,7190
+monthly_residuals,M4_transformed,,purchase_month=2017-11,late_orders,894
+monthly_residuals,M4_transformed,,purchase_month=2017-11,observed_rate,0.1243393602225313
+monthly_residuals,M4_transformed,,purchase_month=2017-11,fitted_rate,0.07712435098187867
+monthly_residuals,M4_transformed,,purchase_month=2017-11,mean_rain_index_mm,5.625511507869014
+monthly_residuals,M4_transformed,,purchase_month=2017-11,observed_percent,12.43393602225313
+monthly_residuals,M4_transformed,,purchase_month=2017-11,fitted_percent,7.712435098187867
+monthly_residuals,M4_transformed,,purchase_month=2017-11,residual_pp,4.721500924065263
+monthly_residuals,M4_transformed,,purchase_month=2017-12,orders,5467
+monthly_residuals,M4_transformed,,purchase_month=2017-12,late_orders,406
+monthly_residuals,M4_transformed,,purchase_month=2017-12,observed_rate,0.07426376440460948
+monthly_residuals,M4_transformed,,purchase_month=2017-12,fitted_rate,0.0515193910318162
+monthly_residuals,M4_transformed,,purchase_month=2017-12,mean_rain_index_mm,5.620854475342578
+monthly_residuals,M4_transformed,,purchase_month=2017-12,observed_percent,7.426376440460948
+monthly_residuals,M4_transformed,,purchase_month=2017-12,fitted_percent,5.15193910318162
+monthly_residuals,M4_transformed,,purchase_month=2017-12,residual_pp,2.274437337279328
+monthly_residuals,M4_transformed,,purchase_month=2018-01,orders,6940
+monthly_residuals,M4_transformed,,purchase_month=2018-01,late_orders,384
+monthly_residuals,M4_transformed,,purchase_month=2018-01,observed_rate,0.0553314121037464
+monthly_residuals,M4_transformed,,purchase_month=2018-01,fitted_rate,0.06193111084237155
+monthly_residuals,M4_transformed,,purchase_month=2018-01,mean_rain_index_mm,7.263089178833693
+monthly_residuals,M4_transformed,,purchase_month=2018-01,observed_percent,5.53314121037464
+monthly_residuals,M4_transformed,,purchase_month=2018-01,fitted_percent,6.193111084237155
+monthly_residuals,M4_transformed,,purchase_month=2018-01,residual_pp,-0.659969873862515
+monthly_residuals,M4_transformed,,purchase_month=2018-02,orders,6306
+monthly_residuals,M4_transformed,,purchase_month=2018-02,late_orders,800
+monthly_residuals,M4_transformed,,purchase_month=2018-02,observed_rate,0.12686330478908975
+monthly_residuals,M4_transformed,,purchase_month=2018-02,fitted_rate,0.06996110981528687
+monthly_residuals,M4_transformed,,purchase_month=2018-02,mean_rain_index_mm,6.23019830859232
+monthly_residuals,M4_transformed,,purchase_month=2018-02,observed_percent,12.686330478908975
+monthly_residuals,M4_transformed,,purchase_month=2018-02,fitted_percent,6.9961109815286875
+monthly_residuals,M4_transformed,,purchase_month=2018-02,residual_pp,5.690219497380287
+monthly_residuals,M4_transformed,,purchase_month=2018-03,orders,254
+monthly_residuals,M4_transformed,,purchase_month=2018-03,late_orders,62
+monthly_residuals,M4_transformed,,purchase_month=2018-03,observed_rate,0.2440944881889764
+monthly_residuals,M4_transformed,,purchase_month=2018-03,fitted_rate,0.08396342065202402
+monthly_residuals,M4_transformed,,purchase_month=2018-03,mean_rain_index_mm,4.085572462237087
+monthly_residuals,M4_transformed,,purchase_month=2018-03,observed_percent,24.409448818897637
+monthly_residuals,M4_transformed,,purchase_month=2018-03,fitted_percent,8.396342065202402
+monthly_residuals,M4_transformed,,purchase_month=2018-03,residual_pp,16.013106753695233
+temporal_blocks,Shared,7.0,,nonempty_blocks,65
+temporal_blocks,Shared,7.0,,smallest_block_orders,1
+temporal_blocks,Shared,7.0,,median_block_orders,862.0
+temporal_blocks,Shared,7.0,,largest_block_orders,2883
+temporal_blocks,Shared,7.0,,blocks_without_late_orders,2
+temporal_blocks,Shared,14.0,,nonempty_blocks,35
+temporal_blocks,Shared,14.0,,smallest_block_orders,1
+temporal_blocks,Shared,14.0,,median_block_orders,1644.0
+temporal_blocks,Shared,14.0,,largest_block_orders,4896
+temporal_blocks,Shared,14.0,,blocks_without_late_orders,2
+calendar_group_counts,Shared,,purchase_period=2016 (pooled),orders,263
+calendar_group_counts,Shared,,purchase_period=2016 (pooled),late_orders,3
+calendar_group_counts,Shared,,purchase_period=2016 (pooled),not_late_orders,260
+calendar_group_counts,Shared,,purchase_period=2016 (pooled),late_percent,1.1406844106463878
+calendar_group_counts,Shared,,purchase_period=2016 (pooled),single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-01,orders,739
+calendar_group_counts,Shared,,purchase_period=2017-01,late_orders,21
+calendar_group_counts,Shared,,purchase_period=2017-01,not_late_orders,718
+calendar_group_counts,Shared,,purchase_period=2017-01,late_percent,2.841677943166441
+calendar_group_counts,Shared,,purchase_period=2017-01,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-02,orders,1618
+calendar_group_counts,Shared,,purchase_period=2017-02,late_orders,49
+calendar_group_counts,Shared,,purchase_period=2017-02,not_late_orders,1569
+calendar_group_counts,Shared,,purchase_period=2017-02,late_percent,3.0284301606922126
+calendar_group_counts,Shared,,purchase_period=2017-02,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-03,orders,2500
+calendar_group_counts,Shared,,purchase_period=2017-03,late_orders,113
+calendar_group_counts,Shared,,purchase_period=2017-03,not_late_orders,2387
+calendar_group_counts,Shared,,purchase_period=2017-03,late_percent,4.52
+calendar_group_counts,Shared,,purchase_period=2017-03,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-04,orders,2247
+calendar_group_counts,Shared,,purchase_period=2017-04,late_orders,143
+calendar_group_counts,Shared,,purchase_period=2017-04,not_late_orders,2104
+calendar_group_counts,Shared,,purchase_period=2017-04,late_percent,6.3640409434801954
+calendar_group_counts,Shared,,purchase_period=2017-04,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-05,orders,3497
+calendar_group_counts,Shared,,purchase_period=2017-05,late_orders,104
+calendar_group_counts,Shared,,purchase_period=2017-05,not_late_orders,3393
+calendar_group_counts,Shared,,purchase_period=2017-05,late_percent,2.973977695167286
+calendar_group_counts,Shared,,purchase_period=2017-05,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-06,orders,3078
+calendar_group_counts,Shared,,purchase_period=2017-06,late_orders,93
+calendar_group_counts,Shared,,purchase_period=2017-06,not_late_orders,2985
+calendar_group_counts,Shared,,purchase_period=2017-06,late_percent,3.0214424951267054
+calendar_group_counts,Shared,,purchase_period=2017-06,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-07,orders,3829
+calendar_group_counts,Shared,,purchase_period=2017-07,late_orders,100
+calendar_group_counts,Shared,,purchase_period=2017-07,not_late_orders,3729
+calendar_group_counts,Shared,,purchase_period=2017-07,late_percent,2.6116479498563594
+calendar_group_counts,Shared,,purchase_period=2017-07,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-08,orders,4150
+calendar_group_counts,Shared,,purchase_period=2017-08,late_orders,120
+calendar_group_counts,Shared,,purchase_period=2017-08,not_late_orders,4030
+calendar_group_counts,Shared,,purchase_period=2017-08,late_percent,2.891566265060241
+calendar_group_counts,Shared,,purchase_period=2017-08,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-09,orders,4059
+calendar_group_counts,Shared,,purchase_period=2017-09,late_orders,175
+calendar_group_counts,Shared,,purchase_period=2017-09,not_late_orders,3884
+calendar_group_counts,Shared,,purchase_period=2017-09,late_percent,4.31140675043114
+calendar_group_counts,Shared,,purchase_period=2017-09,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-10,orders,4416
+calendar_group_counts,Shared,,purchase_period=2017-10,late_orders,182
+calendar_group_counts,Shared,,purchase_period=2017-10,not_late_orders,4234
+calendar_group_counts,Shared,,purchase_period=2017-10,late_percent,4.121376811594203
+calendar_group_counts,Shared,,purchase_period=2017-10,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-11,orders,7190
+calendar_group_counts,Shared,,purchase_period=2017-11,late_orders,894
+calendar_group_counts,Shared,,purchase_period=2017-11,not_late_orders,6296
+calendar_group_counts,Shared,,purchase_period=2017-11,late_percent,12.43393602225313
+calendar_group_counts,Shared,,purchase_period=2017-11,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2017-12,orders,5467
+calendar_group_counts,Shared,,purchase_period=2017-12,late_orders,406
+calendar_group_counts,Shared,,purchase_period=2017-12,not_late_orders,5061
+calendar_group_counts,Shared,,purchase_period=2017-12,late_percent,7.426376440460948
+calendar_group_counts,Shared,,purchase_period=2017-12,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2018-01,orders,6940
+calendar_group_counts,Shared,,purchase_period=2018-01,late_orders,384
+calendar_group_counts,Shared,,purchase_period=2018-01,not_late_orders,6556
+calendar_group_counts,Shared,,purchase_period=2018-01,late_percent,5.53314121037464
+calendar_group_counts,Shared,,purchase_period=2018-01,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2018-02,orders,6306
+calendar_group_counts,Shared,,purchase_period=2018-02,late_orders,800
+calendar_group_counts,Shared,,purchase_period=2018-02,not_late_orders,5506
+calendar_group_counts,Shared,,purchase_period=2018-02,late_percent,12.686330478908975
+calendar_group_counts,Shared,,purchase_period=2018-02,single_outcome_group,False
+calendar_group_counts,Shared,,purchase_period=2018-03,orders,254
+calendar_group_counts,Shared,,purchase_period=2018-03,late_orders,62
+calendar_group_counts,Shared,,purchase_period=2018-03,not_late_orders,192
+calendar_group_counts,Shared,,purchase_period=2018-03,late_percent,24.409448818897637
+calendar_group_counts,Shared,,purchase_period=2018-03,single_outcome_group,False
+temporal_blocks,Shared,,,utc_block_anchor,2016-09-12 00:00:00+00:00

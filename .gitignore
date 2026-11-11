@@ -1,22 +1,72 @@
 # Python environments
 .venv/
-.venv-phong/
+.venv*/
 venv/
 env/
+ENV/
+__pypackages__/
 
-# Python cache
+# Python bytecode, packaging and tool caches
 __pycache__/
 *.py[cod]
-.ipynb_checkpoints/
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
 
-# Local secrets
+# Notebook and plotting runtime state
+.ipynb_checkpoints/
+.jupyter/
+.ipython/
+.matplotlib/
+.cache/
+catboost_info/
+
+# Local credentials; example environment files may be committed
 .env
 .env.*
 !.env.example
+!.env.template
+.aws/
+credentials.json
+token.json
+*.pem
+*.key
 
-# OS files
+# Large/local artifacts. Keep tracked CSV data, result tables and figures.
+/data/external/inmet/raw/
+/outputs/models/
+/outputs/reruns/
+/outputs/migrations/
+/outputs/tmp/
+*.joblib
+*.pkl
+*.pickle
+*.cbm
+*.onnx
+
+# Local editor settings and temporary files
+.vscode/
+.idea/
+*.code-workspace
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+~$*
+
+# Operating system metadata
 .DS_Store
 Thumbs.db
-
-/data/external/inmet/raw/
-outputs/models/
+Desktop.ini
