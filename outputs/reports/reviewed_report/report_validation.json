@@ -1,0 +1,14 @@
+{
+  "manual_cover_preserved": true,
+  "manual_heading_sequence_preserved": true,
+  "tables_checked": 20,
+  "retained_table_values_unchanged": true,
+  "removed_reference_rows": 2,
+  "business_paragraphs": 7,
+  "only_two_plot_images_changed": true,
+  "manual_bookmarks_preserved": true,
+  "no_field_errors": true,
+  "source_report_unchanged_before_apply": true,
+  "reviewed_sha256": "f422a87089d133ad9a9cf7b60eac5584d5be0ef8deadd107841880bef70db659",
+  "no_removed_model_mentions": true
+}

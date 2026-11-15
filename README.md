@@ -1,247 +1,238 @@
-# Early Prediction of Late Delivery Risk in Brazilian E-Commerce
+# Late Delivery in Brazilian E-Commerce
 
-This project uses the **Brazilian E-Commerce Public Dataset by Olist**, enriched with product attributes, Brazilian holidays and INMET weather observations, to study delivery delays and predict risk at order placement.
+### Statistical Analysis · STAT3013.R11.CTTT · Group 5
 
-The completed workflow covers preprocessing, exploratory data analysis (EDA), statistical inference, explanatory regression, predictive baselines, class weighting, calibration, threshold selection and final Test evaluation. Random oversampling and undersampling were added **after Test results had been observed** and are reported separately as exploratory analyses.
+**From order data to statistical evidence and early delivery-risk prediction.**
 
-## 1. Objectives and scope
+This course project studies late delivery in the Brazilian Olist e-commerce dataset. It combines data preparation, exploratory data analysis, statistical tests, explanatory logistic regression and machine learning. Customer reviews and cancellation provide additional business context.
 
-- Describe delivery delays across time, geography and order characteristics.
-- Test associations and report effect sizes and uncertainty.
-- Compare Logistic Regression, Random Forest, LightGBM, XGBoost and CatBoost, with DummyClassifier as a reference.
-- Evaluate predicted probabilities and an operating threshold under a shared protocol.
+The goal is to understand delivery patterns, identify selected associations and evaluate whether order information can support early risk alerts. The results describe historical transactions; they do not establish causal effects or a system ready for deployment.
 
-This is an observational study of historical transactions. Results do not establish causation or demonstrate production readiness.
+[Research questions](#research-questions) · [Methods and statistical findings](#methods-and-statistical-findings) · [Machine learning results](#machine-learning-results) · [Business insights](#business-insights) · [Limitations](#limitations) · [Getting started](#getting-started)
 
-## 2. Repository structure
+## Project at a glance
+
+| Item | Scope |
+|---|---|
+| Course | Phân tích thống kê — **STAT3013.R11.CTTT** |
+| Data | Olist orders, customers, items, sellers, products, payments, reviews and geolocation; enriched with Brazilian holidays and INMET weather |
+| Research sample | **99,441 orders**, one row per order |
+| Valid delivery labels | **96,470**, including **6,534 Late orders (6.77%)** |
+| Predictive inputs | **21 predictors**: basic/temporal, price/product, holiday and weather features |
+| Learned classifiers | Logistic Regression, Random Forest, LightGBM, XGBoost and CatBoost |
+| Current report | [Final Report.docx](outputs/reports/reviewed_report/Final%20Report.docx) |
+
+An order is **Late** when its actual delivery calendar date is later than its estimated delivery date. Eligible orders delivered on or before that date are **Not Late**. Orders without a valid label, including cancelled or unresolved orders, are excluded from label-dependent analysis and are never assigned to Not Late by default.
+
+## Research questions
+
+| Question | Evidence and current status |
+|---|---|
+| **A.** How does late delivery vary across order characteristics, locations and time? | Descriptive analysis of distance, states, months and order features. |
+| **B.** Which selected variables are associated with late delivery? | Four primary tests: distance, freight, purchase holiday and destination rainfall. |
+| **C.** Which associations remain after adjustment for other selected variables? | Multivariable logistic regression, with calendar and block-length sensitivity checks. |
+| **D.** Do price/product, holiday and weather features improve early prediction on later orders? | Full-feature model comparisons are complete. **Controlled feature-group comparisons are not yet completed**, so this question remains open. |
+| **E.** How do review scores and cancellation patterns differ across groups? | Descriptive comparisons only; no review/cancellation hypothesis test or regression is claimed. |
+
+## Methods and statistical findings
+
+The workflow has five stages: **preprocessing → exploratory analysis → statistical inference → explanatory regression → predictive modelling**. Data preparation checks identifiers, joins, timestamps, missing values and target validity before combining order-level features.
+
+Exploratory analysis finds late rates of **4.47%** in the 0–100 km distance group and **12.04%** at distances of at least 2,000 km. Rates also vary over time: **18.96% in March 2018**, compared with **1.16% in June 2018**. These patterns motivate temporal evaluation and careful interpretation of small groups.
+
+### Stage 3 · Four primary tests
+
+All tests are two-sided. Holm correction is applied across the four primary p-values; confidence intervals are pointwise 95% intervals.
+
+| Variable | Method | Main effect | Holm p-value |
+|---|---|---|---:|
+| Distance | Mann–Whitney U; rank-biserial effect and bootstrap interval | Rank-biserial **0.160**, 95% CI [0.146, 0.173] | 7.92e-102 |
+| Freight value | Welch two-sample t-test | Late minus Not Late: **+2.641 BRL**, CI [2.049, 3.233] | 8.13e-18 |
+| Holiday purchase | Chi-square; risk difference | Holiday minus non-holiday: **−1.928 percentage points**, CI [−2.927, −0.698] | 0.00344 |
+| Destination rainfall index | Seven-day temporal block bootstrap | Late minus Not Late: **+1.314 mm**, CI [0.794, 1.767] | 0.00100 |
+
+All four tests reject their null hypotheses at 0.05 after correction. Their effects have different units, and statistical significance alone does not establish business importance. Mann–Whitney compares distributions/ranks and is not automatically a median test.
+
+Source: [primary test results](outputs/tables/inferential_statistics/statistical_test_results.csv). See the [statistical validation review](docs/inferential_statistics/validation_review.md) for assumptions and sensitivity checks.
+
+### Stage 4 · Adjusted delivery associations
+
+The main explanatory logistic model uses **56,553 complete-case training orders**, transformed numerical terms and uncertainty clustered in seven-day blocks. Odds ratios describe adjusted associations, not changes in probability or causal effects.
+
+| Contrast | Adjusted odds ratio | Pointwise 95% CI | Interpretation |
+|---|---:|---|---|
+| Distance: 200 vs 100 km | **1.193** | [1.101, 1.292] | Higher delivery-delay odds after adjustment. |
+| Freight: 20 vs 10 BRL | **1.071** | [0.970, 1.183] | Interval includes 1; this contrast is unclear after adjustment. |
+| Holiday vs non-holiday | **0.593** | [0.408, 0.862] | Lower observed odds; this does not mean holidays prevent delays. |
+| Rainfall index: 5 vs 0 mm | **1.290** | [1.168, 1.423] | Sensitive to calendar controls: about **1.036 [0.976, 1.100]** after calendar adjustment. |
+
+Sources: [main adjusted results](outputs/tables/explanatory_regression/four_rq_adjusted_results.csv), [sensitivity results](outputs/tables/explanatory_regression/four_rq_sensitivity_results.csv) and [regression findings](docs/explanatory_regression/logistic_regression_findings.md).
+
+## Machine learning results
+
+### Shared evaluation design
+
+All models use the same chronological manifest and 21 predictors. Preprocessing is fitted on Train only. Selected boundaries have 45-day maturation gaps and label-availability cutoffs; **18,800 labelled orders are excluded** from the final samples.
+
+| Split | Orders | Late orders | Purpose |
+|---|---:|---:|---|
+| Train | 57,449 | 3,720 | Fit preprocessing and classifiers. |
+| Validation A | 7,661 | 387 | Compare and select configurations. |
+| Validation B | 3,115 | 180 | Fit calibration and select the threshold. |
+| Test | 9,445 | 504 | Evaluate frozen choices. |
+
+**Average Precision (AP)** is the primary selection metric; higher is better. It measures ranking performance and is not accuracy. ROC-AUC is supplementary. Lower Brier score and Log Loss indicate better probability quality. Precision, recall, F1 and alert rate describe a chosen operating threshold.
+
+### Five unweighted baselines
+
+| Model | Validation A AP ↑ | Test AP ↑ | Test ROC-AUC ↑ | Test Brier ↓ | Test Log Loss ↓ |
+|---|---:|---:|---:|---:|---:|
+| **CatBoost — selected on A** | **0.09285** | 0.08284 | 0.67409 | 0.05014 | 0.20085 |
+| Logistic Regression | 0.09164 | 0.08124 | 0.62990 | 0.05118 | 0.20698 |
+| XGBoost | 0.07684 | 0.08771 | 0.68204 | 0.05059 | 0.20083 |
+| Random Forest | 0.07477 | **0.09781** | **0.70379** | **0.04992** | **0.20042** |
+| LightGBM | 0.07362 | 0.08902 | 0.67704 | 0.05034 | 0.20128 |
+
+CatBoost narrowly leads on Validation A; its AP advantage over Logistic Regression is about 0.00122, without an estimated uncertainty interval. Random Forest has the highest observed Test AP, but **the model choice is not changed using Test**. The ranking changes across periods and does not establish a universally best algorithm.
+
+Sources: [Validation A baselines](outputs/tables/machine_learning/ml_catboost/20261111_152855_922857/baseline_model_comparison.csv) and [Test comparison](outputs/tables/machine_learning/ml_test/20261111_160038_411032/test_model_comparison.csv).
+
+### Class weighting and random sampling
+
+Weighted CatBoost uses a Late-class weight of about **14.44**. Its Validation A AP falls to **0.07915**, compared with 0.09285 for the unweighted baseline; it is not selected. Its saved raw Test AP is 0.07391.
+
+Random sampling is applied **only to training classifier inputs**, using preprocessing fitted on the original Train sample. The same sampled indices are shared across all five models within each method.
+
+| Model | Baseline AP | Oversampling AP | Undersampling AP |
+|---|---:|---:|---:|
+| CatBoost | **0.09285** | 0.07773 | 0.07845 |
+| Logistic Regression | 0.09164 | 0.09258 | 0.08765 |
+| Random Forest | 0.07477 | 0.07273 | 0.07928 |
+| LightGBM | 0.07362 | 0.07317 | 0.06597 |
+| XGBoost | 0.07684 | 0.06585 | 0.06809 |
+
+These are **Validation A** scores. Oversampling duplicates minority records to 53,729 per class; undersampling keeps 3,720 per class. Only Logistic Regression improves its own AP with oversampling, while only Random Forest improves with undersampling. Both methods worsen Brier and Log Loss for every model. No sampled configuration exceeds the original CatBoost baseline AP.
+
+Sampling experiments took place after Test exposure. They are exploratory and did not change the frozen pipeline or trigger new B/Test evaluations. Source: [sampling comparison](outputs/tables/machine_learning/ml_random_undersampling/20261111_161215_292137/sampling_method_comparison.csv).
+
+### CatBoost calibration and the frozen threshold
+
+Sigmoid calibration is fitted on Validation B. The calibrated threshold **0.054178902872422004** is selected to achieve recall of at least 70%, prioritising precision, then lower alert rate and a larger threshold. Validation B serves both fitting and selection, so its results are not independent evaluation.
+
+| Probability quality | Validation B: raw → calibrated | Test: raw → calibrated |
+|---|---|---|
+| Mean predicted probability | 2.75% → 5.78% | 5.23% → 11.81% |
+| Observed late rate | 5.78% | 5.34% |
+| Brier score ↓ | 0.05410 → 0.05295 | 0.05014 → 0.05752 |
+| Log Loss ↓ | 0.21686 → 0.20294 | 0.20085 → 0.22789 |
+
+| Frozen-threshold result | Validation B | Test |
+|---|---:|---:|
+| Precision | 10.97% | **6.42%** |
+| Recall | 71.11% | **94.25%** |
+| F1 | 0.19005 | **0.12024** |
+| Alert rate | 37.46% | **78.32%** |
+| True / false alerts | 128 / 1,039 | **475 / 6,922** |
+| Missed Late orders | 52 | **29** |
+
+Calibration improves its fitting sample but **worsens on the later Test period**. High recall comes with many false alerts: 7,397 of 9,445 Test orders are flagged. The pipeline is an experimental reference; broad automatic deployment is not supported by these results.
+
+Sources: [calibration on B](outputs/tables/machine_learning/ml_calibration/20261111_154951_108593/calibration_comparison.csv), [Test calibration](outputs/tables/machine_learning/ml_test/20261111_160038_411032/selected_calibration_comparison.csv) and [Test threshold metrics](outputs/tables/machine_learning/ml_test/20261111_160038_411032/selected_threshold_metrics.csv).
+
+## Business insights
+
+| Evidence | Business implication and next step |
+|---|---|
+| Low-review rates are **62.40% for Late** and **9.27% for Not Late** orders; mean scores are 2.27 and 4.29. | Delivery reliability deserves attention in customer support. Test clearer status messages and early contact; the observed association does not prove that these actions improve reviews. |
+| Longer routes have higher descriptive late rates and an adjusted distance OR above 1. | Review delivery promises and capacity for route/seller groups with repeated delays and substantial volume. A 200 km comparison is not an intervention cutoff. |
+| Late rates and model rankings change across periods. | Monitor risk and performance by period and route. A threshold or probability correction may not transfer to the next period. |
+| The frozen Test rule creates **6,922 false alerts** for 475 true alerts. | Define staff capacity and intervention costs before a pilot. Compare precision and late-order coverage within a realistic daily review budget. |
+| Freight is unclear after adjustment; rainfall is sensitive to calendar controls. | Do not justify higher shipping charges or weather-based decisions from these associations alone. Test added predictive value through controlled feature-group comparisons. |
+| There are **625 cancellations (0.63%)**. Sao Paulo has 327, while Rondonia has three despite its higher percentage. | Prioritise investigations using both event volume and rate. Keep cancellation separate from the delivery-delay target and avoid ranking small groups too strongly. |
+
+Review figures use one **latest valid review per order**. Older EDA outputs select the first review and have slightly different percentages. Sources: [review summary](outputs/tables/inferential_statistics/review_descriptive_summary.csv), [review coverage](outputs/tables/inferential_statistics/review_coverage.csv) and [cancellation by state](outputs/tables/eda/cancellation_satisfaction/state_cancellation.csv).
+
+Business value still needs a controlled pilot. Possible measures include alerts handled per day, confirmed late orders found, missed delays, support workload and customer outcomes. No intervention effect, financial saving or return on investment has been measured.
+
+## Limitations
+
+- **Observational and historical data:** Olist transactions are not a random sample of all Brazilian e-commerce. Associations do not establish causes.
+- **Selected cohorts:** prediction requires a valid delivery label. Cancelled/unresolved orders, maturation exclusions and complete-case regression can change the population represented.
+- **Information availability:** purchase-time availability of some seller, estimate and weather inputs remains an assumption. Weather publication timing and the timezone convention need further verification; state averages do not describe an exact route.
+- **Dependence and model assumptions:** order-level distance bootstrap intervals and Welch tests do not fully address seller/time dependence. Block-based uncertainty and regression diagnostics also have limits; some covariance matrices are rank deficient.
+- **Evaluation reuse:** Validation A was reused for selection. Test outcomes appeared earlier in exploratory/statistical analysis, and sampling followed Test exposure. Test was therefore not completely unseen in the wider research process.
+- **Uncertain performance differences:** model comparisons lack uncertainty intervals. Calibration and threshold selection share Validation B, and the fitted correction transfers poorly to Test.
+- **Incomplete question D:** full-feature algorithm comparison does not establish the incremental value of product/price, holiday or weather features.
+- **Reconstruction and deployment:** original INMET ZIPs and frozen model binaries are not supplied in Git. Operational costs, alert budgets and intervention benefits remain unvalidated.
+
+Further development should use an appropriate new evaluation design rather than repeatedly tuning against the existing Test results.
+
+## Repository guide
 
 ```text
 data/
-  raw/                         # Nine original Olist tables
-  processed/                   # Cleaned tables and order-level datasets
-  external/
-    holidays/
-    inmet/processed/           # Processed weather tables
-    inmet/raw/                 # Separately supplied ZIPs; excluded from Git
-  ml_preparation/               # Shared split manifest and summary
-docs/
-  data_preprocessing/
-  eda/
-  inferential_statistics/
-  explanatory_regression/
-  machine_learning/
-  predictor_list.csv            # 21 ML predictors
+  raw/                         Original Olist tables
+  processed/                   Cleaned and enriched order-level data
+  external/                    Holiday and processed weather inputs
+  ml_preparation/              Shared split manifest and summary
+docs/                          Dictionaries, findings, validation and ML protocol
 notebooks/
-  01_data_preprocessing/
-  02_eda/
-  03_inferential_statistics/
-  04_explanatory_regression/
-  05_machine_learning/
-    data_preparation/
-    baselines/
-    model_selection/
-    calibration/
-    test_evaluation/
-    sampling_experiments/
+  01_data_preprocessing/       Cleaning, aggregation and feature preparation
+  02_eda/                     Delivery, time, reviews and cancellation exploration
+  03_inferential_statistics/  Four primary delivery tests
+  04_explanatory_regression/  Adjusted delivery associations and sensitivity
+  05_machine_learning/        Baselines, selection, calibration, Test and sampling
 outputs/
-  tables/                       # Tables grouped by analysis stage
-  figures/
-  models/                       # Local pipelines/calibrators; excluded from Git
-  migrations/                   # Local metadata backups; excluded from Git
-README.md
-requirements.txt
-.gitignore
+  tables/                     Results grouped by stage and timestamped ML run
+  figures/                    Exported analytical charts
+  reports/                    Current reviewed report and earlier versions
+  presentations/              Existing slides and previews
+  models/                     Local binary artifacts; excluded from Git
+requirements.txt              Shared direct dependencies
+environment.txt               Installed project environment snapshot
+README.md                     Single project overview
 ```
 
-Indexes: [documentation](docs/README.md), [notebooks](notebooks/README.md), [ML workflow](notebooks/05_machine_learning/README.md), [result tables](outputs/tables/README.md).
-
-## 3. Dataset and target
-
-The order-level dataset contains **99,441 orders**, with one row per `order_id`. There are **96,470 valid delivery labels**, including **6,534 Late orders**, or **6.77%** of labeled orders.
-
-For orders eligible for labeling:
-
-- `is_late = 1`: actual delivery calendar date is after the estimated date.
-- `is_late = 0`: delivery is on or before the estimated date.
-- Missing label: labeling requirements are not met; **never replace this with 0**.
-
-Label construction also checks order status and date validity. See the [dataset dictionary](docs/data_preprocessing/order_dataset_dictionary.md) and [data quality/leakage review](docs/eda/data_quality_and_leakage_review.md).
-
-| Shared ML input | Location |
+| Start here | Location |
 |---|---|
-| Main dataset | [research_data_weather_price_holiday_assume_utc.csv](data/processed/research_data_weather_price_holiday_assume_utc.csv) |
-| 21 predictors | [predictor_list.csv](docs/predictor_list.csv) |
-| Order assignments | [split_manifest.csv](data/ml_preparation/split_manifest.csv) |
-| Split counts | [split_summary.csv](data/ml_preparation/split_summary.csv) |
+| Main predictive dataset | [Enriched order data](data/processed/research_data_weather_price_holiday_assume_utc.csv) |
+| Predictor definitions | [21-predictor list](docs/predictor_list.csv) |
+| Temporal assignments | [Split manifest](data/ml_preparation/split_manifest.csv), [summary](data/ml_preparation/split_summary.csv) |
+| Statistical notebook | [Four delivery tests](notebooks/03_inferential_statistics/test_delivery_risk_associations.ipynb) |
+| Explanatory notebook | [Adjusted logistic regression](notebooks/04_explanatory_regression/explain_late_delivery_logistic.ipynb) |
+| ML design and frozen runs | [Experiment protocol](docs/machine_learning/experiment_protocol.md) |
+| Current report/source comparison | [141 checks passed](outputs/reports/reviewed_report/cross_check_results.json) |
 
-Predictors cover internal order information, price/product characteristics, holidays and weather. The dataset also contains post-purchase outcomes: use the predictor list rather than every available column.
+The reviewed DOCX is the current report; earlier generated reports are previous versions. Slides are retained as requested and contain older scope/model references. Use the current report and protocol for agreed conclusions. Word contents, figure/table lists and cross-references can be refreshed with **Ctrl+A → F9**; preserve manual edits instead of rebuilding an older report over it.
 
-Original and processed CSVs are currently tracked in Git. Keep raw files unchanged. Holiday sources are recorded in the `source_url` column; the [INMET review](docs/data_preprocessing/inmet_weather_preparation_review.md) documents weather preparation and aggregation.
+## Getting started
 
-### Inputs required to rebuild weather from source
+The recorded working environment is Windows with CPython 3.14.6. Direct dependencies are pinned in `requirements.txt`; historical experiments retain their own package-version records. The file is not a complete transitive lockfile.
 
-```text
-data/external/inmet/raw/2016.zip
-data/external/inmet/raw/2017.zip
-data/external/inmet/raw/2018.zip
-```
-
-These three archives are not currently supplied and are excluded from Git. Processed weather tables and the ML dataset are available, so the processed-data workflow and saved results can be inspected without rebuilding the archives.
-
-## 4. Environment setup
-
-Validated environment: **Windows, CPython 3.14.6**. Other Python versions were not verified in this handoff.
-
-`requirements.txt` pins direct dependencies from the working environment; pip resolves transitive dependencies. It is not a complete transitive lockfile. Each experiment retains its own `package_versions.json`, and historical runs may use different environments.
+[environment.txt](environment.txt) stores the shared installed environment snapshot, including transitive packages and notebook/document tools. It matches the direct dependency versions in `requirements.txt`. It is specific to the recorded Windows/Python setup and is not a portable lockfile.
 
 Run from the repository root in PowerShell:
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m pip check
 .\.venv\Scripts\python.exe -m jupyterlab
 ```
 
-For VS Code, install the Python and Jupyter extensions and select `.venv\Scripts\python.exe` as the kernel. Calling the environment's Python directly avoids changing PowerShell execution policy for activation.
+Select the project environment as the notebook kernel. The practical workflow is:
 
-## 5. Notebook workflow
+1. Inspect source inputs and preprocessing notebooks, then EDA. Keep original raw data unchanged.
+2. Prepare the shared manifest with [ml_data_preparation](notebooks/05_machine_learning/data_preparation/ml_data_preparation.ipynb); Stage 4 also depends on it. Inspect the Stage 3 and Stage 4 notebooks.
+3. For ML, follow `baselines/` → `model_selection/` → `calibration/` → `test_evaluation/`. Sampling notebooks are separate exploratory extensions.
+4. Inspect saved Test results. The final evaluation notebook guards against a second completed evaluation of the same frozen configuration; new upstream runs do not automatically replace frozen references.
 
-### Preprocessing and EDA
+**Before rebuilding:** original weather extraction requires `data/external/inmet/raw/2016.zip`, `2017.zip` and `2018.zip`, which are absent. Processed weather and the enriched dataset are available. The base construction notebook overwrites `research_data.csv`; temporal export defaults to `EXPORT=False` and includes a branch guard. Review these controls before rebuilding the canonical data.
 
-1. [clean_olist_tables](notebooks/01_data_preprocessing/clean_olist_tables.ipynb): clean source tables.
-2. [build_order_level_dataset](notebooks/01_data_preprocessing/build_order_level_dataset.ipynb): construct the order-level dataset and target.
-3. [build_temporal_features](notebooks/01_data_preprocessing/build_temporal_features.ipynb): derive temporal features.
-4. Prepare [price/product](notebooks/01_data_preprocessing/build_price_product_features.ipynb), [holiday](notebooks/01_data_preprocessing/build_holiday_features.ipynb) and [weather](notebooks/01_data_preprocessing/prepare_inmet_weather.ipynb) features, then [merge the enriched dataset](notebooks/01_data_preprocessing/merge_enriched_features.ipynb).
-5. [02_eda](notebooks/02_eda/): examine delivery delays, class imbalance, time patterns, cancellations, reviews and data quality.
+**Frozen artifacts:** `outputs/models/` is excluded from Git. A clone does not restore pipelines or calibrators. Obtain matching artifacts separately and verify their recorded hashes before using the frozen configuration. Retraining creates new artifacts.
 
-Review exports before rebuilding the canonical dataset. The order-level construction notebook overwrites `research_data.csv`; temporal export defaults to `EXPORT=False` and still checks for branch `feat/temporal-feature-enhancement` when enabled. Running the chain without reviewing these controls can leave the dataset without its temporal additions. Weather preparation also requires the three ZIPs above. These implementation limitations remain unresolved.
+## Data sources
 
-### Statistical analysis and ML
-
-| Step | Notebook / folder | Purpose |
-|---|---|---|
-| Split preparation | [ml_data_preparation](notebooks/05_machine_learning/data_preparation/ml_data_preparation.ipynb) | Shared manifest required by Stage 4 and predictive ML |
-| Stage 3 | [test_delivery_risk_associations](notebooks/03_inferential_statistics/test_delivery_risk_associations.ipynb) | 26 primary tests, Holm correction, effect sizes and intervals |
-| Stage 4 | [explain_late_delivery_logistic](notebooks/04_explanatory_regression/explain_late_delivery_logistic.ipynb) | M0/M4 explanatory models, sensitivity analyses and diagnostics; 56,553 complete cases |
-| Baselines | [baselines](notebooks/05_machine_learning/baselines/) | Five learned model families and DummyClassifier |
-| Selection | [model_selection](notebooks/05_machine_learning/model_selection/) | Weighted CatBoost challenger; Validation A selection and pipeline freeze |
-| Calibration | [calibration_threshold](notebooks/05_machine_learning/calibration/calibration_threshold.ipynb) | Sigmoid calibration and threshold selection on B |
-| Test | [final_test_evaluation](notebooks/05_machine_learning/test_evaluation/final_test_evaluation.ipynb) | Evaluation of frozen configurations |
-| Post-Test extensions | [sampling_experiments](notebooks/05_machine_learning/sampling_experiments/) | Oversampling/undersampling across five models, scored on A only |
-
-ML code is implemented directly in `.ipynb` cells. Repository discovery works from notebook subfolders. Start new experiments with a fresh kernel and follow the [ML execution guide](notebooks/05_machine_learning/README.md).
-
-**Final Test evaluation is complete.** The Test notebook blocks a second completed evaluation of the same frozen configuration. Inspect saved outputs rather than using Test to tune models or thresholds. Selection, calibration and Test notebooks reference specific recorded runs; rerunning a baseline does not silently replace those frozen references.
-
-## 6. Experimental design
-
-Orders are split chronologically, keeping the same purchase day within one split and applying 45-day maturation gaps and label-availability cutoffs. Models share the same manifest rather than using independent random splits.
-
-| Split | Orders | Late orders | Role |
-|---|---:|---:|---|
-| Train | 57,449 | 3,720 | Fit preprocessing and classifier |
-| Validation A | 7,661 | 387 | Compare and select configurations |
-| Validation B | 3,115 | 180 | Calibration and threshold selection |
-| Test | 9,445 | 504 | Final evaluation |
-| **Total** | **77,670** | **4,791** | Selected by the manifest |
-
-Another 18,800 valid-labeled orders are excluded by maturation gaps or label-availability requirements. Do not force the final split back to 70/20/10.
-
-- **Average Precision (AP)** is the primary selection metric. It is not interchangeable with trapezoidal PR-AUC.
-- ROC-AUC measures discrimination; lower Brier score and Log Loss indicate better probability quality.
-- Imputation, encoding and scaling learn from Train only. Logistic Regression uses scaling; CatBoost uses native categorical handling; the other tree models use one-hot encoding.
-- The unweighted CatBoost baseline was selected on A. Its weighted challenger performed worse and was rejected.
-- Sigmoid calibration was fitted to clipped raw log-odds on B. The threshold rule requires Recall >=70%, prioritizes Precision, then lower alert rate.
-- Calibration and threshold selection share B, so B metrics are not an independent evaluation.
-
-See [experiment_protocol.md](docs/machine_learning/experiment_protocol.md) for parameters, tie-break rules, cutoffs and scope amendments.
-
-## 7. Main results
-
-### Raw probabilities on Test
-
-Test contains 9,445 orders with 5.34% Late prevalence. The ranking below was not used to reselect the model.
-
-| Model | AP (higher) | ROC-AUC (higher) | Brier (lower) | Log Loss (lower) |
-|---|---:|---:|---:|---:|
-| Random Forest | **0.097815** | **0.703794** | **0.049924** | **0.200420** |
-| LightGBM | 0.089018 | 0.677041 | 0.050339 | 0.201280 |
-| XGBoost | 0.087707 | 0.682035 | 0.050587 | 0.200834 |
-| CatBoost - selected on A | 0.082843 | 0.674094 | 0.050143 | 0.200854 |
-| Logistic Regression | 0.081244 | 0.629901 | 0.051185 | 0.206977 |
-| Weighted CatBoost | 0.073914 | 0.624723 | 0.176899 | 0.535125 |
-| DummyClassifier | 0.053362 | 0.500000 | 0.050644 | 0.209432 |
-
-Source: [Test comparison](outputs/tables/machine_learning/ml_test/20261111_160038_411032/seven_model_test_comparison.csv).
-
-### Selected CatBoost at the B-frozen operating threshold
-
-The calibrated probability threshold is **0.054178902872422004**, with predicted Late defined as `p >= threshold`.
-
-| Test measure | Result |
-|---|---:|
-| Recall | 94.25% - 475 of 504 Late orders detected |
-| Precision | 6.42% |
-| F1 | 0.120238 |
-| Alert rate | 78.32% - 7,397 orders |
-| TP / FP / FN / TN | 475 / 6,922 / 29 / 2,019 |
-
-Calibration improved B scores but **worsened Test probability quality**: Brier increased from 0.050143 to 0.057522, and Log Loss from 0.200854 to 0.227891. High recall came with a large false-alert burden; operational effectiveness has not been established.
-
-Sources: [raw versus calibrated probabilities](outputs/tables/machine_learning/ml_test/20261111_160038_411032/selected_calibration_comparison.csv), [threshold metrics](outputs/tables/machine_learning/ml_test/20261111_160038_411032/selected_threshold_metrics.csv).
-
-### Post-Test resampling analyses
-
-All five model families used seed 42, identical sampled indices within each method and unchanged baseline parameters. Preprocessing was fitted on original Train before resampling classifier inputs. Validation A was not resampled.
-
-- Oversampling: 53,729 rows per class; only Logistic Regression slightly improved AP.
-- Undersampling: 3,720 rows per class; only Random Forest improved AP over its own baseline.
-- Both methods worsened Brier and Log Loss for all five models.
-- No resampled configuration exceeded the original CatBoost baseline AP on A. The frozen decision was not changed, and B/Test were not rescored.
-
-Source: [baseline, oversampling and undersampling comparison](outputs/tables/machine_learning/ml_random_undersampling/20261111_161215_292137/sampling_method_comparison.csv).
-
-## 8. Artifacts and reproducibility
-
-| Artifact | Location |
-|---|---|
-| Classifier selection | [selected_config.json](outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json) |
-| Calibration and threshold | [final_config.json](outputs/tables/machine_learning/ml_calibration/20261111_154951_108593/final_config.json) |
-| Test evaluation audit | [evaluation_manifest.json](outputs/tables/machine_learning/ml_test/20261111_160038_411032/evaluation_manifest.json) |
-| Table index | [outputs/tables/README.md](outputs/tables/README.md) |
-
-Runs record metrics, order-level predictions, audits, parameters, package versions and input hashes. Check completion records where available and required artifacts: incomplete trial folders are retained for provenance and are not completed results.
-
-`outputs/models/` is excluded from Git because it contains large binary artifacts. **Cloning this repository does not restore the original pipelines or calibrators.** Verifying frozen artifacts or applying them to other data requires the matching model backup and SHA256. Metrics and metadata are not substitutes for the model. Retraining creates new artifacts and does not automatically replace notebook references to frozen runs.
-
-`outputs/reruns/` was removed; notebooks do not depend on it. `outputs/migrations/` contains local metadata backups from path reorganizations and is excluded from Git. Current metadata paths and dependent hashes were migrated together; numerical results and predictions were not recomputed during those moves.
-
-## 9. Limitations and remaining work
-
-- Historical Olist transactions are not a random sample of all Brazilian e-commerce.
-- Prediction cohorts contain ultimately valid-labeled orders, not every canceled or unresolved order.
-- Label-cutoff exclusions and complete-case regression can introduce selection bias.
-- Source timezone, weather publication timing and purchase-time availability of some fields remain assumptions. State-level weather does not describe an exact delivery route.
-- Actual delivery timestamps/durations, reviews and post-purchase flags must not enter the purchase-time predictor set.
-- A was reused for selection; Test outcomes previously appeared in EDA/Stage 3. Resampling extensions followed Test exposure.
-- Model-performance differences have no uncertainty intervals; operating costs and production alert requirements have not been validated.
-
-Remaining descriptive work includes error/subgroup analysis and examining calibration differences between B and Test. Further model development needs a new evaluation design rather than tuning against the existing Test cohort. Supply the INMET ZIPs and review temporal export controls before rebuilding preprocessing from scratch.
-
-## 10. Commit preparation
-
-Keep notebooks, documentation, requirements, predictor definitions, currently tracked CSV data, split manifests, result tables and figures in Git. Exclude virtual environments, secrets, caches, binary models, raw INMET ZIPs, temporary run logs and local migration backups.
-
-```powershell
-git status --short
-git diff --check
-git diff --stat
-git add -A
-git diff --cached --stat
-git diff --cached --check
-git commit -m "Organize project and document final experiments"
-```
-
-Review changes before staging or committing. Reorganized files may appear as deleted old paths and untracked new paths before staging; that alone does not imply data loss. `.gitignore` does not remove previously tracked files from history.
+- [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+- [INMET historical weather observations](https://portal.inmet.gov.br/dadoshistoricos)
+- Holiday provenance is recorded in the local holiday tables; [weather preparation notes](docs/data_preprocessing/inmet_weather_preparation_review.md) document aggregation and coverage.

@@ -2,9 +2,9 @@
 
 ## 1. Objective
 
-Predict late delivery risk at the time an order is placed. Compare five learned model families (Logistic Regression, Random Forest, LightGBM, XGBoost and CatBoost) plus a DummyClassifier prior reference under shared data and evaluation rules. The study is observational and does not establish causation.
+Predict late delivery risk at the time an order is placed. Compare five learned model families (Logistic Regression, Random Forest, LightGBM, XGBoost and CatBoost) under shared data and evaluation rules. The study is observational and does not establish causation.
 
-Updated 2026-11-11 after observing six Validation A baseline results. Section 8 defines the current reduced experiment sequence and replaces the earlier eight-configuration, broad-tuning and feature-ablation plan. No new model family, hyperparameter search or feature-group comparison is scheduled in this revision.
+Updated 2026-11-11 after observing five Validation A baseline results. Section 8 defines the current reduced experiment sequence and replaces the earlier eight-configuration, broad-tuning and feature-ablation plan. No new model family, hyperparameter search or feature-group comparison is scheduled in this revision.
 
 ## 2. Shared inputs
 
@@ -78,7 +78,7 @@ Exclude IDs, final order status, approval and delivery timestamps, approval dela
 
 Models may use suitable preprocessing, but must receive the same underlying information and evaluation orders. Any learned clipping, transformations or feature selection must also be fitted on train only.
 
-CatBoost uses train-fitted numeric median imputation and a fixed missing-category token, with native categorical handling for `customer_state` and `purchase_weekday`. The other four learned baselines use one-hot encoding; their comparison therefore includes preprocessing differences as well as classifier differences. DummyClassifier ignores predictors and learns only Train class proportions.
+CatBoost uses train-fitted numeric median imputation and a fixed missing-category token, with native categorical handling for `customer_state` and `purchase_weekday`. The other four learned baselines use one-hot encoding; their comparison therefore includes preprocessing differences as well as classifier differences.
 
 ## 7. Roles
 
@@ -95,13 +95,13 @@ Stage 4 uses the shared training orders, with its own documented missing-data ap
 
 ### E1: Completed unweighted baselines
 
-Five learned baselines and one constant-probability reference have been fitted on Train and scored on Validation A only (7,661 orders, 387 Late; prevalence 5.0516%). All learned baselines use the same 21 F0-F3 predictors and seed 42. No class weighting, tuning, early stopping, calibration or threshold selection has been run in these baseline notebooks.
+Five learned baselines have been fitted on Train and scored on Validation A only (7,661 orders, 387 Late; prevalence 5.0516%). All learned baselines use the same 21 F0-F3 predictors and seed 42. No class weighting, tuning, early stopping, calibration or threshold selection has been run in these baseline notebooks.
 
 - `notebooks/05_machine_learning/baselines/logistic_random_forest.ipynb`: Logistic Regression C=1, max_iter=3000; Random Forest 300 trees, min_samples_leaf=2.
 - `notebooks/05_machine_learning/baselines/lightgbm_xgboost.ipynb`: LightGBM 100 rounds, learning rate 0.1, 31 leaves; XGBoost 100 rounds, learning rate 0.1, depth 6, hist method; 4 CPU threads.
-- `notebooks/05_machine_learning/baselines/catboost_dummy.ipynb`: CatBoost 1.2.10, 100 iterations, learning rate 0.1, depth 6, random seed 42, 4 CPU threads, native categorical handling; DummyClassifier(strategy="prior") fitted on Train.
+- `notebooks/05_machine_learning/baselines/catboost.ipynb`: CatBoost 1.2.10, 100 iterations, learning rate 0.1, depth 6, random seed 42, 4 CPU threads, native categorical handling.
 
-Current comparison source: `outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857/six_model_comparison.csv`.
+Current comparison source: `outputs/tables/machine_learning/ml_catboost/20261111_152855_922857/baseline_model_comparison.csv`.
 
 | Model | AP | ROC-AUC | Brier | Log Loss |
 |---|---:|---:|---:|---:|
@@ -110,7 +110,6 @@ Current comparison source: `outputs/tables/machine_learning/ml_catboost_dummy/20
 | XGBoost | 0.076845 | 0.596653 | 0.047978 | 0.199795 |
 | RandomForest | 0.074766 | 0.604052 | 0.048191 | 0.200893 |
 | LightGBM | 0.073623 | 0.582513 | 0.048189 | 0.201357 |
-| DummyClassifier | 0.050516 | 0.500000 | 0.048166 | 0.201833 |
 
 CatBoost is the provisional Validation A leader. Its AP lead over Logistic Regression is small and has not been established as statistically reliable. The CatBoost/Dummy extension was requested after reviewing the original four baselines, so these results and the next selection step are exploratory.
 
@@ -138,9 +137,9 @@ The model-selection rule in E3 is unchanged. Completing this experiment does not
 
 ### E3: Select and freeze the classifier on Validation A
 
-Status: completed on 2026-11-11 using `notebooks/05_machine_learning/model_selection/freeze_selected_model.ipynb`. Selected CatBoost unweighted baseline from `outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857`. Frozen selection record: `outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json`; pipeline: `outputs/models/ml_selection/20261111_154450_762570/CatBoostBaseline.joblib`. The copied pipeline is byte-identical to the source, verified against its saved Validation A probabilities, and was not refitted. E4 was subsequently completed as recorded below; Test was subsequently evaluated once in E5; see its completed evaluation record below.
+Status: completed on 2026-11-11 using `notebooks/05_machine_learning/model_selection/freeze_selected_model.ipynb`. Selected CatBoost unweighted baseline from `outputs/tables/machine_learning/ml_catboost/20261111_152855_922857`. Frozen selection record: `outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json`; pipeline: `outputs/models/ml_selection/20261111_154450_762570/CatBoostBaseline.joblib`. The copied pipeline is byte-identical to the source, verified against its saved Validation A probabilities, and was not refitted. E4 was subsequently completed as recorded below; Test was subsequently evaluated once in E5; see its completed evaluation record below.
 
-Select the highest AP among the five unweighted learned baselines and the one weighted CatBoost challenger. DummyClassifier remains a reference and is not a selectable predictive model. Resolve numerical AP ties (absolute difference <= 1e-12) by lower Log Loss, then lower Brier, then prefer the unweighted configuration; use the configuration ID for a final deterministic tie-break. These are configuration-selection rules, not tests of statistical significance.
+Select the highest AP among the five unweighted learned baselines and the one weighted CatBoost challenger. Resolve numerical AP ties (absolute difference <= 1e-12) by lower Log Loss, then lower Brier, then prefer the unweighted configuration; use the configuration ID for a final deterministic tie-break. These are configuration-selection rules, not tests of statistical significance.
 
 Freeze the selected fitted pipeline, predictor list, preprocessing, parameters, weighting, data hashes and package versions in `selected_config.json` before generating any B/Test predictions. Record the comparison source and selection rationale. The unweighted CatBoost is only the provisional leader; the frozen classifier must follow the observed E2/E3 results. Do not automatically choose the weighted variant.
 
@@ -179,7 +178,6 @@ Observed final Test results (9,445 orders, 504 Late): Random Forest had the high
 | LightGBM baseline | scale_pos_weight=1 | Completed |
 | XGBoost baseline | scale_pos_weight=1 | Completed |
 | CatBoost baseline | None | Completed |
-| DummyClassifier prior | None; returns Train prevalence | Completed reference |
 | CatBoost weighted challenger | class_weights=[1.0, n_train_not_late / n_train_late] | Completed; rejected on Validation A |
 
 Weights use Train labels only. Validation A, B and Test retain the observed distributions and all eligible evaluation orders. Weighted variants of other families, resampling and SMOTE are outside the current reduced experiment scope. If later introduced, document the change before execution and apply resampling to training data only.
@@ -225,16 +223,15 @@ Before handoff, confirm:
 
 ## Supplementary extension declared 2026-11-11
 
-After reviewing the four baseline results, add two exploratory references in `notebooks/05_machine_learning/baselines/catboost_dummy.ipynb`:
+After reviewing the four baseline results, add one exploratory baseline in `notebooks/05_machine_learning/baselines/catboost.ipynb`:
 
 - CatBoost 1.2.10: 100 iterations, learning rate 0.1, depth 6, random seed 42, 4 CPU threads. Native categorical handling for customer state and purchase weekday; numeric medians fitted on Train and a fixed missing-category token. No class weights, tuning, eval_set, early stopping or best-iteration selection.
-- DummyClassifier with strategy="prior": fit class proportions on Train only and return that constant probability on Validation A. It is a reference, not an additional learned predictor family.
 
 Use the same 21 predictors, shared manifest and evaluation orders as the original four baselines. Fit Train only; score Validation A only. B/Test are not scored or used to select configurations. AP remains the primary comparison metric. These additions were requested after observing earlier Validation A scores, so the six-way comparison is exploratory and not an unbiased final performance estimate. The earlier broad tuning plan was not executed by this extension and is superseded by the reduced sequence in Section 8.
 
-Save parameters before fitting, package versions, input hashes, audits, predictions, pipelines, PR curves and a six-model comparison under the `ml_catboost_dummy` output group. Require matching inputs and validation labels when consolidating earlier runs.
+Save parameters before fitting, package versions, input hashes, audits, predictions, pipelines, PR curves and a five-model comparison under the `ml_catboost` output group. Require matching inputs and validation labels when consolidating earlier runs.
 
-API references: [CatBoostClassifier](https://catboost.ai/docs/en/concepts/python-reference_catboostclassifier), [DummyClassifier](https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html).
+API references: [CatBoostClassifier](https://catboost.ai/docs/en/concepts/python-reference_catboostclassifier).
 
 ## Post-Test exploratory extension: random oversampling (2026-11-11)
 

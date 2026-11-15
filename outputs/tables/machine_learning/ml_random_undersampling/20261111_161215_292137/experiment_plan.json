@@ -133,7 +133,7 @@
       "source_run": "outputs/tables/machine_learning/ml_lightgbm_xgboost/20261111_145217_850412"
     },
     "CatBoost": {
-      "pipeline": "outputs/models/ml_catboost_dummy/20261111_152855_922857/CatBoost.joblib",
+      "pipeline": "outputs/models/ml_catboost/20261111_152855_922857/CatBoost.joblib",
       "pipeline_sha256": "a15ecc749164d142bc8cbc702a7f1204eb50160b5d3bedaf946f8fb0948815e7",
       "parameters": {
         "iterations": 100,
@@ -152,7 +152,7 @@
           "purchase_weekday"
         ]
       },
-      "source_run": "outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857"
+      "source_run": "outputs/tables/machine_learning/ml_catboost/20261111_152855_922857"
     }
   },
   "original_rows": 57449,

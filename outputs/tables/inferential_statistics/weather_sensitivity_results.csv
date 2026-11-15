@@ -1,0 +1,2 @@
+﻿rq,variable,block_days,mean_difference,ci_lower,ci_upper,p_value_raw,n_blocks,bootstrap_reps
+RQ4,destination_rain_state_mean_mm,14,1.31417306511,0.652222151941,1.81774911105,0.000499750124938,48,2000

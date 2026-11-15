@@ -3,7 +3,7 @@
   "model": "CatBoost",
   "configuration": "unweighted_baseline",
   "selection_config": "outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json",
-  "selection_sha256": "06ab7c61f307db612e06b2bf360de7c0d5b01544a8445d60816505e01ed1778b",
+  "selection_sha256": "98b906d247e8233e69cb18fd671b3739862a350567880ab8ae0147e2f818fdae",
   "frozen_pipeline": "outputs/models/ml_selection/20261111_154450_762570/CatBoostBaseline.joblib",
   "pipeline_sha256": "a15ecc749164d142bc8cbc702a7f1204eb50160b5d3bedaf946f8fb0948815e7",
   "features": [

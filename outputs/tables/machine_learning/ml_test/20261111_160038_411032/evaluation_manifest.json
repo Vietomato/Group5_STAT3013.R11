@@ -1,6 +1,6 @@
 {
   "final_config": "outputs/tables/machine_learning/ml_calibration/20261111_154951_108593/final_config.json",
-  "final_config_sha256": "b6345dc4eb8ce5809ec21b3a19d9725b67ec9be6c3d7db0d666dcd56795721d6",
+  "final_config_sha256": "567aeb2ef6364b9e42897ba3a974663b30c187cde175697f30f924155aa6cb48",
   "selection_config": "outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json",
   "model_registry": [
     {
@@ -36,14 +36,7 @@
       "selected_on_validation_a": true,
       "pipeline": "outputs/models/ml_selection/20261111_154450_762570/CatBoostBaseline.joblib",
       "pipeline_sha256": "a15ecc749164d142bc8cbc702a7f1204eb50160b5d3bedaf946f8fb0948815e7",
-      "source_run": "outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857"
-    },
-    {
-      "model": "DummyClassifier",
-      "selected_on_validation_a": false,
-      "pipeline": "outputs/models/ml_catboost_dummy/20261111_152855_922857/DummyClassifier.joblib",
-      "pipeline_sha256": "32f57884192b6d1d207d374557ea0f18dd66807b9d9422cd073d743a8d637dfa",
-      "source_run": "outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857"
+      "source_run": "outputs/tables/machine_learning/ml_catboost/20261111_152855_922857"
     },
     {
       "model": "CatBoostWeighted",
@@ -92,16 +85,16 @@
     "validation_b_target_recall": 0.7,
     "test_recall_target_met": true
   },
-  "test_probability_comparison": "seven_model_test_comparison.csv",
+  "test_probability_comparison": "test_model_comparison.csv",
   "outputs": {
-    "model_registry.csv": "eb19cb0d9aeae25d1fb1887575bd96f36a9436fd1430202efab0944e24a56e35",
+    "model_registry.csv": "900748b24dcc00e44f2eb2b1d564fc110ff21c6b3225f66e9c934026c6e5d64d",
     "sample_summary.csv": "e8a34ed7c8982b20f22fd8cd45ae02e85598847a3c9177a6fbaa2d4632d4dee0",
     "selected_calibration_comparison.csv": "5ebd0b843f7a97d803338a64785d10fab6577f4958c175942173cae3a7241b6b",
     "selected_test_predictions.csv": "99740f446281bae592d07cf169148a8787104c31505e7c0ee36685385288e0ca",
     "selected_threshold_metrics.csv": "6764e7334725e96262ebbdb9182bd064015a830d8bcc5e613402deb5cf74e203",
-    "seven_model_test_comparison.csv": "1d8e4fcdb5e2e831e4920eb4f98fb27f4bbbee6573cd69cc63faffb63ac5035b",
+    "test_model_comparison.csv": "a4df7fbb0dbf2e6551459c299432b1f00cf1ee0a9610784f869eed02e175f4fd",
     "test_calibration_bins.csv": "fa98cd12f9697f51f2c45795affd94841cf601dec7490c9996e25287f985d5a9",
-    "test_predictions.csv": "6094e12bcb94bc9ffbaf5fa1c9ebfc4b23477d616788846cfebac1d4bcf5be1f"
+    "test_predictions.csv": "52f556f0759e008bf47bc4256712deebe59e40d6bb20bbfdabb6a43e6eb2db0a"
   },
   "package_versions": {
     "numpy": "2.3.5",

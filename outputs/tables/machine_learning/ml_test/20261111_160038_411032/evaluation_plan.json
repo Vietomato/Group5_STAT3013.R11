@@ -1,6 +1,6 @@
 {
   "final_config": "outputs/tables/machine_learning/ml_calibration/20261111_154951_108593/final_config.json",
-  "final_config_sha256": "b6345dc4eb8ce5809ec21b3a19d9725b67ec9be6c3d7db0d666dcd56795721d6",
+  "final_config_sha256": "567aeb2ef6364b9e42897ba3a974663b30c187cde175697f30f924155aa6cb48",
   "selection_config": "outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json",
   "model_registry": [
     {
@@ -36,14 +36,7 @@
       "selected_on_validation_a": true,
       "pipeline": "outputs/models/ml_selection/20261111_154450_762570/CatBoostBaseline.joblib",
       "pipeline_sha256": "a15ecc749164d142bc8cbc702a7f1204eb50160b5d3bedaf946f8fb0948815e7",
-      "source_run": "outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857"
-    },
-    {
-      "model": "DummyClassifier",
-      "selected_on_validation_a": false,
-      "pipeline": "outputs/models/ml_catboost_dummy/20261111_152855_922857/DummyClassifier.joblib",
-      "pipeline_sha256": "32f57884192b6d1d207d374557ea0f18dd66807b9d9422cd073d743a8d637dfa",
-      "source_run": "outputs/tables/machine_learning/ml_catboost_dummy/20261111_152855_922857"
+      "source_run": "outputs/tables/machine_learning/ml_catboost/20261111_152855_922857"
     },
     {
       "model": "CatBoostWeighted",

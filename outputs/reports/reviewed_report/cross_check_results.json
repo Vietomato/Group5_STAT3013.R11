@@ -1,0 +1,859 @@
+{
+  "report": "C:\\Users\\LENOVO\\OneDrive\\Desktop\\Final Report.docx",
+  "checks": 141,
+  "passed": 141,
+  "failed": [],
+  "details": [
+    {
+      "item": "outputs\\tables\\machine_learning\\ml_catboost\\20261111_152855_922857\\baseline_model_comparison.csv row count",
+      "match": true,
+      "report": 5,
+      "source": 5
+    },
+    {
+      "item": "CatBoost AP baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.0929",
+      "source": "0.0929"
+    },
+    {
+      "item": "CatBoost ROC_AUC baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.6558",
+      "source": "0.6558"
+    },
+    {
+      "item": "CatBoost Brier baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.04723",
+      "source": "0.04723"
+    },
+    {
+      "item": "CatBoost LogLoss baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.19260",
+      "source": "0.19260"
+    },
+    {
+      "item": "Logistic Regression AP baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.0916",
+      "source": "0.0916"
+    },
+    {
+      "item": "Logistic Regression ROC_AUC baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.6424",
+      "source": "0.6424"
+    },
+    {
+      "item": "Logistic Regression Brier baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.04772",
+      "source": "0.04772"
+    },
+    {
+      "item": "Logistic Regression LogLoss baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.19641",
+      "source": "0.19641"
+    },
+    {
+      "item": "XGBoost AP baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.0768",
+      "source": "0.0768"
+    },
+    {
+      "item": "XGBoost ROC_AUC baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.5967",
+      "source": "0.5967"
+    },
+    {
+      "item": "XGBoost Brier baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.04798",
+      "source": "0.04798"
+    },
+    {
+      "item": "XGBoost LogLoss baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.19980",
+      "source": "0.19980"
+    },
+    {
+      "item": "Random Forest AP baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.0748",
+      "source": "0.0748"
+    },
+    {
+      "item": "Random Forest ROC_AUC baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.6041",
+      "source": "0.6041"
+    },
+    {
+      "item": "Random Forest Brier baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.04819",
+      "source": "0.04819"
+    },
+    {
+      "item": "Random Forest LogLoss baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.20089",
+      "source": "0.20089"
+    },
+    {
+      "item": "LightGBM AP baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.0736",
+      "source": "0.0736"
+    },
+    {
+      "item": "LightGBM ROC_AUC baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.5825",
+      "source": "0.5825"
+    },
+    {
+      "item": "LightGBM Brier baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.04819",
+      "source": "0.04819"
+    },
+    {
+      "item": "LightGBM LogLoss baseline_model_comparison.csv",
+      "match": true,
+      "report": "0.20136",
+      "source": "0.20136"
+    },
+    {
+      "item": "outputs\\tables\\machine_learning\\ml_test\\20261111_160038_411032\\test_model_comparison.csv row count",
+      "match": true,
+      "report": 6,
+      "source": 6
+    },
+    {
+      "item": "Random Forest AP test_model_comparison.csv",
+      "match": true,
+      "report": "0.0978",
+      "source": "0.0978"
+    },
+    {
+      "item": "Random Forest ROC_AUC test_model_comparison.csv",
+      "match": true,
+      "report": "0.7038",
+      "source": "0.7038"
+    },
+    {
+      "item": "Random Forest Brier test_model_comparison.csv",
+      "match": true,
+      "report": "0.04992",
+      "source": "0.04992"
+    },
+    {
+      "item": "Random Forest LogLoss test_model_comparison.csv",
+      "match": true,
+      "report": "0.20042",
+      "source": "0.20042"
+    },
+    {
+      "item": "LightGBM AP test_model_comparison.csv",
+      "match": true,
+      "report": "0.0890",
+      "source": "0.0890"
+    },
+    {
+      "item": "LightGBM ROC_AUC test_model_comparison.csv",
+      "match": true,
+      "report": "0.6770",
+      "source": "0.6770"
+    },
+    {
+      "item": "LightGBM Brier test_model_comparison.csv",
+      "match": true,
+      "report": "0.05034",
+      "source": "0.05034"
+    },
+    {
+      "item": "LightGBM LogLoss test_model_comparison.csv",
+      "match": true,
+      "report": "0.20128",
+      "source": "0.20128"
+    },
+    {
+      "item": "XGBoost AP test_model_comparison.csv",
+      "match": true,
+      "report": "0.0877",
+      "source": "0.0877"
+    },
+    {
+      "item": "XGBoost ROC_AUC test_model_comparison.csv",
+      "match": true,
+      "report": "0.6820",
+      "source": "0.6820"
+    },
+    {
+      "item": "XGBoost Brier test_model_comparison.csv",
+      "match": true,
+      "report": "0.05059",
+      "source": "0.05059"
+    },
+    {
+      "item": "XGBoost LogLoss test_model_comparison.csv",
+      "match": true,
+      "report": "0.20083",
+      "source": "0.20083"
+    },
+    {
+      "item": "CatBoost AP test_model_comparison.csv",
+      "match": true,
+      "report": "0.0828",
+      "source": "0.0828"
+    },
+    {
+      "item": "CatBoost ROC_AUC test_model_comparison.csv",
+      "match": true,
+      "report": "0.6741",
+      "source": "0.6741"
+    },
+    {
+      "item": "CatBoost Brier test_model_comparison.csv",
+      "match": true,
+      "report": "0.05014",
+      "source": "0.05014"
+    },
+    {
+      "item": "CatBoost LogLoss test_model_comparison.csv",
+      "match": true,
+      "report": "0.20085",
+      "source": "0.20085"
+    },
+    {
+      "item": "Logistic Regression AP test_model_comparison.csv",
+      "match": true,
+      "report": "0.0812",
+      "source": "0.0812"
+    },
+    {
+      "item": "Logistic Regression ROC_AUC test_model_comparison.csv",
+      "match": true,
+      "report": "0.6299",
+      "source": "0.6299"
+    },
+    {
+      "item": "Logistic Regression Brier test_model_comparison.csv",
+      "match": true,
+      "report": "0.05118",
+      "source": "0.05118"
+    },
+    {
+      "item": "Logistic Regression LogLoss test_model_comparison.csv",
+      "match": true,
+      "report": "0.20698",
+      "source": "0.20698"
+    },
+    {
+      "item": "Weighted CatBoost AP test_model_comparison.csv",
+      "match": true,
+      "report": "0.0739",
+      "source": "0.0739"
+    },
+    {
+      "item": "Weighted CatBoost ROC_AUC test_model_comparison.csv",
+      "match": true,
+      "report": "0.6247",
+      "source": "0.6247"
+    },
+    {
+      "item": "Weighted CatBoost Brier test_model_comparison.csv",
+      "match": true,
+      "report": "0.17690",
+      "source": "0.17690"
+    },
+    {
+      "item": "Weighted CatBoost LogLoss test_model_comparison.csv",
+      "match": true,
+      "report": "0.53512",
+      "source": "0.53512"
+    },
+    {
+      "item": "CatBoost AP_baseline",
+      "match": true,
+      "report": "0.0929",
+      "source": "0.0929"
+    },
+    {
+      "item": "CatBoost AP_random_oversampling",
+      "match": true,
+      "report": "0.0777",
+      "source": "0.0777"
+    },
+    {
+      "item": "CatBoost AP_random_undersampling",
+      "match": true,
+      "report": "0.0784",
+      "source": "0.0784"
+    },
+    {
+      "item": "LightGBM AP_baseline",
+      "match": true,
+      "report": "0.0736",
+      "source": "0.0736"
+    },
+    {
+      "item": "LightGBM AP_random_oversampling",
+      "match": true,
+      "report": "0.0732",
+      "source": "0.0732"
+    },
+    {
+      "item": "LightGBM AP_random_undersampling",
+      "match": true,
+      "report": "0.0660",
+      "source": "0.0660"
+    },
+    {
+      "item": "Logistic Regression AP_baseline",
+      "match": true,
+      "report": "0.0916",
+      "source": "0.0916"
+    },
+    {
+      "item": "Logistic Regression AP_random_oversampling",
+      "match": true,
+      "report": "0.0926",
+      "source": "0.0926"
+    },
+    {
+      "item": "Logistic Regression AP_random_undersampling",
+      "match": true,
+      "report": "0.0876",
+      "source": "0.0876"
+    },
+    {
+      "item": "Random Forest AP_baseline",
+      "match": true,
+      "report": "0.0748",
+      "source": "0.0748"
+    },
+    {
+      "item": "Random Forest AP_random_oversampling",
+      "match": true,
+      "report": "0.0727",
+      "source": "0.0727"
+    },
+    {
+      "item": "Random Forest AP_random_undersampling",
+      "match": true,
+      "report": "0.0793",
+      "source": "0.0793"
+    },
+    {
+      "item": "XGBoost AP_baseline",
+      "match": true,
+      "report": "0.0768",
+      "source": "0.0768"
+    },
+    {
+      "item": "XGBoost AP_random_oversampling",
+      "match": true,
+      "report": "0.0659",
+      "source": "0.0659"
+    },
+    {
+      "item": "XGBoost AP_random_undersampling",
+      "match": true,
+      "report": "0.0681",
+      "source": "0.0681"
+    },
+    {
+      "item": "RQ1 adjusted OR",
+      "match": true,
+      "report": "1.193",
+      "source": "1.193"
+    },
+    {
+      "item": "RQ1 OR CI",
+      "match": true,
+      "report": "[1.101, 1.292]",
+      "source": "[1.101, 1.292]"
+    },
+    {
+      "item": "RQ1 OR Holm p rounding",
+      "match": true,
+      "report": 0.000128,
+      "source": 0.000128
+    },
+    {
+      "item": "RQ2 adjusted OR",
+      "match": true,
+      "report": "1.071",
+      "source": "1.071"
+    },
+    {
+      "item": "RQ2 OR CI",
+      "match": true,
+      "report": "[0.970, 1.183]",
+      "source": "[0.970, 1.183]"
+    },
+    {
+      "item": "RQ2 OR Holm p rounding",
+      "match": true,
+      "report": 0.17,
+      "source": 0.17
+    },
+    {
+      "item": "RQ3 adjusted OR",
+      "match": true,
+      "report": "0.593",
+      "source": "0.593"
+    },
+    {
+      "item": "RQ3 OR CI",
+      "match": true,
+      "report": "[0.408, 0.862]",
+      "source": "[0.408, 0.862]"
+    },
+    {
+      "item": "RQ3 OR Holm p rounding",
+      "match": true,
+      "report": 0.0138,
+      "source": 0.0138
+    },
+    {
+      "item": "RQ4 adjusted OR",
+      "match": true,
+      "report": "1.290",
+      "source": "1.290"
+    },
+    {
+      "item": "RQ4 OR CI",
+      "match": true,
+      "report": "[1.168, 1.423]",
+      "source": "[1.168, 1.423]"
+    },
+    {
+      "item": "RQ4 OR Holm p rounding",
+      "match": true,
+      "report": 1.06e-05,
+      "source": 1.06e-05
+    },
+    {
+      "item": "RQ1 test n",
+      "match": true,
+      "report": 95990,
+      "source": 95990
+    },
+    {
+      "item": "RQ1 test estimate",
+      "match": true,
+      "report": 0.16,
+      "source": 0.16
+    },
+    {
+      "item": "RQ1 test CI",
+      "match": true,
+      "report": "[0.146, 0.173]",
+      "source": "[0.146, 0.173]"
+    },
+    {
+      "item": "RQ1 p_value_raw",
+      "match": true,
+      "report": 1.98e-102,
+      "source": 1.98e-102
+    },
+    {
+      "item": "RQ1 p_value_holm",
+      "match": true,
+      "report": 7.92e-102,
+      "source": 7.92e-102
+    },
+    {
+      "item": "RQ2 test n",
+      "match": true,
+      "report": 96470,
+      "source": 96470
+    },
+    {
+      "item": "RQ2 test estimate",
+      "match": true,
+      "report": 2.641,
+      "source": 2.641
+    },
+    {
+      "item": "RQ2 test CI",
+      "match": true,
+      "report": "[2.049, 3.233]",
+      "source": "[2.049, 3.233]"
+    },
+    {
+      "item": "RQ2 p_value_raw",
+      "match": true,
+      "report": 2.71e-18,
+      "source": 2.71e-18
+    },
+    {
+      "item": "RQ2 p_value_holm",
+      "match": true,
+      "report": 8.13e-18,
+      "source": 8.13e-18
+    },
+    {
+      "item": "RQ3 test n",
+      "match": true,
+      "report": 96470,
+      "source": 96470
+    },
+    {
+      "item": "RQ3 test estimate",
+      "match": true,
+      "report": -1.928,
+      "source": -1.928
+    },
+    {
+      "item": "RQ3 test CI",
+      "match": true,
+      "report": "[-2.927, -0.698]",
+      "source": "[-2.927, -0.698]"
+    },
+    {
+      "item": "RQ3 p_value_raw",
+      "match": true,
+      "report": 0.00344,
+      "source": 0.00344
+    },
+    {
+      "item": "RQ3 p_value_holm",
+      "match": true,
+      "report": 0.00344,
+      "source": 0.00344
+    },
+    {
+      "item": "RQ4 test n",
+      "match": true,
+      "report": 95544,
+      "source": 95544
+    },
+    {
+      "item": "RQ4 test estimate",
+      "match": true,
+      "report": 1.314,
+      "source": 1.314
+    },
+    {
+      "item": "RQ4 test CI",
+      "match": true,
+      "report": "[0.794, 1.767]",
+      "source": "[0.794, 1.767]"
+    },
+    {
+      "item": "RQ4 p_value_raw",
+      "match": true,
+      "report": 0.0005,
+      "source": 0.0005
+    },
+    {
+      "item": "RQ4 p_value_holm",
+      "match": true,
+      "report": 0.001,
+      "source": 0.001
+    },
+    {
+      "item": "Not Late review orders",
+      "match": true,
+      "report": 89443,
+      "source": 89443
+    },
+    {
+      "item": "Not Late review low_reviews",
+      "match": true,
+      "report": 8290,
+      "source": 8290
+    },
+    {
+      "item": "Not Late low review %",
+      "match": true,
+      "report": "9.27%",
+      "source": "9.27%"
+    },
+    {
+      "item": "Not Late score",
+      "match": true,
+      "report": "4.29",
+      "source": "4.29"
+    },
+    {
+      "item": "Late review orders",
+      "match": true,
+      "report": 6381,
+      "source": 6381
+    },
+    {
+      "item": "Late review low_reviews",
+      "match": true,
+      "report": 3982,
+      "source": 3982
+    },
+    {
+      "item": "Late low review %",
+      "match": true,
+      "report": "62.40%",
+      "source": "62.40%"
+    },
+    {
+      "item": "Late score",
+      "match": true,
+      "report": "2.27",
+      "source": "2.27"
+    },
+    {
+      "item": "train counts",
+      "match": true,
+      "report": "57,449 / 3,720",
+      "source": "57,449 / 3,720"
+    },
+    {
+      "item": "train dates",
+      "match": true,
+      "report": "2016-09-15 to 2018-03-01",
+      "source": "2016-09-15 to 2018-03-01"
+    },
+    {
+      "item": "validation_a counts",
+      "match": true,
+      "report": "7,661 / 387",
+      "source": "7,661 / 387"
+    },
+    {
+      "item": "validation_a dates",
+      "match": true,
+      "report": "2018-04-16 to 2018-05-15",
+      "source": "2018-04-16 to 2018-05-15"
+    },
+    {
+      "item": "validation_b counts",
+      "match": true,
+      "report": "3,115 / 180",
+      "source": "3,115 / 180"
+    },
+    {
+      "item": "validation_b dates",
+      "match": true,
+      "report": "2018-05-16 to 2018-06-03",
+      "source": "2018-05-16 to 2018-06-03"
+    },
+    {
+      "item": "test counts",
+      "match": true,
+      "report": "9,445 / 504",
+      "source": "9,445 / 504"
+    },
+    {
+      "item": "test dates",
+      "match": true,
+      "report": "2018-07-19 to 2018-08-29",
+      "source": "2018-07-19 to 2018-08-29"
+    },
+    {
+      "item": "Validation B / raw probability",
+      "match": true,
+      "report": "2.75%",
+      "source": "2.75%"
+    },
+    {
+      "item": "Validation B / raw Brier",
+      "match": true,
+      "report": "0.05410",
+      "source": "0.05410"
+    },
+    {
+      "item": "Validation B / raw LogLoss",
+      "match": true,
+      "report": "0.21686",
+      "source": "0.21686"
+    },
+    {
+      "item": "Validation B / calibrated probability",
+      "match": true,
+      "report": "5.78%",
+      "source": "5.78%"
+    },
+    {
+      "item": "Validation B / calibrated Brier",
+      "match": true,
+      "report": "0.05295",
+      "source": "0.05295"
+    },
+    {
+      "item": "Validation B / calibrated LogLoss",
+      "match": true,
+      "report": "0.20294",
+      "source": "0.20294"
+    },
+    {
+      "item": "Test / raw probability",
+      "match": true,
+      "report": "5.23%",
+      "source": "5.23%"
+    },
+    {
+      "item": "Test / raw Brier",
+      "match": true,
+      "report": "0.05014",
+      "source": "0.05014"
+    },
+    {
+      "item": "Test / raw LogLoss",
+      "match": true,
+      "report": "0.20085",
+      "source": "0.20085"
+    },
+    {
+      "item": "Test / calibrated probability",
+      "match": true,
+      "report": "11.81%",
+      "source": "11.81%"
+    },
+    {
+      "item": "Test / calibrated Brier",
+      "match": true,
+      "report": "0.05752",
+      "source": "0.05752"
+    },
+    {
+      "item": "Test / calibrated LogLoss",
+      "match": true,
+      "report": "0.22789",
+      "source": "0.22789"
+    },
+    {
+      "item": "B Precision",
+      "match": true,
+      "report": "10.97%",
+      "source": "10.97%"
+    },
+    {
+      "item": "B Recall",
+      "match": true,
+      "report": "71.11%",
+      "source": "71.11%"
+    },
+    {
+      "item": "B alert_rate",
+      "match": true,
+      "report": "37.46%",
+      "source": "37.46%"
+    },
+    {
+      "item": "B F1",
+      "match": true,
+      "report": "0.1901",
+      "source": "0.1901"
+    },
+    {
+      "item": "B confusion",
+      "match": true,
+      "report": "128 / 1039 / 52 / 1896",
+      "source": "128 / 1039 / 52 / 1896"
+    },
+    {
+      "item": "Test Precision",
+      "match": true,
+      "report": "6.42%",
+      "source": "6.42%"
+    },
+    {
+      "item": "Test Recall",
+      "match": true,
+      "report": "94.25%",
+      "source": "94.25%"
+    },
+    {
+      "item": "Test alert_rate",
+      "match": true,
+      "report": "78.32%",
+      "source": "78.32%"
+    },
+    {
+      "item": "Test F1",
+      "match": true,
+      "report": "0.1202",
+      "source": "0.1202"
+    },
+    {
+      "item": "Test confusion",
+      "match": true,
+      "report": "475 / 6922 / 29 / 2019",
+      "source": "475 / 6922 / 29 / 2019"
+    },
+    {
+      "item": "Embedded figure labels",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Embedded figure class_distance",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Embedded figure monthly",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Embedded figure adjusted_or",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Embedded figure validation_models",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Embedded figure sampling",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Embedded figure undersampling",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Embedded figure calibration_transfer",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Embedded figure test_confusion",
+      "match": true,
+      "report": true,
+      "source": true
+    },
+    {
+      "item": "Desktop equals reviewed workspace copy",
+      "match": true,
+      "report": true,
+      "source": true
+    }
+  ],
+  "scope_notes": [
+    "Older EDA reviews use first review, report uses latest valid review.",
+    "Slides intentionally retained unchanged by user request.",
+    "Question D feature ablation not completed; report discloses this."
+  ]
+}

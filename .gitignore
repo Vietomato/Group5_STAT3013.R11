@@ -70,3 +70,6 @@ token.json
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Personal draft excluded from commits by request
+/docs/project_summary_vi.md

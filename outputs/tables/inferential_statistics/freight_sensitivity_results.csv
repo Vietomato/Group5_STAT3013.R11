@@ -1,0 +1,2 @@
+﻿rq,variable,unit,trim_proportion_each_tail,n_late,n_not_late,ordinary_mean_difference,trimmed_mean_difference,yuen_t_statistic,yuen_df,sensitivity_p_raw,skewness_late,skewness_not_late
+RQ2,freight_value,BRL,0.1,6534,89936,2.64065171559,2.01936261814,12.1954960197,5821.67838799,8.46536104435e-34,7.65788842637,12.7321853152

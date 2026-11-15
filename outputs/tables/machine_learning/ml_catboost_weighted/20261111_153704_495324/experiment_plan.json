@@ -26,7 +26,7 @@
     "late": 3720
   },
   "weight_ratio": 14.443279569892473,
-  "baseline_run": "outputs\\tables\\machine_learning\\ml_catboost_dummy\\20261111_152855_922857",
+  "baseline_run": "outputs\\tables\\machine_learning\\ml_catboost\\20261111_152855_922857",
   "fit_split": "train",
   "score_split": "validation_a",
   "tuning": false,

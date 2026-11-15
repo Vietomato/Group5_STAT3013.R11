@@ -1,0 +1,19 @@
+{
+  "AP": "Average Precision",
+  "AUC": "Area Under the Curve",
+  "BRL": "Brazilian real",
+  "CI": "Confidence Interval",
+  "EDA": "Exploratory Data Analysis",
+  "F1": "Harmonic mean of precision and recall",
+  "FN": "False Negative",
+  "FP": "False Positive",
+  "INMET": "Instituto Nacional de Meteorologia",
+  "ML": "Machine Learning",
+  "OR": "Odds Ratio",
+  "ROC": "Receiver Operating Characteristic",
+  "RQ": "Research Question",
+  "TN": "True Negative",
+  "TP": "True Positive",
+  "UTC": "Coordinated Universal Time",
+  "VIF": "Variance Inflation Factor"
+}
