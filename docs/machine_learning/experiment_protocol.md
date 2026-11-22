@@ -16,6 +16,8 @@ Updated 2026-11-11 after observing five Validation A baseline results. Section 8
 
 Record the dataset commit or file hash and package versions with the experiment outputs. Use the same dataset version and manifest for all models and references. UTC is an assumption, not a confirmed source timezone. The Sao Paulo scenario is reserved for sensitivity analysis; never stack the two scenarios as separate orders.
 
+Each experiment writes one result set directly to its `ml_*` folder under `outputs/tables/machine_learning/`, `outputs/figures/`, and `outputs/models/`. Reruns overwrite those files; there are no timestamp or `latest` subfolders. Run identifiers remain in metadata for traceability. After changing an upstream model or selection, rerun dependent stages so recorded hashes match. Reproducing Test overwrites its saved results using the fixed pipeline, calibrator, and threshold; it does not select new settings from Test scores.
+
 The source dataset contains 99,441 unique orders and 96,470 valid delivery labels. Do not modify the source CSV to enforce a split or remove excluded orders.
 
 ## 3. Target and prediction point
@@ -101,7 +103,7 @@ Five learned baselines have been fitted on Train and scored on Validation A only
 - `notebooks/05_machine_learning/baselines/lightgbm_xgboost.ipynb`: LightGBM 100 rounds, learning rate 0.1, 31 leaves; XGBoost 100 rounds, learning rate 0.1, depth 6, hist method; 4 CPU threads.
 - `notebooks/05_machine_learning/baselines/catboost.ipynb`: CatBoost 1.2.10, 100 iterations, learning rate 0.1, depth 6, random seed 42, 4 CPU threads, native categorical handling.
 
-Current comparison source: `outputs/tables/machine_learning/ml_catboost/20261111_152855_922857/baseline_model_comparison.csv`.
+Current comparison source: `outputs/tables/machine_learning/ml_catboost/baseline_model_comparison.csv`.
 
 | Model | AP | ROC-AUC | Brier | Log Loss |
 |---|---:|---:|---:|---:|
@@ -115,7 +117,7 @@ CatBoost is the provisional Validation A leader. Its AP lead over Logistic Regre
 
 ### E2: One weighted CatBoost challenger
 
-Status: completed on 2026-11-11 in `notebooks/05_machine_learning/model_selection/catboost_weighted.ipynb`. Results: `outputs/tables/machine_learning/ml_catboost_weighted/20261111_153704_495324`. No B/Test predictions were made.
+Status: completed on 2026-11-11 in `notebooks/05_machine_learning/model_selection/catboost_weighted.ipynb`. Results: `outputs/tables/machine_learning/ml_catboost_weighted`. No B/Test predictions were made.
 
 Fit exactly one additional CatBoost configuration on the existing Train orders, with the same 21 predictors, categorical handling, imputation and all baseline hyperparameters. Change only class weighting:
 
@@ -137,7 +139,7 @@ The model-selection rule in E3 is unchanged. Completing this experiment does not
 
 ### E3: Select and freeze the classifier on Validation A
 
-Status: completed on 2026-11-11 using `notebooks/05_machine_learning/model_selection/freeze_selected_model.ipynb`. Selected CatBoost unweighted baseline from `outputs/tables/machine_learning/ml_catboost/20261111_152855_922857`. Frozen selection record: `outputs/tables/machine_learning/ml_selection/20261111_154450_762570/selected_config.json`; pipeline: `outputs/models/ml_selection/20261111_154450_762570/CatBoostBaseline.joblib`. The copied pipeline is byte-identical to the source, verified against its saved Validation A probabilities, and was not refitted. E4 was subsequently completed as recorded below; Test was subsequently evaluated once in E5; see its completed evaluation record below.
+Status: completed on 2026-11-11 using `notebooks/05_machine_learning/model_selection/freeze_selected_model.ipynb`. Selected CatBoost unweighted baseline from `outputs/tables/machine_learning/ml_catboost`. Frozen selection record: `outputs/tables/machine_learning/ml_selection/selected_config.json`; pipeline: `outputs/models/ml_selection/CatBoostBaseline.joblib`. The copied pipeline is byte-identical to the source, verified against its saved Validation A probabilities, and was not refitted. E4 was subsequently completed as recorded below; Test was subsequently evaluated once in E5; see its completed evaluation record below.
 
 Select the highest AP among the five unweighted learned baselines and the one weighted CatBoost challenger. Resolve numerical AP ties (absolute difference <= 1e-12) by lower Log Loss, then lower Brier, then prefer the unweighted configuration; use the configuration ID for a final deterministic tie-break. These are configuration-selection rules, not tests of statistical significance.
 
@@ -147,7 +149,7 @@ No broad tuning, additional model family or feature-group ablation is included i
 
 ### E4: Calibration and operating threshold on Validation B
 
-Status: completed on 2026-11-11 in `notebooks/05_machine_learning/calibration/calibration_threshold.ipynb`. Frozen calibration and threshold record: `outputs/tables/machine_learning/ml_calibration/20261111_154951_108593/final_config.json`. The source classifier was not refitted; Test was subsequently evaluated once in E5; see its completed evaluation record below.
+Status: completed on 2026-11-11 in `notebooks/05_machine_learning/calibration/calibration_threshold.ipynb`. Frozen calibration and threshold record: `outputs/tables/machine_learning/ml_calibration/final_config.json`. The source classifier was not refitted; Test was subsequently evaluated once in E5; see its completed evaluation record below.
 
 Fit one sigmoid calibrator on Validation B for the frozen selected classifier. The implementation is fixed before fitting: transform the frozen raw probabilities to log-odds after clipping to [1e-6, 1-1e-6], then fit an unweighted LogisticRegression(penalty=None, solver="lbfgs", max_iter=1000, tol=1e-10) with intercept on B. This fits only the two sigmoid parameters; the CatBoost pipeline stays unchanged. Use 10 fixed equal-width [0,1] bins for calibration plots and report empty bins/counts. No alternative calibration family or probability transform is searched. B must not be used to refit its preprocessing/classifier, select a model family, change class weights or tune hyperparameters. Keep raw and calibrated probabilities; report Brier, Log Loss and calibration curves for both. Use the calibrated probabilities for the operating-threshold procedure rather than choosing the probability type after looking at Test.
 
@@ -159,7 +161,7 @@ Observed Validation B operating point (calibrated probability >= 0.0541789028724
 
 ### E5: Final Test evaluation
 
-Status: completed on 2026-11-11 in `notebooks/05_machine_learning/test_evaluation/final_test_evaluation.ipynb`. Final results: `outputs/tables/machine_learning/ml_test/20261111_160038_411032`. Artifact/configuration hashes were verified; no training, calibration fitting, threshold search or selection changes were performed.
+Status: completed on 2026-11-11 in `notebooks/05_machine_learning/test_evaluation/final_test_evaluation.ipynb`. Final results: `outputs/tables/machine_learning/ml_test`. Artifact/configuration hashes were verified; no training, calibration fitting, threshold search or selection changes were performed.
 
 Evaluate the six existing baseline/reference configurations and the single weighted challenger in one predeclared final raw-probability comparison (seven distinct configurations). Identify the selected configuration using its Validation A decision; do not switch the recommended model after seeing Test.
 
@@ -243,7 +245,7 @@ For each model, clone its matched baseline preprocessing, fit learned transforma
 
 Record original/resampled class counts, sampled indices and multiplicities, exact model parameters, input hashes, provenance, saved pipelines, validation predictions, probability metrics and pairwise changes from the matched baseline. Do not claim an independent improvement from this exploratory extension after Test exposure.
 
-Status: completed in `notebooks/05_machine_learning/sampling_experiments/random_oversampling.ipynb`. Results: `outputs/tables/machine_learning/ml_random_oversampling/20261111_160816_219035`. All five pipeline reload checks passed; the shared oversampled Train contained 53,729 orders per class (107,458 rows), while Validation A retained 7,661 unique orders.
+Status: completed in `notebooks/05_machine_learning/sampling_experiments/random_oversampling.ipynb`. Results: `outputs/tables/machine_learning/ml_random_oversampling`. All five pipeline reload checks passed; the shared oversampled Train contained 53,729 orders per class (107,458 rows), while Validation A retained 7,661 unique orders.
 
 | Model | Baseline AP | Oversampled AP | AP change |
 |---|---:|---:|---:|
@@ -261,7 +263,7 @@ Run one random undersampling configuration for each of the same five learned mod
 
 Keep every baseline classifier parameter unchanged. As in the oversampling comparison, fit preprocessing on original Train only, then select transformed training rows for classifier fitting. Validation A remains unchanged; do not score B or Test. Save sampled indices/multiplicities, exact parameters, hashes, saved pipelines and metrics. Compare to matched baselines and the completed random-oversampling experiment. This extension was requested after Test exposure; it is exploratory and does not revise the frozen decision or final Test results.
 
-Status: completed in `notebooks/05_machine_learning/sampling_experiments/random_undersampling.ipynb`. Results: `outputs/tables/machine_learning/ml_random_undersampling/20261111_161215_292137`. Every minority Train order was retained exactly once; 3,720 majority orders were selected without replacement; all five models shared the same 7,440 training indices. Validation A retained 7,661 unique orders.
+Status: completed in `notebooks/05_machine_learning/sampling_experiments/random_undersampling.ipynb`. Results: `outputs/tables/machine_learning/ml_random_undersampling`. Every minority Train order was retained exactly once; 3,720 majority orders were selected without replacement; all five models shared the same 7,440 training indices. Validation A retained 7,661 unique orders.
 
 | Model | Baseline AP | Random oversampling AP | Random undersampling AP |
 |---|---:|---:|---:|

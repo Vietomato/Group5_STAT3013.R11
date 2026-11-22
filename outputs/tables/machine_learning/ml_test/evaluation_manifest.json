@@ -1,0 +1,110 @@
+{
+  "final_config": "outputs/tables/machine_learning/ml_calibration/final_config.json",
+  "final_config_sha256": "1375492e41b202641f51803ca0b93435f399f62dadff8f163a113dfcc939b9b8",
+  "selection_config": "outputs/tables/machine_learning/ml_selection/selected_config.json",
+  "model_registry": [
+    {
+      "model": "LogisticRegression",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_logistic_random_forest/LogisticRegression.joblib",
+      "pipeline_sha256": "cac788b6a7331a491b13847f334e1a938fd76fef8ec85e927786b3369f5818fe",
+      "source_run": "outputs/tables/machine_learning/ml_logistic_random_forest"
+    },
+    {
+      "model": "RandomForest",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_logistic_random_forest/RandomForest.joblib",
+      "pipeline_sha256": "6e6847d211e3f0da8799ea3a3354d6516a7e1db37cf0e8ca4538588b7b6b71cd",
+      "source_run": "outputs/tables/machine_learning/ml_logistic_random_forest"
+    },
+    {
+      "model": "LightGBM",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_lightgbm_xgboost/LightGBM.joblib",
+      "pipeline_sha256": "1c2dd3595e593274613754d9b8f861c9e0742f4821f3dbc090b8c064e2202517",
+      "source_run": "outputs/tables/machine_learning/ml_lightgbm_xgboost"
+    },
+    {
+      "model": "XGBoost",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_lightgbm_xgboost/XGBoost.joblib",
+      "pipeline_sha256": "597398891103041b0ac47f1f1ea8e8e17a65d783859cc98acf7328df6c368c05",
+      "source_run": "outputs/tables/machine_learning/ml_lightgbm_xgboost"
+    },
+    {
+      "model": "CatBoost",
+      "selected_on_validation_a": true,
+      "pipeline": "outputs/models/ml_selection/CatBoostBaseline.joblib",
+      "pipeline_sha256": "b88339341f6c65485cf24b6fd4c80ca08439da2d96d2eb6efe98b35159284df5",
+      "source_run": "outputs/tables/machine_learning/ml_catboost"
+    },
+    {
+      "model": "CatBoostWeighted",
+      "selected_on_validation_a": false,
+      "pipeline": "outputs/models/ml_catboost_weighted/CatBoostWeighted.joblib",
+      "pipeline_sha256": "db3fe04c240eb59bce6607e939b33eea9c776ef5e748611888768f416c8cdcf8",
+      "source_run": "outputs/tables/machine_learning/ml_catboost_weighted"
+    }
+  ],
+  "selected_model": "CatBoost",
+  "threshold": 0.054178902872422004,
+  "calibrator": "outputs/models/ml_calibration/sigmoid_calibrator.joblib",
+  "calibrator_sha256": "1c0eee46f7a63a2930e3dc53db16db00a83c2cd38087728bc62b83cd0f1795a6",
+  "test_expected_orders": 9445,
+  "test_expected_late": 504,
+  "input_hashes": {
+    "data/processed/research_data_weather_price_holiday_assume_utc.csv": "83c8387c68716ca388e3634a6c76dfbdaa72ba7b6ee8b29ec07b798b1a369593",
+    "docs/predictor_list.csv": "044dc58a193c4f92f9bc5d09388d666956040ab51c765367f70a79ca4549569e",
+    "data/ml_preparation/split_manifest.csv": "4acf1fd734bf69d5e45e8ba923b8c52a50ed87e0745909d6176fa7fad1475582"
+  },
+  "classifier_refitted": false,
+  "calibrator_refitted": false,
+  "threshold_reselected": false,
+  "selection_changed_after_test": false,
+  "limitation": "Test outcomes previously appeared in EDA/Stage 3. No choices may be changed based on these Test results.",
+  "status": "completed",
+  "run_id": "20261122_223026_875803",
+  "test_orders": 9445,
+  "test_late": 504,
+  "selected_test_metrics": {
+    "model": "CatBoost",
+    "split": "test",
+    "probability_type": "calibrated",
+    "threshold": 0.054178902872422004,
+    "n": 9445,
+    "late": 504,
+    "Precision": 0.06421522238745438,
+    "Recall": 0.9424603174603174,
+    "F1": 0.12023794456397924,
+    "alert_rate": 0.7831656961355214,
+    "alerts": 7397,
+    "TN": 2019,
+    "FP": 6922,
+    "FN": 29,
+    "TP": 475,
+    "validation_b_target_recall": 0.7,
+    "test_recall_target_met": true
+  },
+  "test_probability_comparison": "test_model_comparison.csv",
+  "outputs": {
+    "model_registry.csv": "e5363d3c353c116cd9ba50c534d3f3f9f1c78033f09a1c19c6f29067bcb27223",
+    "sample_summary.csv": "e8a34ed7c8982b20f22fd8cd45ae02e85598847a3c9177a6fbaa2d4632d4dee0",
+    "selected_calibration_comparison.csv": "5ebd0b843f7a97d803338a64785d10fab6577f4958c175942173cae3a7241b6b",
+    "selected_test_predictions.csv": "99740f446281bae592d07cf169148a8787104c31505e7c0ee36685385288e0ca",
+    "selected_threshold_metrics.csv": "6764e7334725e96262ebbdb9182bd064015a830d8bcc5e613402deb5cf74e203",
+    "test_calibration_bins.csv": "fa98cd12f9697f51f2c45795affd94841cf601dec7490c9996e25287f985d5a9",
+    "test_model_comparison.csv": "25a190bd58e2cd9359f3650e23cdc837e5328d7759f1a31997f63c3afe261d32",
+    "test_predictions.csv": "701b54eac78a822514fa1da795f4e7a51eca3bfb88a41210bf51d20a99789519"
+  },
+  "package_versions": {
+    "numpy": "2.3.5",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "scikit-learn": "1.7.2",
+    "joblib": "1.5.2",
+    "catboost": "1.2.10",
+    "lightgbm": "4.6.0",
+    "xgboost": "3.1.1",
+    "python": "3.14.6"
+  }
+}

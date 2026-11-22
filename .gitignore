@@ -42,9 +42,12 @@ token.json
 *.key
 
 # Large/local artifacts. Keep tracked CSV data, result tables and figures.
-/data/external/inmet/raw/
 /outputs/models/
+/outputs/validation/
 /outputs/reruns/
+/outputs/presentations/
+/outputs/notebook_runs/
+/outputs/notebook_run/
 /outputs/migrations/
 /outputs/tmp/
 *.joblib

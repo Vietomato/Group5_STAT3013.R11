@@ -2,7 +2,7 @@
 
 **Owner:** Phong · **Source:** `data/processed/research_data.csv` (99,441 rows, 34 columns; 1 row = 1 order) · **Notebook:** `notebooks/02_eda/analyze_class_imbalance.ipynb` · Figure: `imb01_class_distribution.png`
 
-> Figures are computed from `research_data.csv`; charts are generated when the notebook is run (saved in `outputs/figures/`, tables in `outputs/tables/`).
+> Figures are computed from `research_data.csv`; charts are generated when the notebook is run (saved in `outputs/figures/class_imbalance/`, tables in `outputs/tables/eda/class_imbalance/`).
 > Related TASK 02 report: `docs/eda/late_delivery_findings.md` (monthly prevalence in EDA03).
 
 ## 0. Sample scope

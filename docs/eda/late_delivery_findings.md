@@ -2,7 +2,7 @@
 
 **Owner:** Phong · **Source:** `data/processed/research_data.csv` (99,441 rows, 34 columns; 1 row = 1 order, unique `order_id`) · **Notebook:** `notebooks/02_eda/explore_late_delivery.ipynb` (TASK 03 is reported separately in `docs/eda/class_imbalance_findings.md`, notebook `analyze_class_imbalance.ipynb`)
 
-> Figures below are computed from `research_data.csv`; charts are generated when the notebook is run (file names are given per section, saved in `outputs/figures/`; CSV tables in `outputs/tables/`).
+> Figures below are computed from `research_data.csv`; charts are generated when the notebook is run (file names are given per section, saved in `outputs/figures/late_delivery/`; CSV tables in `outputs/tables/eda/late_delivery/`).
 > All comments are **descriptive observations** – no causal conclusions and no statistical-significance conclusions.
 
 ## 0. Sample scope & conventions
