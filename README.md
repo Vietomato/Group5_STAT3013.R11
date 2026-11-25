@@ -1,4 +1,5 @@
-# Late Delivery in Brazilian E-Commerce
+# Late Delivery in Brazilian E-Commerce - A Statistical and Machine Learning Approach.
+
 
 Statistical Analysis · STAT3013.R11.CTTT · Group 5
 
