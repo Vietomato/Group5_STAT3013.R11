@@ -1,8 +1,20 @@
-# Late Delivery in Brazilian E-Commerce
+# Statistical and Machine Learning Analysis of Late Delivery, Customer Reviews, and Order Cancellation in Brazilian E-Commerce
+
 
 Statistical Analysis · STAT3013.R11.CTTT · Group 5
 
 Analyze Olist delivery patterns, test selected associations, and evaluate purchase-time risk prediction. Reviews and cancellations provide descriptive business context. The results are historical and observational; they do not establish causes or deployment readiness.
+
+
+## Repository, dataset, and demo video
+
+- [GitHub repository](https://github.com/Vitchann/STAT3013.R11.Group5)
+- [Demo video folder (Google Drive)](https://drive.google.com/drive/u/0/folders/1zWDZ-t7i2CkViIVRE1zhI8jtckA-wciK)
+- [Olist Brazilian E-Commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
+- [INMET historical weather archives](https://portal.inmet.gov.br/dadoshistoricos)
+- [Source-code license: MIT](#license)
+
+The Drive link opens the folder containing the demonstration recordings.
 
 ## Project scope
 
@@ -76,18 +88,85 @@ At the frozen calibrated threshold of approximately **0.05418**, Test results ar
 
 High recall creates a large review workload. These results do not support broad automatic deployment. See the [ML protocol](docs/machine_learning/experiment_protocol.md) and [saved ML runs](outputs/tables/machine_learning/) for full metrics and provenance.
 
-## Business implications and limits
+## Business insights and recommendations
 
-- Low-review rates are 62.40% for Late and 9.27% for Not Late orders. Test clearer delivery updates and support; no intervention benefit has been measured.
-- Distance groups range from 4.47% Late at 0–100 km to 12.04% at ≥2,000 km. Review promises and capacity for routes with repeated delays and meaningful volume.
-- Risk varies by period and location. Monitor rates with sample sizes; avoid ranking sparse groups by percentages alone. Cancellations are a separate outcome: 625 orders (0.63%).
-- Define an alert budget and handling costs before a pilot. Measure confirmed delays found, missed delays, workload, and customer outcomes.
+The five insights below correspond to the revised business-insight slides. Counts describe the historical labeled cohort unless a review or Test sample is stated. Proposed actions require a measured pilot.
+
+| Insight | Evidence | Proposed action |
+|---|---|---|
+| Prioritize where late orders accumulate | São Paulo has 1,820 late orders (4.49% of 40,494 labeled orders) and Rio de Janeiro has 1,495 (12.11% of 12,350). Together they account for **50.7% of all 6,534 late orders**. | Review high-volume routes and local capacity using both late counts and rates. |
+| Include busy mid-distance routes | Routes from 300 to under 1,000 km account for **3,400 late orders, or 52.0% of all late orders**. The ≥2,000 km group has a higher late rate (12.04%) but fewer affected orders. | Allocate attention across routes using volume, risk, and repeated patterns over time. |
+| Extend service-quality review beyond delivery timing | Low-review rates are **62.40% for Late** and **9.27% for Not Late** among reviewed orders. However, **8,290 of 12,272 low reviews (67.6%)** come from Not Late orders. | Test proactive support for delays and investigate other complaint categories among on-time orders. |
+| Investigate delay spikes beyond order volume | March 2018 has **1,328 late orders**, about **3.3 times** January's 403, while labeled volume is similar (7,003 versus 7,069). | Investigate seller, carrier, route, and capacity changes around the spike. The comparison alone does not identify its cause. |
+| Pilot within a manageable alert budget | The frozen Test rule flags **78.32%** of orders, with **94.25% recall** and **6.42% precision**: 475 true alerts and 6,922 false alerts. | Set a review capacity, assign an operational owner, and measure staff time, confirmed delays, customer outcomes, and intervention costs. |
+
+Sources: [state counts](outputs/tables/eda/late_delivery/eda04_late_rate_by_state.csv), [distance groups](outputs/tables/eda/late_delivery/eda05_late_rate_by_distance_group.csv), [latest-valid-review summary](outputs/tables/inferential_statistics/review_descriptive_summary.csv), [monthly counts](outputs/tables/eda/time_analysis/monthly_late_delivery_summary.csv), and [frozen Test metrics](outputs/tables/machine_learning/ml_test/selected_threshold_metrics.csv).
+
+Cancellation is a separate descriptive outcome: 625 orders (0.63%). Financial savings, intervention success rates, and causal improvements have not been measured. A pilot should compare outcomes with a suitable comparison group and retain follow-up until outcomes are known.
+
+## Interpretation limits
 
 The data are historical and not a random sample of all Brazilian e-commerce. Missing labels and complete-case selection can affect results. Weather is a state-level pre-purchase index; publication timing and availability of some seller/estimate inputs remain assumptions. UTC is the main scenario; do not stack timezone scenarios as extra orders.
 
 Dependence, model form, and sparse groups limit inference. Validation A was reused, Test outcomes appeared in earlier analyses, and calibration/threshold selection share B. New evaluation data are needed for further tuning. Feature-group gains, financial savings, and intervention effects remain unvalidated.
 
 Review figures use the **latest valid review per order**. Earlier EDA uses the first review and differs slightly. Sources: [review summary](outputs/tables/inferential_statistics/review_descriptive_summary.csv) and [cancellation summary](outputs/tables/eda/cancellation_satisfaction/status_summary.csv).
+
+## Exploratory extension: days late among late orders
+
+The extension asks how many days an order will be late, conditional on lateness. The target is actual delivery date minus estimated delivery date, using calendar days. CatBoostRegressor uses the same 21 purchase-time features and is fitted on **3,720 late Train orders**. A fixed configuration (100 iterations, depth 6, learning rate 0.1, MAE loss, seed 42) is compared with the **Train-median baseline of 7 days** on **567 late orders from Validation A + B**.
+
+| Validation A + B metric | Median baseline | CatBoostRegressor |
+|---|---:|---:|
+| MAE (days) | **4.40564** | 4.52518 |
+| RMSE (days) | **6.70386** | 6.85110 |
+| Absolute error within 3 days | **47.44%** | 43.03% |
+
+The MAE difference (CatBoost minus baseline) is **+0.11954 days**, with a purchase-date bootstrap 95% interval of **[−0.02449, +0.25777]**. The experiment does not demonstrate improvement over the baseline. This regression experiment has not scored Test.
+
+Train-only temporal diagnostics give pooled later-period MAEs of 6.40 days for the median baseline, 6.86 for CatBoost with 21 features, and 6.70 after removing six weather features. Removing weather improves this diagnostic comparison, but both CatBoost configurations remain worse than the baseline. These findings concern the tested configurations. They do not prove that the features contain no predictive information or establish weather memorization as a causal mechanism. Delivery cutoffs and changing delay distributions limit interpretation.
+
+Explore the [factor-analysis notebooks and regression experiments](notebooks/06_delay_prediction/), [saved regression plan](outputs/tables/delay_prediction/regression_catboost/experiment_plan.json), [validation metrics](outputs/tables/delay_prediction/regression_catboost/validation_metrics.csv), and [temporal diagnostics](outputs/tables/delay_prediction/regression_train_diagnostics/pooled_metrics.csv). The weather-removal diagnostic addresses conditional delay duration; the classification feature-group question remains open.
+
+## Local web demo
+
+`demo_web/` is a local research demo that runs both frozen models live. It uses only the Python standard-library HTTP server plus the project's existing packages, so no extra installation is needed. It reads research outputs and never retrains models or overwrites results.
+
+| Page | Question | Model and samples |
+|---|---|---|
+| Dashboard | How does late delivery vary? | Filter by state and month; includes the distribution of days late |
+| Statistical insights | What do the tests and models show? | Saved inference, regression, and model-comparison outputs |
+| 1 · Will it be late? | Probability of late delivery | Frozen CatBoost classifier, sigmoid calibration, and threshold; 12 Test orders |
+| 2 · How many days? | Days late, if the order is late | `CatBoostDelayRegressor` against the 7-day baseline; 8 late Validation A + B orders, never Test |
+| Mock orders 2026 | Scoring synthetic orders | 22 synthetic orders without outcomes; 10 try-out orders (28 Nov–7 Dec 2026) also appear in both sample menus |
+
+**1. Create the model files.** Model binaries are excluded from Git. After setting up the environment above, run these notebooks once:
+
+- **Problem 1:** `05_machine_learning/baselines/catboost.ipynb`, then `model_selection/freeze_selected_model.ipynb`, then `calibration/calibration_threshold.ipynb`.
+- **Problem 2:** `06_delay_prediction/02_delay_regression_catboost.ipynb`.
+
+These steps write `outputs/models/ml_selection/CatBoostBaseline.joblib`, `outputs/models/ml_calibration/sigmoid_calibrator.joblib`, and `outputs/models/delay_regression/CatBoostDelayRegressor.joblib`. The notebooks record each file's SHA-256 hash, and the server checks those hashes before loading.
+
+**2. Start the server** from the repository root:
+
+```powershell
+.\.venv\Scripts\python.exe demo_web/server.py
+```
+
+Wait for `Problem 1 model: ready; frozen hashes verified` and `Problem 2 model: ready; frozen hash verified`. Then open <http://127.0.0.1:8501> in Chrome or Edge. Press `Ctrl+C` to stop the server.
+
+- **Use another port:** `.\.venv\Scripts\python.exe demo_web/server.py --port 8502`.
+- **Use the launcher:** `.\demo_web\run_demo.ps1` checks `.venv-boosting` first, then `.venv`.
+- **Missing or mismatched model:** the dashboard and saved results still load. Live prediction for that problem is disabled, and the page shows the reason.
+
+**3. Optional checks and fixtures:**
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s demo_web -p "test_*.py" -v
+.\.venv\Scripts\python.exe demo_web/generate_mock_orders.py
+```
+
+The tests check prediction parity with saved Test and validation outputs, input validation, synthetic calendars, and HTTP routes. The second command regenerates `demo_web/data/mock_orders_2026.csv` and `try_orders_2026.csv`. The server binds only to `127.0.0.1`; it is not a public deployment configuration. A Vietnamese walkthrough for recording the demo is in [demo_web/README.md](demo_web/README.md).
 
 ## Files and execution
 
@@ -98,17 +177,25 @@ Review figures use the **latest valid review per order**. Earlier EDA uses the f
 | `data/external/` | Holiday calendar and INMET inputs/outputs |
 | `data/ml_preparation/` | Shared chronological manifest |
 | `notebooks/` | Preprocessing, EDA, tests, regression, and ML |
+| `notebooks/06_delay_prediction/` | Delay-duration EDA, regression, and Train-only diagnostics |
+| `demo_web/` | Local web demo for both prediction problems ([how to run](#local-web-demo)) |
 | `docs/` | Dictionaries, findings, and protocol |
 | `outputs/` | Tables, figures, and local model artifacts |
 
 Use the project Python environment (recorded on Windows, CPython 3.14.6). [requirements.txt](requirements.txt) pins direct dependencies; [environment.txt](environment.txt) records the installed environment rather than a portable lockfile.
 
 ```powershell
+git clone https://github.com/Vitchann/STAT3013.R11.Group5.git
+cd STAT3013.R11.Group5
+git lfs pull
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m pip check
+.\.venv\Scripts\python.exe -m ipykernel install --user --name pttk-boosting --display-name "Python (PTTK boosting)"
 .\.venv\Scripts\python.exe -m jupyterlab
 ```
+
+Install Git and Git LFS before cloning. Select the **Python (PTTK boosting)** kernel in Jupyter or VS Code. The pinned environment is the recorded Windows setup; compatibility with other platforms or Python versions has not been verified here.
 
 Run notebooks in dependency order:
 
@@ -119,9 +206,39 @@ Run notebooks in dependency order:
 5. Run ML baselines: Logistic/Random Forest → LightGBM/XGBoost → CatBoost.
 6. Run weighted CatBoost → freeze selection → calibration → final Test evaluation. References must match the intended upstream run.
 7. Run oversampling, then undersampling, as separate exploratory extensions.
+8. For the delay-duration extension, run `notebooks/06_delay_prediction/01_delay_factor_analysis.ipynb`, `01b_additional_delay_factor_analysis.ipynb`, `02_delay_regression_catboost.ipynb`, then `02b_delay_regression_train_diagnostics.ipynb`. The last notebook performs diagnostics within Train.
+
+View the application demonstration through the [demo video folder](https://drive.google.com/drive/u/0/folders/1zWDZ-t7i2CkViIVRE1zhI8jtckA-wciK). This repository update publishes the notebooks and research outputs needed to inspect the experiments.
 
 Raw weather requires `data/external/inmet/raw/2016.zip`, `2017.zip`, and `2018.zip`. All three archives are tracked with Git LFS; extraction was rerun successfully on 2026-11-22. Install Git LFS before cloning, then run `git lfs pull` if the ZIPs have not been downloaded. Model binaries remain excluded from Git and are regenerated by running the ML notebooks in order.
 
 Base construction overwrites `research_data.csv`; run temporal/enrichment steps afterward. Temporal export is currently enabled and validates the CSV before replacement. Keep backups before rebuilding. Each ML experiment stores one result set directly in its `ml_*` folder. Reruns overwrite that set. Test always uses the selected pipeline, calibrator, and threshold without retuning.
 
 Data sources: [Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), [INMET historical archives](https://portal.inmet.gov.br/dadoshistoricos), and [local weather preparation notes](docs/data_preprocessing/inmet_weather_preparation_review.md).
+
+
+## License
+
+The original source code authored by STAT3013.R11 Group 5 is licensed under the MIT License below. Third-party datasets (including Olist and INMET), libraries, and other third-party materials retain their respective licenses and terms. This source-code grant does not relicense those materials.
+
+### MIT License
+
+Copyright (c) 2026 STAT3013.R11 Group 5
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
