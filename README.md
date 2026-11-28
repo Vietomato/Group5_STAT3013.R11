@@ -166,7 +166,7 @@ Wait for `Problem 1 model: ready; frozen hashes verified` and `Problem 2 model: 
 .\.venv\Scripts\python.exe demo_web/generate_mock_orders.py
 ```
 
-The tests check prediction parity with saved Test and validation outputs, input validation, synthetic calendars, and HTTP routes. The second command regenerates `demo_web/data/mock_orders_2026.csv` and `try_orders_2026.csv`. The server binds only to `127.0.0.1`; it is not a public deployment configuration. A Vietnamese walkthrough for recording the demo is in [demo_web/README.md](demo_web/README.md).
+The tests check prediction parity with saved Test and validation outputs, input validation, synthetic calendars, and HTTP routes. The second command regenerates `demo_web/data/mock_orders_2026.csv` and `try_orders_2026.csv`. The server binds only to `127.0.0.1`; it is not a public deployment configuration. A page-by-page walkthrough and a 15-minute recording plan are in [demo_web/README.md](demo_web/README.md).
 
 ## Files and execution
 
