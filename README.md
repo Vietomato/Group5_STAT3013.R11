@@ -11,7 +11,6 @@ Analyze Olist delivery patterns, test selected associations, and evaluate purcha
 - [GitHub repository](https://github.com/Vitchann/STAT3013.R11.Group5)
 - [Demo video folder (Google Drive)](https://drive.google.com/drive/u/0/folders/1zWDZ-t7i2CkViIVRE1zhI8jtckA-wciK)
 - [Olist Brazilian E-Commerce dataset](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)
-- [INMET historical weather archives](https://portal.inmet.gov.br/dadoshistoricos)
 - [Source-code license: MIT](#license)
 
 The Drive link opens the folder containing the demonstration recordings.
