@@ -1,6 +1,6 @@
 {
   "selection": "outputs/tables/machine_learning/ml_selection/selected_config.json",
-  "selection_sha256": "789cd5b2f5a4f52f2b33f46e58aaf4f85b009965f652dff2dbd0e3b180c1292a",
+  "selection_sha256": "62d58ee4720d575f71516fc3fe20b9e960f7bc04b71ec16a771638aa102f2da8",
   "method": "sigmoid on clipped raw log-odds",
   "clipping_epsilon": 1e-06,
   "calibrator_parameters": {

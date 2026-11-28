@@ -1,5 +1,5 @@
 {
-  "selection_id": "20261122_223015_049570",
+  "selection_id": "20261128_153312_350272",
   "selected_model": "CatBoost",
   "configuration": "unweighted_baseline",
   "status": "classifier_frozen_pending_calibration",
@@ -10,9 +10,9 @@
   "source_run": "outputs/tables/machine_learning/ml_catboost",
   "source_model": "outputs/models/ml_catboost/CatBoost.joblib",
   "comparison_source": "outputs/tables/machine_learning/ml_catboost_weighted/model_configuration_comparison.csv",
-  "comparison_sha256": "be037d444f4743bdb8350eec7fe10b18606ea0d64b6b3dc8f952e41b0781f2f8",
+  "comparison_sha256": "63c550c8d4ad0bbc363e230e695d19c885ccaec5960210f2b3f3e96c468cdf22",
   "frozen_pipeline": "outputs/models/ml_selection/CatBoostBaseline.joblib",
-  "pipeline_sha256": "b88339341f6c65485cf24b6fd4c80ca08439da2d96d2eb6efe98b35159284df5",
+  "pipeline_sha256": "84002660a271820dd139545b7f5c467b60989a441663aa3f1baea92543a13f31",
   "features": [
     "distance_km_mean",
     "customer_state",

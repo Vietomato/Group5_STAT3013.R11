@@ -1,7 +1,7 @@
 [
   {
     "model": "CatBoost",
-    "training_seconds": 8.69064500008244,
+    "training_seconds": 5.58684269990772,
     "parameters": {
       "iterations": 100,
       "learning_rate": 0.1,
