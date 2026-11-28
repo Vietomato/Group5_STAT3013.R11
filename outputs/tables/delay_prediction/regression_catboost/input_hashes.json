@@ -1,0 +1,12 @@
+{
+  "raw": {
+    "data/processed/research_data_weather_price_holiday_assume_utc.csv": "83c8387c68716ca388e3634a6c76dfbdaa72ba7b6ee8b29ec07b798b1a369593",
+    "docs/predictor_list.csv": "044dc58a193c4f92f9bc5d09388d666956040ab51c765367f70a79ca4549569e",
+    "data/ml_preparation/split_manifest.csv": "4acf1fd734bf69d5e45e8ba923b8c52a50ed87e0745909d6176fa7fad1475582"
+  },
+  "lf_normalised": {
+    "data/processed/research_data_weather_price_holiday_assume_utc.csv": "8c6fd7247a0f57ddbd6f82205f9634657ce7a128cb744e125729d694cd681272",
+    "docs/predictor_list.csv": "dea1377fb1c860b545f6b9fc889bd2ba713a81df38d3b76da73d9274151ca49d",
+    "data/ml_preparation/split_manifest.csv": "f718cf63c08a3d0df22be54d24b63496894a992d1a2b5cf2a375aacf0f4169a3"
+  }
+}

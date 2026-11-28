@@ -274,3 +274,62 @@ Status: completed in `notebooks/05_machine_learning/sampling_experiments/random_
 | XGBoost | 0.076845 | 0.065851 | 0.068090 |
 
 Random Forest was the only model with higher AP under undersampling than its own baseline. All five undersampled models had worse Brier and Log Loss than their baselines. No undersampling variant exceeded the original CatBoost baseline AP. These comparisons are post-Test exploratory findings; no uncertainty interval establishes superiority, no B/Test scores were generated, and the frozen model/calibrator/threshold decision remains unchanged.
+
+## Extension: delay-duration regression (declared 2026-11-28)
+
+Requested as an extension outside the submitted report's research questions A-E. It does not revise the frozen classifier, calibrator, threshold or Test results above. Declared after the descriptive Train-only analyses in `notebooks/06_delay_prediction/01_delay_factor_analysis.ipynb` and `01b_additional_delay_factor_analysis.ipynb`, and before any regression model was fitted or any validation delay was scored.
+
+**Question.** Among orders that are delivered late, can the 21 purchase-time predictors estimate the number of days late more accurately than a constant Train-median guess?
+
+**Target and sample.**
+
+- Target: `delivery_delay_days` = actual delivery calendar date minus estimated delivery calendar date. Only orders with `is_late = 1` are used, so every target is at least 1 day.
+- Splits come from the existing manifest. Train: 3,720 late orders. Validation: Validation A and Validation B pooled, 387 + 180 = 567 late orders (purchases 2018-04-16 to 2018-06-03; both share the 2018-07-19 label cutoff). B is pooled because this extension needs no calibration or threshold set; the decision was made before any regression result was seen.
+- Test (504 late orders) is not loaded or scored in this notebook. A single later Test evaluation requires a separate notebook and no changes to the frozen configuration.
+- Predictors: the same 21 features in `docs/predictor_list.csv`. Delivery timestamps, delay, status and reviews are never predictors.
+
+**Models (fixed, no tuning).**
+
+| ID | Definition |
+|---|---|
+| `MedianBaseline` | Predict the Train median delay for every order |
+| `CatBoostDelayRegressor` | `CatBoostRegressor`: loss MAE, 100 iterations, learning rate 0.1, depth 6, random seed 42, 4 CPU threads, native categorical handling for `customer_state` and `purchase_weekday`; no early stopping, eval set, weighting or hyperparameter search |
+
+Preprocessing matches the classification CatBoost baseline: numeric median imputation and a fixed `__MISSING__` category token, both fitted on the 3,720 Train late orders only. Predictions below 1 day are raised to 1; predictions are not rounded.
+
+**Evaluation on pooled validation.**
+
+- Primary: MAE in days.
+- Secondary: median absolute error, RMSE, mean error (prediction minus actual), share of orders within ±3 days.
+- By actual delay group: 1-3, 4-7, 8-14 and >14 days, with counts.
+- Validation A and B are also reported separately to check stability; the conclusion uses the pooled set.
+- Uncertainty: 95% percentile interval for MAE(CatBoost) − MAE(baseline), from 2,000 bootstrap resamples of whole purchase dates (seed 42).
+- Descriptive diagnostics: Train MAE of both models, prediction spread, and CatBoost feature importance. Importance is not a causal or feature-group result.
+
+**Decision rule.** CatBoost is considered better than the baseline only if the entire interval lies below 0. Otherwise the conclusion is that no improvement was demonstrated, and the baseline is retained. The size of any improvement in days must be reported with the decision. Parameters are not changed after seeing validation results; any further configuration would be a new, separately declared exploratory amendment with no unused validation set remaining.
+
+**Limitations.** Small samples; Train labels require delivery before 2018-04-16, so long delays of late-Train purchases are under-represented; validation periods have already been inspected in EDA; the model conditions on an order being late and cannot alone be used as a purchase-time alert; no causal or feature-group conclusion follows.
+
+**Outputs.** Notebook: `notebooks/06_delay_prediction/02_delay_regression_catboost.ipynb`. Tables: `outputs/tables/delay_prediction/regression_catboost/`. Figures: `outputs/figures/delay_prediction/regression_catboost/`. Model: `outputs/models/delay_regression/CatBoostDelayRegressor.joblib` (excluded from Git).
+
+### Diagnostic amendment: why CatBoost did not beat the baseline (declared 2026-11-28)
+
+Declared after the pooled-validation result above (CatBoost MAE 4.53 vs baseline 4.41; interval [−0.02, +0.26]). Its only purpose is to explain that result. It uses **Train late orders only**; Validation A/B and Test are not loaded or scored, and nothing here changes the retained baseline decision or selects a new model.
+
+**Hypotheses.** (H1) The 21 purchase-time predictors carry little transferable information about delay length. (H2) State-day weather values act as a date fingerprint, letting the model memorise period-specific delay levels that do not recur.
+
+**Time-ordered folds within Train (expanding window).** Fold k fits on Train late orders purchased *and delivered* before its start date (the same label-availability rule as the main design) and scores Train late orders purchased in its window:
+
+| Fold | Fit: purchased and delivered before | Score: purchased in |
+|---|---|---|
+| 1 | 2017-07-01 | [2017-07-01, 2017-10-01) |
+| 2 | 2017-10-01 | [2017-10-01, 2018-01-01) |
+| 3 | 2018-01-01 | [2018-01-01, 2018-03-02) |
+
+**Configurations per fold.** `MedianBaseline` (median of that fold's fit rows); `CatBoost21` (all 21 predictors); `CatBoost15_noWeather` (drops the six F3 weather predictors). CatBoost parameters and preprocessing are identical to `CatBoostDelayRegressor`; preprocessing is fitted on each fold's fit rows only; predictions below 1 day are raised to 1.
+
+**Measures.** Out-of-time MAE per fold and pooled; in-sample MAE on each fold's fit rows; pooled 95% percentile intervals (2,000 purchase-date bootstrap resamples, seed 42) for CatBoost21 − baseline, CatBoost15_noWeather − baseline and CatBoost15_noWeather − CatBoost21; weather-group share of CatBoost21 feature importance. A descriptive check counts how often a state's six-value weather vector corresponds to a single calendar day across all 57,449 Train orders (no target used).
+
+**Reading rules.** H1 is supported if CatBoost21 does not beat the baseline out of time (interval not entirely below 0). H2 is supported if (a) weather vectors are nearly unique to one day, (b) CatBoost21 shows a larger in-sample gain than CatBoost15_noWeather, and (c) removing weather does not worsen out-of-time MAE (CatBoost15_noWeather − CatBoost21 point estimate ≤ 0). These are explanatory diagnostics on periods already inspected; they are not confirmation of a better model, and no configuration found here will be scored on validation or Test without a new declaration.
+
+Notebook: `notebooks/06_delay_prediction/02b_delay_regression_train_diagnostics.ipynb`. Tables: `outputs/tables/delay_prediction/regression_train_diagnostics/`. Figures: `outputs/figures/delay_prediction/regression_train_diagnostics/`. No model files are saved.

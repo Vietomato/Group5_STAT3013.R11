@@ -1,0 +1,4 @@
+feature,valid_orders,missing_orders,missing_late_orders
+distance_km_mean,57149,300,25.0
+destination_rain_state_mean_mm,56850,599,46.0
+origin_rain_state_mean_mm,57332,117,5.0

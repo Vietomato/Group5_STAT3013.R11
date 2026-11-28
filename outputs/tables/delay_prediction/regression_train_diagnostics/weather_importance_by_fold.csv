@@ -1,0 +1,4 @@
+fold,weather_share_pct,top_feature
+fold_1,39.263038098968735,destination_humidity_state_mean_pct
+fold_2,40.28070471864831,destination_air_temp_state_mean_c
+fold_3,38.25840860498694,product_category_count

@@ -1,0 +1,70 @@
+{
+  "run_id": "20261128_144120_756559",
+  "question": "Days late among late orders: CatBoost versus Train-median baseline",
+  "protocol": "docs/machine_learning/experiment_protocol.md#extension-delay-duration-regression-declared-2026-11-28",
+  "target": "delivery_delay_days (late orders only, >= 1)",
+  "fit_split": "train (late orders)",
+  "score_split": "validation_a + validation_b pooled (late orders)",
+  "test_scored": false,
+  "tuning": false,
+  "early_stopping": false,
+  "features": [
+    "distance_km_mean",
+    "customer_state",
+    "item_count",
+    "seller_count",
+    "purchase_hour",
+    "purchase_weekday",
+    "estimated_window_days",
+    "items_value",
+    "freight_value",
+    "total_product_weight_g",
+    "total_product_volume_cm3",
+    "product_category_count",
+    "purchase_is_national_holiday",
+    "days_to_next_national_holiday",
+    "national_holiday_count_in_estimated_window",
+    "destination_rain_state_mean_mm",
+    "origin_rain_state_mean_mm",
+    "destination_humidity_state_mean_pct",
+    "origin_humidity_state_mean_pct",
+    "destination_air_temp_state_mean_c",
+    "origin_air_temp_state_mean_c"
+  ],
+  "categorical_features": [
+    "customer_state",
+    "purchase_weekday"
+  ],
+  "preprocessing": "Train median for numeric features; __MISSING__ token for categories; fitted on Train late orders",
+  "baseline": {
+    "model": "MedianBaseline",
+    "value_days": 7.0
+  },
+  "CatBoostDelayRegressor": {
+    "iterations": 100,
+    "learning_rate": 0.1,
+    "depth": 6,
+    "loss_function": "MAE",
+    "thread_count": 4,
+    "random_seed": 42,
+    "use_best_model": false,
+    "verbose": false,
+    "eval_metric": "MAE",
+    "allow_writing_files": false,
+    "task_type": "CPU",
+    "cat_features": [
+      "customer_state",
+      "purchase_weekday"
+    ]
+  },
+  "prediction_floor_days": 1,
+  "rounding": false,
+  "primary_metric": "MAE",
+  "bootstrap": {
+    "unit": "purchase date",
+    "replicates": 2000,
+    "seed": 42,
+    "interval": "percentile 95%"
+  },
+  "decision_rule": "CatBoost better only if the full 95% interval of MAE difference is below 0"
+}

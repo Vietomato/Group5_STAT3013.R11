@@ -1,0 +1,4 @@
+seller_group,orders,late_orders,late_rate_pct,distance_median_km,window_median_days,delay_median_days,delay_mean_days,delay_p25_days,delay_p75_days,delay_p90_days
+1 seller,56814,3712,6.5336008730242545,453.01278931674835,25.0,7.0,10.749191810344827,3.0,13.0,22.0
+2 sellers,605,8,1.322314049586777,437.791046220493,25.0,5.0,4.5,3.75,5.25,6.3
+3+ sellers,30,0,0.0,551.0739697286903,29.0,,,,,

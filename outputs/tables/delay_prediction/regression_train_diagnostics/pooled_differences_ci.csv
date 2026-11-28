@@ -1,0 +1,4 @@
+comparison,question,difference,ci95_low,ci95_high,share_below_0_pct,purchase_dates
+CatBoost21 minus MedianBaseline,H1: does CatBoost21 beat the baseline?,0.45672310686477857,0.3239656579712167,0.5932251733060044,0.0,238
+CatBoost15_noWeather minus MedianBaseline,Does CatBoost without weather beat the baseline?,0.2922698879974437,0.19903830929779773,0.3917250267111002,0.0,238
+CatBoost15_noWeather minus CatBoost21,H2: does removing weather worsen MAE?,-0.16445321886733488,-0.27312781584763346,-0.0665620803725086,99.95,238

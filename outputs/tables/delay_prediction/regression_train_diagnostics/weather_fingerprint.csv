@@ -1,0 +1,3 @@
+predictors,orders_with_complete_values,distinct_vectors,distinct_state_purchase_dates,vectors_on_one_date_pct,orders_whose_vector_is_one_date_pct,mean_dates_per_vector
+state + 3 destination weather values,56770,6852,6852,100.0,100.0,1.0
+state + all 6 weather values,56653,15998,6845,100.0,100.0,1.0
