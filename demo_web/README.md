@@ -1,151 +1,150 @@
-# Web demo Olist chạy trên máy
+# Olist local web demo
 
-Web dùng dữ liệu và mô hình thật trong repo, phục vụ video demo 15 phút. Giao diện bằng tiếng Anh để khớp lời thuyết minh; hướng dẫn ở đây bằng tiếng Việt. Web chạy tại localhost, không cần tài khoản, dịch vụ ngoài hoặc kết nối Internet khi demo.
+The demo runs the project's real data and frozen models on your own machine. It was built for a 15-minute recorded walkthrough. It runs on localhost and needs no account, external service, or Internet connection during the demo.
 
-## Mở web
+## Start the demo
 
-Mở Terminal tại thư mục `PTTK`, chạy:
+From the repository root, run:
 
 ```powershell
-.\.venv-boosting\Scripts\python.exe demo_web/server.py
+.\.venv\Scripts\python.exe demo_web/server.py
 ```
 
-Chờ hai dòng `Problem 1 model: ready; frozen hashes verified` và `Problem 2 model: ready; frozen hash verified`, sau đó mở **http://127.0.0.1:8501** bằng Chrome hoặc Edge. Giữ Terminal đang chạy trong lúc demo. Nhấn `Ctrl+C` để dừng.
+Wait for two lines: `Problem 1 model: ready; frozen hashes verified` and `Problem 2 model: ready; frozen hash verified`. Then open **http://127.0.0.1:8501** in Chrome or Edge. Keep the terminal open during the demo, and press `Ctrl+C` to stop the server.
 
-Cũng có thể chạy launcher, nếu PowerShell cho phép chạy script:
+You can also use the launcher if PowerShell allows scripts. It looks for `.venv-boosting` first, then `.venv`:
 
 ```powershell
 .\demo_web\run_demo.ps1
 ```
 
-Nếu cổng đang được dùng, chọn cổng khác:
+If port 8501 is busy, choose another port and open that address:
 
 ```powershell
-.\.venv-boosting\Scripts\python.exe demo_web/server.py --port 8502
+.\.venv\Scripts\python.exe demo_web/server.py --port 8502
 ```
 
-Mở `http://127.0.0.1:8502` tương ứng. Có thể chạy `server.py` từ thư mục khác vì các đường dẫn dữ liệu được tính từ vị trí file.
+`server.py` can be started from any folder, because data paths are resolved from the file's location. After you edit code, stop the server, start it again, and press `Ctrl+F5` in the browser.
 
-## Hai bài toán trong web
+## Two prediction problems
 
-| Trang | Câu hỏi | Dữ liệu | Mô hình | Kết quả đã chốt |
+| Page | Question | Data | Model | Frozen result |
 |---|---|---|---|---|
-| **1 · Will it be late?** | Đơn có trễ không? | Mọi đơn có nhãn; mẫu demo lấy từ Test | CatBoost phân loại + hiệu chỉnh sigmoid + ngưỡng 5,418% | Test: recall 94,25%, precision 6,42% |
-| **2 · How many days?** | Nếu trễ thì trễ bao nhiêu ngày? | Chỉ đơn trễ; mẫu demo lấy từ Validation A+B, không dùng Test | `CatBoostDelayRegressor` (MAE), so với baseline luôn đoán 7 ngày | MAE 4,53 so với 4,41 ngày; không tốt hơn baseline |
+| **1 · Will it be late?** | Will this order be late? | All labeled orders; demo samples come from Test | CatBoost classifier, sigmoid calibration, and a 5.418% threshold | Test: recall 94.25%, precision 6.42% |
+| **2 · How many days?** | If it is late, how many days late? | Late orders only; demo samples come from Validation A + B, never Test | `CatBoostDelayRegressor` (MAE loss), compared with a baseline that always predicts 7 days | MAE 4.53 vs 4.41 days; no improvement over the baseline |
 
-Hai mô hình dùng cùng 21 biến lúc đặt hàng. Kết quả Bài toán 1 hiện thêm dòng "nếu trễ, ước lượng X ngày" từ Bài toán 2, kèm lưu ý ước lượng này không chính xác hơn baseline. Bảng Mock orders 2026 có thêm cột `If late · days`.
+Both models use the same 21 purchase-time inputs. A Problem 1 result also shows an "if late, about X days" line from Problem 2, noting that this estimate was not more accurate than the baseline. The Mock orders 2026 table has an `If late · days` column.
 
-## Demo các phần như thế nào
-
-### Problem 2 · How many days?
-
-1. Chọn **Late order D01–D08**, bấm **Load sample**. Tám đơn trễ thật của Validation A+B, hai đơn cho mỗi nhóm trễ 1–3, 4–7, 8–14 và trên 14 ngày; trong mỗi nhóm có một đơn CatBoost đoán sát hơn và một đơn baseline sát hơn. Menu không tiết lộ số ngày trễ.
-2. Bấm **Estimate days late**: server gọi `predict` thật của `CatBoostDelayRegressor`, nâng kết quả dưới 1 ngày lên 1, và hiện cạnh baseline 7 ngày.
-3. Bấm **Reveal actual delay** để xem số ngày trễ thật và mỗi cách đoán lệch bao nhiêu. Một đơn chỉ để minh họa; kết luận dựa vào MAE trên 567 đơn.
-4. Sửa đầu vào (ví dụ khoảng cách) và chạy lại để thấy độ nhạy của mô hình. Đây không phải tác động nhân quả.
-5. Phía dưới trang là bằng chứng đã lưu: bảng MAE, khoảng tin cậy, sai số theo nhóm trễ, kiểm tra chia Train theo thời gian, việc thời tiết đóng vai "dấu vân tay ngày", và mức dùng biến. Nguồn: `outputs/tables/delay_prediction/regression_catboost/` và `regression_train_diagnostics/`.
-
-Mô hình Bài toán 2 cần file `outputs/models/delay_regression/CatBoostDelayRegressor.joblib` (tạo bởi `notebooks/06_delay_prediction/02_delay_regression_catboost.ipynb`). Server kiểm tra SHA-256 với `experiment_log.json` trước khi nạp; nếu thiếu, trang vẫn hiện kết quả đã lưu nhưng khóa nút dự đoán.
+## How to present each page
 
 ### Dashboard
 
-- Hiện tổng đơn, số nhãn hợp lệ, số đơn trễ và tỷ lệ trễ. Mẫu đầy đủ phải hiện 99.441 đơn, 96.470 nhãn hợp lệ, 6.534 đơn trễ, tỷ lệ 6,77%.
-- Chọn **Destination state** hoặc **Purchase month**: các chỉ số và biểu đồ được tính lại trên cohort đã lọc, không thay đổi dữ liệu nguồn.
-- Di chuột vào điểm/cột để xem tỷ lệ cùng số đơn. Nhóm ít hơn 30 đơn được tô xám; không xếp hạng mức rủi ro chỉ từ tỷ lệ của nhóm quá ít đơn.
-- **Reset filters** trở về toàn bộ dữ liệu. Bộ lọc chỉ áp dụng cho Dashboard.
+- Shows total orders, valid labels, late orders, and the late rate. The full cohort must show 99,441 orders, 96,470 valid labels, 6,534 late orders, and a 6.77% late rate.
+- **Destination state** and **Purchase month** recompute the cards and charts for the filtered cohort. The source data are not changed.
+- Hover a point or bar to see its rate and order count. Groups with fewer than 30 orders are gray; do not rank risk from very small groups.
+- **When an order is late, how late?** shows the distribution of days late (the Problem 2 target). The full cohort has a median of 7 days, a mean of 10.6, and a 90th percentile of 22.
+- **Reset filters** returns to the full cohort. Filters apply to the Dashboard only.
 
 ### Statistical insights
 
-- Chọn **Distance / Freight / Holiday / Rainfall** để đọc phương pháp, cỡ mẫu, ước lượng, CI và p-value đã hiệu chỉnh Holm; đối chiếu với OR hồi quy.
-- Chỉ đường OR = 1 khi giải thích khoảng tin cậy. Với mưa, nói rõ kết quả giảm sau kiểm soát thời kỳ mua hàng.
-- Chuyển **Validation A / Test** để thấy CatBoost được chọn trên A, trong khi Random Forest có AP cao nhất trên Test. Không đổi mô hình theo thứ hạng Test.
-- Chỉ 6.922 false alerts trong ma trận nhầm lẫn; giải thích recall 94,25% đi cùng precision 6,42% và alert rate 78,32%.
-- Đây là các kết quả nghiên cứu đã lưu, không phải chạy lại hồi quy/kiểm định khi bấm chọn. Nhãn trên màn hình ghi rõ phạm vi này.
+- Select **Distance / Freight / Holiday / Rainfall** to read the method, sample size, estimate, CI, and Holm-adjusted p-value, alongside the adjusted odds ratio.
+- Point to the OR = 1 line when explaining an interval. For rainfall, say that the association weakens after controlling for purchase period.
+- Switch **Validation A / Test**: CatBoost was selected on A, while Random Forest has the highest Test AP. The model is not changed based on Test rankings.
+- Point to the 6,922 false alerts in the confusion matrix to explain why 94.25% recall comes with 6.42% precision and a 78.32% alert rate.
+- These are saved research results; nothing is refitted when you click. The on-screen labels state this.
 
 ### Problem 1 · Will it be late?
 
-1. Chọn **Sample 01**, bấm **Load sample** nếu vừa đổi lựa chọn. Web nạp đủ 21 biến từ một đơn Test thật, chưa hiện kết quả thực tế.
-2. Đọc các trường chính. Mở **Calendar, products & weather** để thấy 14 biến còn lại. Các biến không sửa vẫn giữ giá trị của đơn đã nạp; không phải mô hình chỉ cần bảy trường chính.
-3. Bấm **Run prediction**. Server thực sự gọi `predict_proba` của pipeline CatBoost, rồi bộ hiệu chỉnh sigmoid đã lưu. Không lấy xác suất lưu sẵn để giả lập dự báo.
-4. Đọc xác suất đã hiệu chỉnh, ngưỡng khoảng 5,418% và nhãn cảnh báo. Xác suất thô cũng được hiện để đối chiếu.
-5. Bấm **Reveal actual outcome** để hiện đơn đó thực tế trễ hay không. Mười hai mẫu được chọn gồm cả dự báo đúng, cảnh báo sai và bỏ sót. Các mẫu được chọn để minh họa, không đại diện cho hiệu năng chung.
-6. Đổi một đầu vào, ví dụ khoảng cách. Web đánh dấu kết quả cũ đã lỗi thời. Bấm **Run prediction** lần nữa: so sánh xác suất mới với xác suất đơn gốc đã chạy ở bước 3. Mức thay đổi có thể tăng, giảm hoặc bằng không tùy đầu vào.
-7. Nói đây là phản ứng của mô hình khi thay dữ liệu, không phải hiệu quả can thiệp có quan hệ nhân quả. Đầu vào giả định có thể không phản ánh một đơn hàng khả thi ngoài thực tế.
-8. Kết quả thực tế không được dùng để đối chiếu với tình huống đã sửa. Bấm **Restore sample** và chạy lại để quay về đơn gốc.
-9. Có thể bấm **Download result** để tải JSON gồm đầu vào và dự báo hiện tại. Web không ghi đè dữ liệu, mô hình hoặc các bảng kết quả nghiên cứu.
+1. Choose **Sample 01** and select **Load sample** if you changed the selection. The page loads all 21 inputs of a real Test order without showing its outcome.
+2. Read the main fields, then open **Calendar, products & weather** to show the other 14 inputs. Unedited fields keep the loaded values; the model uses all 21 inputs, not only the seven main ones.
+3. Select **Run prediction**. The server calls the CatBoost pipeline's `predict_proba`, then the saved sigmoid calibrator. It does not replay stored probabilities.
+4. Read the calibrated probability, the threshold of about 5.418%, and the alert label. The raw probability is shown for comparison.
+5. Select **Reveal actual outcome** to show whether the order was late. The 12 samples include true alerts, false alerts, and missed delays. They were chosen to illustrate, not to represent overall performance.
+6. Change an input, for example distance. The old result is marked as outdated. Run the prediction again and compare it with the original order's probability from step 3; the change can go either way or be zero.
+7. Explain that this shows how the model responds to inputs, not a causal effect of an intervention. An edited order may not be realistic.
+8. The actual outcome does not validate an edited scenario. Select **Restore sample** and run again to return to the original order.
+9. **Download result** saves a JSON file with the current inputs and prediction. The demo never overwrites data, models, or research tables.
 
-Để thể hiện giới hạn rõ hơn khi quay: Sample 01 là ví dụ cảnh báo đúng; Sample 04 là cảnh báo sai; Sample 07 là bỏ sót; Sample 10 là không cảnh báo đúng. Thứ tự này dựa vào kết quả Test đã lưu, không phải chọn mẫu ngẫu nhiên. Menu không tiết lộ sẵn kết quả cho người xem.
+To show the model's limits while recording: Sample 01 is a true alert, Sample 04 a false alert, Sample 07 a missed delay, and Sample 10 a correct non-alert. This order comes from the saved Test results, not random sampling. The menu does not reveal outcomes.
 
-## Thử đơn giả lập năm 2026
+### Problem 2 · How many days?
 
-Có hai bộ đơn tự tạo, mỗi đơn đủ 21 biến:
+1. Choose **Late order D01–D08** and select **Load sample**. These are eight real late orders from Validation A + B: two per delay group (1–3, 4–7, 8–14, and over 14 days). In each group, CatBoost is closer for one order and the baseline for the other. The menu does not reveal the delay.
+2. Select **Estimate days late**. The server calls `CatBoostDelayRegressor.predict`, raises results below 1 day to 1, and shows the 7-day baseline beside it.
+3. Select **Reveal actual delay** to show the true delay and how far each guess missed. A single order is only illustrative; the conclusion rests on MAE over 567 orders.
+4. Edit an input (for example distance) and run again to show the model's sensitivity. This is not a causal effect.
+5. The lower part of the page shows the saved evidence: the MAE table, the confidence interval, errors by delay group, the Train-only time-split diagnostics, weather acting as a "date fingerprint", and feature importance. Sources: `outputs/tables/delay_prediction/regression_catboost/` and `regression_train_diagnostics/`.
 
-| Bộ | Mã | Ngày mua | Dùng để |
+Problem 2 needs `outputs/models/delay_regression/CatBoostDelayRegressor.joblib`, created by `notebooks/06_delay_prediction/02_delay_regression_catboost.ipynb`. The server checks its SHA-256 against `experiment_log.json` before loading. If the file is missing, the page still shows saved results but disables live estimates.
+
+## Synthetic 2026 orders
+
+There are two synthetic sets, each order with all 21 inputs:
+
+| Set | IDs | Purchase dates | Used for |
 |---|---|---|---|
-| Order book | `MOCK-2026-001` … `012` | 26/11 – 25/12/2026 | Bảng Mock orders 2026, có kịch bản Giáng sinh và ngày lễ |
-| Try-out | `TRY-2026-01` … `10` | 28/11 – 07/12/2026, mỗi ngày 1 đơn | Chọn thẳng trong menu mẫu của **cả hai bài toán** để chạy thử ngay |
+| Order book | `MOCK-2026-001` … `012` | 26 Nov – 25 Dec 2026 | Mock orders 2026 table, including Christmas and holiday scenarios |
+| Try-out | `TRY-2026-01` … `10` | 28 Nov – 7 Dec 2026, one per day | Selectable in the sample menus of **both problems** for quick trials |
 
-Mười đơn Try-out được thiết kế để thấy dự đoán thay đổi: đơn nội thành hẹn giao ngắn, mưa lớn nơi nhận, tuyến rất xa nhưng hẹn ngắn, hẹn giao 30 ngày, ba người bán, hàng cồng kềnh giá cao, vùng xa phía bắc có mưa, đơn rạng sáng, mưa nơi gửi, đơn nhiều món về Đông Bắc.
+The ten try-out orders are designed to show predictions changing: a same-city order with a short promise, heavy rain at the destination, a very long route with a short promise, a 30-day promise, three sellers, a bulky high-value item, a remote northern destination with rain, an early-morning order, rain at the origin, and a large multi-item order to the northeast.
 
-Trong trang Problem 1 hoặc Problem 2, mở menu mẫu, chọn nhóm **2026 try-out**, bấm **Load sample** rồi chạy. Nút xem kết quả thực tế bị khóa vì đơn giả lập không có kết quả.
+On the Problem 1 or Problem 2 page, open the sample menu, pick from the **2026 try-out** group, select **Load sample**, and run. The reveal button is disabled because synthetic orders have no outcome.
 
-Trang **Mock orders 2026** hiện cả 22 đơn, cột Set phân biệt hai bộ. Bấm **Predict all orders** để chạy CatBoost và bộ hiệu chỉnh thật trên toàn bộ lô; cột Probability, Alert và If late · days được điền sau khi mô hình chạy. Không có cột thực tế, precision, recall hay accuracy vì bộ mock không có nhãn kết quả.
+The **Mock orders 2026** page lists all 22 orders; the Set column separates the two sets. **Predict all orders** runs the real classifier, calibrator, and delay regressor on the whole batch and fills Probability, Alert, and If late · days. There are no actual outcomes, so no precision, recall, or accuracy is shown.
 
-- **Order book CSV** và **Try-out CSV** tải dữ liệu giả lập; file nằm tại `demo_web/data/mock_orders_2026.csv` và `demo_web/data/try_orders_2026.csv`.
-- **Download predictions** tải đầu vào kèm xác suất thô, xác suất đã hiệu chỉnh, cảnh báo và ngưỡng.
-- **Inspect** mở một đơn trong trang Problem 1. Có thể sửa đầu vào, chạy lại và so sánh với lần dự báo đơn gốc. Nút Reveal actual outcome bị vô hiệu hóa cho mọi đơn mock.
-- Dashboard và kết quả thống kê vẫn dùng dữ liệu lịch sử, không ghép các đơn mock vào dữ liệu nghiên cứu.
+- **Order book CSV** and **Try-out CSV** download the inputs: `demo_web/data/mock_orders_2026.csv` and `demo_web/data/try_orders_2026.csv`.
+- **Download predictions** saves inputs with raw and calibrated probabilities, alerts, the threshold, and the days-late estimate.
+- **Inspect** opens an order on the Problem 1 page, where you can edit inputs and compare with the original prediction. Reveal actual outcome is disabled for every mock order.
+- The Dashboard and statistical results use historical data only; mock orders are never merged into the research data.
 
-Giá, khoảng cách, thông tin sản phẩm và thời tiết đều là giả lập; không phải dữ liệu giao dịch hay quan trắc thật năm 2026. Các biến giờ, thứ, số ngày giao dự kiến và ngày dự kiến được tính từ timestamp. Lịch ngày lễ giả định chỉ gồm 25/12/2026 và 01/01/2027 cho các cửa sổ của bộ mock này, không phải lịch ngày lễ quốc gia đã xác minh. Số ngày tới lễ tính cả hôm nay; số lễ trong cửa sổ dùng `(ngày mua, ngày dự kiến]` theo quy ước của project.
+Prices, distances, product details, and weather are synthetic, not real 2026 transactions or observations. Purchase hour, weekday, delivery window, and estimated date are computed from the timestamp. The holiday calendar is an assumption covering only 25 Dec 2026 and 1 Jan 2027, not a verified national calendar. Days to the next holiday include the purchase day, and holidays in the window use `(purchase date, estimated date]`, following the project convention.
 
-Mô hình giữ nguyên từ dữ liệu 2016–2018, chưa được đánh giá trên dữ liệu thật năm 2026. Năm tuyệt đối không nằm trong 21 biến, nên đổi ngày sang năm 2026 không tự cập nhật mô hình theo điều kiện kinh doanh năm 2026. Kết quả dùng minh họa luồng suy luận, không phải bằng chứng về độ chính xác cho năm 2026.
+The models were trained on 2016–2018 data and have not been evaluated on real 2026 data. The calendar year is not one of the 21 inputs, so a 2026 date does not adapt the models to 2026 conditions. The scores illustrate the inference flow; they are not evidence of 2026 accuracy.
 
-Có thể tái tạo fixture và xuất dự báo mà không mở trình duyệt:
+To regenerate the fixtures and export predictions without a browser:
 
 ```powershell
-.\.venv-boosting\Scripts\python.exe demo_web/generate_mock_orders.py
-.\.venv-boosting\Scripts\python.exe demo_web/predict_mock_orders.py
+.\.venv\Scripts\python.exe demo_web/generate_mock_orders.py
+.\.venv\Scripts\python.exe demo_web/predict_mock_orders.py
 ```
 
-Lệnh đầu ghi lại cả hai bộ cố định (bộ 12 đơn cũ không đổi). Lệnh sau ghi `demo_web/data/mock_orders_2026_predictions.csv`; không huấn luyện lại hoặc sửa mô hình. Khi cập nhật code lúc server đang chạy, dừng server bằng `Ctrl+C`, chạy lại rồi nhấn `Ctrl+F5` trên trình duyệt.
+The first command rewrites both fixed sets; the original 12-order file is unchanged. The second writes `demo_web/data/mock_orders_2026_predictions.csv` without retraining or modifying any model.
 
-## Khung quay 15 phút với web
+## 15-minute recording plan
 
-| Thời gian | Thao tác |
+| Time | Action |
 |---|---|
-| 00:00–02:00 | Giới thiệu bài toán, nhãn và dashboard toàn bộ mẫu |
-| 02:00–04:00 | Lọc bang/tháng, đọc biểu đồ và giải thích mất cân bằng |
-| 04:00–07:00 | Statistical insights: kiểm định và hồi quy, phân biệt liên hệ với nhân quả |
-| 07:00–09:00 | Timeline chia tập, Validation A/Test và ma trận nhầm lẫn |
-| 09:00–12:00 | Problem 1: nạp mẫu, chạy, mở outcome, sửa đầu vào, chạy lại |
-| 12:00–13:00 | Problem 2: chạy một đơn trễ, mở số ngày thực tế, đọc kết luận không hơn baseline |
-| 13:00–15:00 | Mở code `server.py` ở hàm `predict` nếu cần chứng minh luồng chạy; kết luận và hạn chế |
+| 00:00–02:00 | Introduce the problem, the label, and the full-cohort dashboard |
+| 02:00–04:00 | Filter by state and month, read the charts, explain class imbalance |
+| 04:00–07:00 | Statistical insights: tests and regression; association is not causation |
+| 07:00–09:00 | Split timeline, Validation A vs Test, and the confusion matrix |
+| 09:00–12:00 | Problem 1: load a sample, run it, reveal the outcome, edit an input, run again |
+| 12:00–13:00 | Problem 2: run a late order, reveal the actual delay, read the "no improvement over baseline" result |
+| 13:00–15:00 | Optionally show `predict` in `server.py` to prove the live flow; conclusions and limitations |
 
-Kịch bản đọc tiếng Anh cũ nằm ở [kịch bản demo](../docs/demo/kich_ban_demo_15_phut.md). Thứ tự chuyển màn hình của bản cũ dành cho notebook; dùng bảng trên khi quay web. Không đọc những câu hướng dẫn chuyển sang notebook nếu đang trình bày web.
+## Environment and models
 
-## Môi trường và mô hình
+No web libraries are added. The backend uses Python's standard HTTP server, and the frontend uses plain HTML, CSS, JavaScript, and SVG. Prediction uses packages already in the research environment: NumPy, pandas, joblib, scikit-learn, and CatBoost. Use an environment compatible with the saved models; the repository records Python 3.14.6 and the versions in `requirements.txt`.
 
-Không thêm thư viện web: backend dùng HTTP server chuẩn của Python, frontend dùng HTML/CSS/JavaScript và SVG. Các thư viện dự báo có sẵn trong môi trường nghiên cứu: NumPy, pandas, joblib, scikit-learn và CatBoost. Cần dùng môi trường tương thích với mô hình; repo ghi nhận Python 3.14.6 và phiên bản tại `requirements.txt`.
-
-Các đầu vào bắt buộc trên ổ đĩa:
+Required inputs on disk:
 
 - Dataset `data/processed/research_data_weather_price_holiday_assume_utc.csv`.
-- Danh sách biến `docs/predictor_list.csv`.
-- Các CSV kết quả trong `outputs/tables/` và `data/ml_preparation/split_summary.csv`.
-- Cấu hình `outputs/tables/machine_learning/ml_calibration/final_config.json`.
-- Pipeline `outputs/models/ml_selection/CatBoostBaseline.joblib`.
-- Bộ hiệu chỉnh `outputs/models/ml_calibration/sigmoid_calibrator.joblib`.
+- Predictor list `docs/predictor_list.csv`.
+- Result CSVs in `outputs/tables/` and `data/ml_preparation/split_summary.csv`.
+- Configuration `outputs/tables/machine_learning/ml_calibration/final_config.json`.
+- Problem 1 pipeline `outputs/models/ml_selection/CatBoostBaseline.joblib` and calibrator `outputs/models/ml_calibration/sigmoid_calibrator.joblib`.
+- Problem 2 model `outputs/models/delay_regression/CatBoostDelayRegressor.joblib` and its records in `outputs/tables/delay_prediction/regression_catboost/`.
 
-Server kiểm tra SHA-256 của pipeline và bộ hiệu chỉnh theo cấu hình trước khi nạp. Đầu vào được sắp đúng thứ tự 21 biến. Giá trị thiếu đi qua preprocessing đã fit trên Train. Xác suất thô được clip bằng epsilon trong cấu hình, đổi sang log-odds, rồi qua calibrator. Ngưỡng được đọc từ cấu hình, không chỉnh bằng giao diện hoặc chọn lại trên Test.
+The server checks the SHA-256 of every model file against its configuration before loading. Inputs are ordered as the 21 predictors. Missing values pass through the preprocessing fitted on Train. For Problem 1, the raw probability is clipped by the configured epsilon, converted to log-odds, and passed to the calibrator; the threshold is read from the configuration and cannot be changed in the interface.
 
-Model binaries đang bị Git bỏ qua theo thiết kế của repo. Khi chuyển máy hoặc clone mới, cần tự tái tạo artifacts theo thứ tự notebook trong README gốc. Nếu thiếu/sai hash model, web vẫn cho xem dashboard và kết quả thống kê nhưng vô hiệu hóa nút dự báo; không sinh dự báo giả để thay thế.
+Model binaries are excluded from Git by design. On a new machine or clone, regenerate them by running the notebooks listed in the root [README](../README.md#local-web-demo). If a model is missing or its hash does not match, the dashboard and statistical results still load, but that problem's prediction button is disabled; no substitute predictions are produced.
 
-Ứng dụng chỉ bind `127.0.0.1`, phù hợp quay demo trên máy. Đây không phải cấu hình triển khai công khai.
+The app binds only to `127.0.0.1` and is suitable for a local recording. It is not a public deployment configuration.
 
-## Kiểm tra
+## Tests
 
 ```powershell
-.\.venv-boosting\Scripts\python.exe -m unittest discover -s demo_web -p "test_*.py" -v
+.\.venv\Scripts\python.exe -m unittest discover -s demo_web -p "test_*.py" -v
 ```
 
-Các kiểm tra đối chiếu dự báo với kết quả Test đã lưu, kiểm tra bộ lọc, giá trị thiếu, dữ liệu nhập không hợp lệ và API HTTP. Chạy kiểm tra không huấn luyện lại mô hình và không ghi đè kết quả nghiên cứu.
+The tests check prediction parity with the saved Test and validation outputs, dashboard filters, missing values, invalid inputs, synthetic calendars, and the HTTP API. Running them does not retrain models or overwrite research results.
