@@ -1,0 +1,30 @@
+{
+  "run_id": "20261128_144120_756559",
+  "model_path": "outputs/models/delay_regression/CatBoostDelayRegressor.joblib",
+  "model_sha256": "40f52723b8248dcebef47a6803491306d62e6362f31cb711b1a1e5b73370980c",
+  "training_seconds": 9.260717099998146,
+  "train_late_orders": 3720,
+  "validation_late_orders": 567,
+  "baseline_value_days": 7.0,
+  "pooled_mae": {
+    "MedianBaseline": 4.405643738977072,
+    "CatBoostDelayRegressor": 4.52518414809146
+  },
+  "split_mae": {
+    "validation_a": {
+      "CatBoostDelayRegressor": 4.993424734096582,
+      "MedianBaseline": 4.821705426356589
+    },
+    "validation_b": {
+      "CatBoostDelayRegressor": 3.5184668881804493,
+      "MedianBaseline": 3.511111111111111
+    }
+  },
+  "mae_difference": 0.11954040911438835,
+  "ci95": [
+    -0.02449410481494314,
+    0.2577717087383101
+  ],
+  "catboost_better": 0.0,
+  "test_scored": false
+}

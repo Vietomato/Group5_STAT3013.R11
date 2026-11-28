@@ -3,9 +3,9 @@
   "model": "CatBoost",
   "configuration": "unweighted_baseline",
   "selection_config": "outputs/tables/machine_learning/ml_selection/selected_config.json",
-  "selection_sha256": "789cd5b2f5a4f52f2b33f46e58aaf4f85b009965f652dff2dbd0e3b180c1292a",
+  "selection_sha256": "62d58ee4720d575f71516fc3fe20b9e960f7bc04b71ec16a771638aa102f2da8",
   "frozen_pipeline": "outputs/models/ml_selection/CatBoostBaseline.joblib",
-  "pipeline_sha256": "b88339341f6c65485cf24b6fd4c80ca08439da2d96d2eb6efe98b35159284df5",
+  "pipeline_sha256": "84002660a271820dd139545b7f5c467b60989a441663aa3f1baea92543a13f31",
   "features": [
     "distance_km_mean",
     "customer_state",

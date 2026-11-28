@@ -1,0 +1,20 @@
+{
+  "H1_supported": true,
+  "H2_criteria": {
+    "fingerprint": true,
+    "larger_in_sample_gain_with_weather": true,
+    "no_worse_without_weather": true
+  },
+  "H2_supported": true,
+  "catboost21_minus_baseline": [
+    0.45672310686477857,
+    0.3239656579712167,
+    0.5932251733060044
+  ],
+  "noweather_minus_catboost21": [
+    -0.16445321886733488,
+    -0.27312781584763346,
+    -0.0665620803725086
+  ],
+  "validation_or_test_scored": false
+}
